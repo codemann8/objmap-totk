@@ -1249,6 +1249,50 @@ export default class AppMap extends mixins(MixinUtil) {
     this.search();
   }
 
+  private async resetCompletedVisibleSearches() {
+    if (!confirm('Reset completed status for objects in currently visible searches?'))
+      return;
+
+    const excludedIds = new Set<number>();
+    for (const set of this.searchExcludedSets) {
+      set.ids.forEach(id => excludedIds.add(id));
+    }
+
+    const useLayerFilter = this.settings ? this.settings.showObjectsCurrentLayer : false;
+    const hashes = new Set<string>();
+    for (const group of this.searchGroups) {
+      if (group.enabled === false)
+        continue;
+      for (const marker of group.getMarkers()) {
+        const obj = marker.obj;
+        if (excludedIds.has(obj.objid))
+          continue;
+        if (useLayerFilter && !isObjectInLayer(obj, this.map.activeLayer))
+          continue;
+        hashes.add(obj.hash_id);
+      }
+    }
+
+    for (const hash of hashes) {
+      if (this.checklists.isMarked(hash))
+        await this.checklists.setMarked(hash, false);
+    }
+    this.clUpdateMarkers();
+    this.refreshMapTowerCompletion();
+  }
+
+  private async resetCompletedAll() {
+    if (!confirm('Reset completed status for all objects?'))
+      return;
+    const hashes = Object.keys(this.checklists.marked);
+    for (const hash of hashes) {
+      if (this.checklists.isMarked(hash))
+        await this.checklists.setMarked(hash, false);
+    }
+    this.clUpdateMarkers();
+    this.refreshMapTowerCompletion();
+  }
+
   async searchAddExcludedSet(query: string, label?: string) {
     if (this.searchExcludedSets.some(g => !!g.query && g.query == query))
       return;

@@ -260,6 +260,14 @@
       <div class="leaflet-sidebar-pane" id="spane-tools">
         <h1 class="leaflet-sidebar-header">Tools</h1>
         <b-button size="sm" variant="secondary" block @click="closeSidebar(); $refs.modalGoto.show()">Go to coordinates...</b-button>
+        <div class="row no-gutters mt-2">
+          <div class="col mr-2">
+            <b-button size="sm" variant="warning" block @click="resetCompletedVisibleSearches">Reset found (visible)</b-button>
+          </div>
+          <div class="col">
+            <b-button size="sm" variant="danger" block @click="resetCompletedAll">Reset all</b-button>
+          </div>
+        </div>
         <hr>
         <h4 class="subsection-heading">About this map</h4>
         <p>This object map is an <a href="https://github.com/zeldamods/objmap-totk">open source project</a>. Contributions are welcome.</p>
