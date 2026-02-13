@@ -675,7 +675,13 @@ export class MapMarkerObj extends MapMarkerCanvasImpl {
     const actor = (Settings.getInstance().hardMode && !this.obj.disable_rankup_for_hard_mode)
       ? rankUpEnemyForHardMode(this.obj.name)
       : this.obj.name;
-    this.title = getName(actor);
+    if (this.obj.name === 'LocationMarker' && this.obj.Location) {
+      this.title = MsgMgr.getInstance().getMsgWithFile('StaticMsg/LocationMarker', this.obj.Location)
+        || MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.obj.Location)
+        || getName(actor);
+    } else {
+      this.title = getName(actor);
+    }
     setObjMarkerTooltip(this.title, this.marker, this.obj);
   }
 
