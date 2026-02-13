@@ -5,16 +5,22 @@
     <div v-if="marker.data.lm.l.ShrineInCave" style="color: orange"><i class="fa fa-exclamation-circle"></i> Inside Cave</div>
     <section title="Warning: This is the marker position; actual Dungeon Position may be different ">Position: {{formatPosition(pos)}}</section>
     <hr>
+    <section v-if="bgmObjs.length">
+      <h4 class="subsection-heading">Shrine</h4>
+      <div class="search-results">
+        <ObjectInfo v-for="bgm in bgmObjs" :key="bgm.objid" :obj="bgm" :isChecked="isChecked(bgm)" />
+      </div>
+    </section>
     <section v-if="tboxObjs.length">
       <h4 class="subsection-heading">Treasure Chests</h4>
       <div class="search-results">
-        <ObjectInfo v-for="tbox in tboxObjs" :key="tbox.objid" :obj="tbox" drop-as-name />
+        <ObjectInfo v-for="tbox in tboxObjs" :key="tbox.objid" :obj="tbox" drop-as-name :isChecked="isChecked(tbox)" />
       </div>
     </section>
     <section v-if="enemies.length">
       <h4 class="subsection-heading">Enemies</h4>
       <div class="search-results">
-        <ObjectInfo v-for="enemy in enemies" :key="enemy.objid" :obj="enemy" />
+        <ObjectInfo v-for="enemy in enemies" :key="enemy.objid" :obj="enemy" :isChecked="isChecked(enemy)" />
       </div>
     </section>
 
