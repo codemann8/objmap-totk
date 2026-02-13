@@ -503,6 +503,7 @@ export default class AppMap extends mixins(MixinUtil) {
       for (const group of this.searchGroups)
         group.update(SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
       this.updateSearchResultMarkerVisibility();
+      this.refreshMapTowerCompletion();
       this.updateRoute();
     });
   }
@@ -1258,6 +1259,7 @@ export default class AppMap extends mixins(MixinUtil) {
     for (const group of this.searchGroups)
       group.update(SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
     this.persistSearchGroupsToSettings();
+    this.refreshMapTowerCompletion();
   }
 
   async searchAddGroup(query: string, label?: string, enabled = true, color?: string) {
@@ -1279,12 +1281,14 @@ export default class AppMap extends mixins(MixinUtil) {
     this.searchGroups.push(group);
     this.updateTooltips();
     this.persistSearchGroupsToSettings();
+    this.refreshMapTowerCompletion();
   }
 
   searchToggleGroupEnabledStatus(idx: number) {
     const group = this.searchGroups[idx];
     group.update(SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
     this.persistSearchGroupsToSettings();
+    this.refreshMapTowerCompletion();
   }
 
   searchViewGroup(idx: number) {
@@ -1300,6 +1304,7 @@ export default class AppMap extends mixins(MixinUtil) {
     group.update(SearchResultUpdateMode.UpdateVisibility | SearchResultUpdateMode.UpdateStyle,
       this.searchExcludedSets);
     this.persistSearchGroupsToSettings();
+    this.refreshMapTowerCompletion();
   }
 
   searchRemoveGroup(idx: number) {
@@ -1307,6 +1312,7 @@ export default class AppMap extends mixins(MixinUtil) {
     group.remove();
     this.searchGroups.splice(idx, 1);
     this.persistSearchGroupsToSettings();
+    this.refreshMapTowerCompletion();
   }
 
   searchRemoveExcludeSet(idx: number) {
@@ -1314,6 +1320,7 @@ export default class AppMap extends mixins(MixinUtil) {
     for (const group of this.searchGroups)
       group.update(SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
     this.persistSearchGroupsToSettings();
+    this.refreshMapTowerCompletion();
   }
 
   async search() {
@@ -1555,6 +1562,7 @@ export default class AppMap extends mixins(MixinUtil) {
           marker.setMarked(value, opacity);
         }
       }
+      this.refreshMapTowerCompletion();
     })
   }
 
@@ -1724,11 +1732,158 @@ export default class AppMap extends mixins(MixinUtil) {
     return area && area.type && area.type == "FeatureCollection";
   }
 
+  private refreshMapTowerCompletion() {
+    if (this.shownAreaMap === 'MapTowerCompletion') {
+      this.loadAreaMap(this.shownAreaMap);
+    }
+  }
+
+  private lerpColor(a: string, b: string, t: number): string {
+    const ai = parseInt(a.replace('#', ''), 16);
+    const bi = parseInt(b.replace('#', ''), 16);
+    const ar = (ai >> 16) & 0xff;
+    const ag = (ai >> 8) & 0xff;
+    const ab = ai & 0xff;
+    const br = (bi >> 16) & 0xff;
+    const bg = (bi >> 8) & 0xff;
+    const bb = bi & 0xff;
+    const rr = Math.round(ar + (br - ar) * t);
+    const rg = Math.round(ag + (bg - ag) * t);
+    const rb = Math.round(ab + (bb - ab) * t);
+    return `#${((1 << 24) + (rr << 16) + (rg << 8) + rb).toString(16).slice(1)}`;
+  }
+
+  private completionToColor(ratio: number): string {
+    const colors = ['#2b6fff', '#2ecc71', '#f1c40f', '#e67e22', '#e74c3c'];
+    const clamped = Math.max(0, Math.min(1, ratio));
+    const seg = (colors.length - 1) * clamped;
+    const idx = Math.floor(seg);
+    const t = seg - idx;
+    if (idx >= colors.length - 1)
+      return colors[colors.length - 1];
+    return this.lerpColor(colors[idx], colors[idx + 1], t);
+  }
+
+  private pointInRing(x: number, z: number, ring: number[][]): boolean {
+    let inside = false;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const xi = ring[i][0], zi = ring[i][1];
+      const xj = ring[j][0], zj = ring[j][1];
+      const intersect = ((zi > z) !== (zj > z)) &&
+        (x < (xj - xi) * (z - zi) / (zj - zi + 0.0) + xi);
+      if (intersect)
+        inside = !inside;
+    }
+    return inside;
+  }
+
+  private pointInPolygon(x: number, z: number, rings: number[][][]): boolean {
+    if (!rings.length)
+      return false;
+    if (!this.pointInRing(x, z, rings[0]))
+      return false;
+    for (let i = 1; i < rings.length; i++) {
+      if (this.pointInRing(x, z, rings[i]))
+        return false;
+    }
+    return true;
+  }
+
+  private featureToPolygons(feature: any): number[][][][] {
+    const type = feature.type || (feature.geometry && feature.geometry.type);
+    const coords = feature.coordinates || (feature.geometry && feature.geometry.coordinates);
+    if (!type || !coords)
+      return [];
+    if (type === 'Polygon')
+      return [coords];
+    if (type === 'MultiPolygon')
+      return coords;
+    return [];
+  }
+
+  private buildAreaIndex(entries: Array<[string, any]>): Array<{ key: string, polygons: { rings: number[][][], bbox: [number, number, number, number] }[] }> {
+    return entries.map(([key, features]) => {
+      const polygons: { rings: number[][][], bbox: [number, number, number, number] }[] = [];
+      features.forEach((feature: any) => {
+        const polys = this.featureToPolygons(feature);
+        polys.forEach((rings: number[][][]) => {
+          let minX = Infinity, minZ = Infinity, maxX = -Infinity, maxZ = -Infinity;
+          rings[0].forEach((pt: number[]) => {
+            minX = Math.min(minX, pt[0]);
+            maxX = Math.max(maxX, pt[0]);
+            minZ = Math.min(minZ, pt[1]);
+            maxZ = Math.max(maxZ, pt[1]);
+          });
+          polygons.push({ rings, bbox: [minX, minZ, maxX, maxZ] });
+        });
+      });
+      return { key, polygons };
+    });
+  }
+
+  private findAreaForPoint(x: number, z: number, index: Array<{ key: string, polygons: { rings: number[][][], bbox: [number, number, number, number] }[] }>): string | null {
+    for (const area of index) {
+      for (const poly of area.polygons) {
+        const [minX, minZ, maxX, maxZ] = poly.bbox;
+        if (x < minX || x > maxX || z < minZ || z > maxZ)
+          continue;
+        if (this.pointInPolygon(x, z, poly.rings))
+          return area.key;
+      }
+    }
+    return null;
+  }
+
+  private computeMapTowerCompletion(entries: Array<[string, any]>): Map<string, { total: number, completed: number, ratio: number }> {
+    const completion = new Map<string, { total: number, completed: number, ratio: number }>();
+    entries.forEach(([key]) => completion.set(key, { total: 0, completed: 0, ratio: 0 }));
+
+    const areaIndex = this.buildAreaIndex(entries);
+    const excludedIds = new Set<number>();
+    for (const set of this.searchExcludedSets) {
+      set.ids.forEach(id => excludedIds.add(id));
+    }
+
+    const seen = new Set<string>();
+    for (const group of this.searchGroups) {
+      if (group.enabled === false)
+        continue;
+      for (const marker of group.getMarkers()) {
+        const obj = marker.obj;
+        if (seen.has(obj.hash_id))
+          continue;
+        if (excludedIds.has(obj.objid))
+          continue;
+        if (!isObjectInLayer(obj, this.map.activeLayer))
+          continue;
+        seen.add(obj.hash_id);
+
+        const areaKey = this.findAreaForPoint(obj.pos[0], obj.pos[2], areaIndex);
+        if (!areaKey)
+          continue;
+        const entry = completion.get(areaKey);
+        if (!entry)
+          continue;
+        entry.total += 1;
+        if (this.checklists.isMarked(obj.hash_id))
+          entry.completed += 1;
+      }
+    }
+
+    completion.forEach((entry) => {
+      entry.ratio = entry.total > 0 ? entry.completed / entry.total : 0;
+    });
+
+    return completion;
+  }
+
   async loadAreaMap(name: string) {
     this.areaMapLayer.data.clearLayers();
     this.areaMapLayersByData.data.clear();
     if (!name)
       return;
+    const isMapTowerCompletion = name === 'MapTowerCompletion';
+    const sourceName = isMapTowerCompletion ? 'MapTower' : name;
     // Order matches that in MapTower.json
     const mapTowerAreas = ["Hebra", "Tabantha", "Gerudo", "Wasteland",
       "Woodland", "Central", "Great Plateau", "Dueling Peaks",
@@ -1758,18 +1913,25 @@ export default class AppMap extends mixins(MixinUtil) {
       'GerudoDesertClimateLv2'
     ];
 
-    let areas = await MapMgr.getInstance().fetchAreaMap(name);
+    let areas = await MapMgr.getInstance().fetchAreaMap(sourceName);
     if (this.isFeatureCollection(areas)) {
       areas = this.featureCollectionToPolygons(areas as any)
     }
     const entries = Object.entries(areas);
+    const completion = isMapTowerCompletion ? this.computeMapTowerCompletion(entries) : null;
 
     let fillOpacity = (this.showAreaColor) ? 0.2 : 0.0
     let fillOpacityOver = (this.showAreaColor) ? 0.3 : 0.0
 
     let i = 0;
     for (const [data, features] of entries) {
+      const completionInfo = completion ? completion.get(data) : null;
+      const completionColor = completionInfo ? this.completionToColor(completionInfo.ratio) : undefined;
       const layers: L.GeoJSON[] = features.map((feature: any) => {
+        if (completionColor) {
+          feature.properties = feature.properties || {};
+          feature.properties.color = completionColor;
+        }
         return L.geoJSON(feature, {
           pointToLayer: function(_geoJsonPoint, latlng) {
             let color = feature.properties.color || '#3388ff'
@@ -1795,7 +1957,15 @@ export default class AppMap extends mixins(MixinUtil) {
         layer.on('mouseout', () => {
           layers.forEach(l => l.setStyle({ weight: 2, fillOpacity }));
         });
-        if (name == "MapTower" || name == "sky_polys" || name == "cave_polys") {
+        if (isMapTowerCompletion) {
+          const title = features[0].properties.title || data;
+          const total = completionInfo ? completionInfo.total : 0;
+          const completed = completionInfo ? completionInfo.completed : 0;
+          const percent = completionInfo ? Math.round(completionInfo.ratio * 100) : 0;
+          layer.bindTooltip(`${title}<br/>${percent}% (${completed}/${total})`);
+          continue;
+        }
+        if (sourceName == "MapTower" || name == "sky_polys" || name == "cave_polys") {
           layer.bindTooltip(features[0].properties.title);
           continue;
         }
@@ -2087,6 +2257,7 @@ export default class AppMap extends mixins(MixinUtil) {
   async initChecklist() {
     await this.checklists.init();
     this.updateMarkers();
+    this.refreshMapTowerCompletion();
   }
 
   searchOnHash(hash: string) {

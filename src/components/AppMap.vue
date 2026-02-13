@@ -141,6 +141,7 @@
           <b-radio value="">None</b-radio>
           <!-- <b-radio value="FieldMapArea">Field map areas</b-radio> -->
           <b-radio value="MapTower">Map Tower Areas</b-radio>
+          <b-radio value="MapTowerCompletion">Map Tower Area Completion</b-radio>
           <b-radio value="Ground">Surface Field Map Areas</b-radio>
           <b-radio value="MinusField">Depths Field Map Areas</b-radio>
           <b-radio value="Cave">Cave Field Map Areas</b-radio>
