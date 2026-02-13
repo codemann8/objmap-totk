@@ -14,6 +14,7 @@ import VueRouter from 'vue-router';
 import draggable from 'vuedraggable';
 
 import AppMapDetailsDungeon from '@/components/AppMapDetailsDungeon';
+import AppMapDetailsLandmark from '@/components/AppMapDetailsLandmark';
 import AppMapDetailsObj from '@/components/AppMapDetailsObj';
 import AppMapDetailsPlace from '@/components/AppMapDetailsPlace';
 import AppMapFilterMainButton from '@/components/AppMapFilterMainButton';
@@ -107,6 +108,7 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   },
   'Tower': {
     cl: MapMarkers.MapMarkerTower,
+    detailsComponent: 'AppMapDetailsLandmark',
     enableUpdates: true,
     filterIcon: MapIcons.TOTK_TOWER.options.iconUrl,
     filterLabel: 'Towers',
@@ -118,17 +120,20 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   },
   'Labo': {
     cl: MapMarkers.MapMarkerLabo,
+    detailsComponent: 'AppMapDetailsLandmark',
     enableUpdates: true,
     filterIcon: MapIcons.LABO.options.iconUrl,
     filterLabel: 'Tech Labs',
   },
   'Chasm': {
     cl: MapMarkers.MapMarkerCave,
+    detailsComponent: 'AppMapDetailsObj',
     filterIcon: MapIcons.CHASM.options.iconUrl,
     filterLabel: 'Chasm',
   },
   'Cave': {
     cl: MapMarkers.MapMarkerCave,
+    detailsComponent: 'AppMapDetailsObj',
     filterIcon: MapIcons.CAVE.options.iconUrl,
     filterLabel: 'Cave/Well',
   },
@@ -141,12 +146,14 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   },
   'DragonTears': {
     cl: MapMarkers.MapMarkerTear,
+    detailsComponent: 'AppMapDetailsObj',
     enableUpdates: true,
     filterIcon: MapIcons.TOTK_TEAR.options.iconUrl,
     filterLabel: 'Dragon Tears',
   },
   'CheckPoint': {
     cl: MapMarkers.MapMarkerLightroot,
+    detailsComponent: 'AppMapDetailsLandmark',
     enableUpdates: true,
     filterIcon: MapIcons.TOTK_LIGHTROOT.options.iconUrl,
     filterLabel: 'Lightroots',
@@ -343,6 +350,7 @@ class SingleEdit {
 @Component({
   components: {
     AppMapDetailsDungeon,
+    AppMapDetailsLandmark,
     AppMapDetailsObj,
     AppMapDetailsPlace,
     AppMapFilterMainButton,
@@ -636,7 +644,37 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   switchPane(pane: string) {
+    if (pane === 'spane-checklist') {
+      this.syncChecklistMarkedState();
+    }
     this.sidebar.open(pane);
+  }
+
+  private syncChecklistMarkedState() {
+    if (!this.checklists || !this.checklists.lists)
+      return;
+    let anyChanged = false;
+    for (const list of this.checklists.lists) {
+      if (!list.items)
+        continue;
+      let changed = false;
+      const items: any = { ...list.items };
+      for (const key of Object.keys(items)) {
+        const item = items[key];
+        const marked = this.checklists.isMarked(item.hash_id);
+        if (item.marked !== marked) {
+          items[key] = { ...item, marked };
+          changed = true;
+        }
+      }
+      if (changed) {
+        list.items = items;
+        anyChanged = true;
+      }
+    }
+    if (anyChanged) {
+      this.checklists.lists = [...this.checklists.lists];
+    }
   }
 
   private initGeojsonFeature(layer: any) {
@@ -1154,7 +1192,7 @@ export default class AppMap extends mixins(MixinUtil) {
     else
       this.map.m.setView(marker.getMarker().getLatLng(), zoom);
 
-    if (marker instanceof MapMarkers.MapMarkerObj || marker instanceof MapMarkers.MapMarkerKorok) {
+    if (marker instanceof MapMarkers.MapMarkerObj || marker instanceof MapMarkers.MapMarkerKorok || marker instanceof MapMarkers.MapMarkerLightroot || marker instanceof MapMarkers.MapMarkerCave || marker instanceof MapMarkers.MapMarkerTower || marker instanceof MapMarkers.MapMarkerLabo || marker instanceof MapMarkers.MapMarkerTear) {
       this.switchToObjectLayer(marker.obj);
     }
   }

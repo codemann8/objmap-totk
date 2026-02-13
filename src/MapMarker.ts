@@ -335,6 +335,7 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
 
 export class MapMarkerLightroot extends MapMarkerGenericLocationMarker {
   public readonly checkpointNum: number;
+  public readonly obj: ObjectMinData;
   constructor(mb: MapBase, l: any) {
     super(mb, l, false, "CheckPoint", 1000)
     this.checkpointNum = parseInt(this.lm.getSaveFlag().replace('Location_CheckPoint', ''), 10);
@@ -343,6 +344,21 @@ export class MapMarkerLightroot extends MapMarkerGenericLocationMarker {
     this.setTitle(msg);
     this.marker.options.title = '';
     this.marker.bindTooltip(msg, { pane: 'front2' });
+    // Fabricate an ObjectMinData so AppMapDetailsObj can fetch full data by hash.
+    this.obj = {
+      objid: 0,
+      hash_id: this.lm.getHashID(),
+      map_type: 'MinusField',
+      map_name: '',
+      map_static: true,
+      name: 'LocationArea',
+      pos: [l.Translate.X, l.Translate.Y, l.Translate.Z],
+      Location: l.MessageID,
+    };
+  }
+
+  setMarked(_marked: boolean, _opacity: number) {
+    super.setMarked(false, 1.0);
   }
 
   shouldBeShown() {
@@ -371,6 +387,7 @@ export class MapMarkerDispenser extends MapMarkerGenericLocationMarker {
 
 export class MapMarkerTear extends MapMarkerGenericLocationMarker {
   public readonly tearNum: number;
+  public readonly obj: ObjectMinData;
   constructor(mb: MapBase, l: any) {
     super(mb, l, false, "DragonTears", 1001);
     this.tearNum = parseInt(this.lm.getSaveFlag().replace('Location_DragonTears', ''), 10);
@@ -391,6 +408,16 @@ export class MapMarkerTear extends MapMarkerGenericLocationMarker {
     this.setTitle(`${titles[this.tearNum]} (#${this.tearNum})`);
     this.marker.options.title = '';
     this.marker.bindTooltip(`${titles[this.tearNum]}<br>Tear of the Dragon #${this.tearNum}`, { pane: 'front2' });
+    this.obj = {
+      objid: 0,
+      hash_id: this.lm.getHashID(),
+      map_type: 'MainField',
+      map_name: '',
+      map_static: true,
+      name: 'LocationArea',
+      pos: [l.Translate.X, l.Translate.Y, l.Translate.Z],
+      Location: l.MessageID,
+    };
   }
 
   shouldBeShown() {
@@ -428,11 +455,27 @@ export class MapMarkerPlace extends MapMarkerGenericLocationMarker {
 }
 
 export class MapMarkerTower extends MapMarkerGenericLocationMarker {
+  public readonly obj: ObjectMinData;
   constructor(mb: MapBase, l: any) {
     super(mb, l, false, l.Icon, 1001);
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
+    this.obj = {
+      objid: 0,
+      hash_id: this.lm.getHashID(),
+      map_type: 'MainField',
+      map_name: '',
+      map_static: true,
+      name: 'LocationArea',
+      pos: [l.Translate.X, l.Translate.Y, l.Translate.Z],
+      Location: l.MessageID,
+    };
   }
+
+  setMarked(_marked: boolean, _opacity: number) {
+    super.setMarked(false, 1.0);
+  }
+  
   shouldBeShown() {
     return this.mb.activeLayer == "Surface";
   }
@@ -440,12 +483,26 @@ export class MapMarkerTower extends MapMarkerGenericLocationMarker {
 
 export class MapMarkerCave extends MapMarkerGenericLocationMarker {
   private info: any;
+  public readonly isChasm: boolean;
+  public readonly obj: ObjectMinData;
   constructor(mb: MapBase, l: any) {
     const category = (l.Icon == "Chasm") ? "Chasm" : "Cave";
     super(mb, l, false, category, 1001);
     this.marker.options.title = '';
     this.marker.bindTooltip(this.title, { pane: 'front2' });
     this.info = l;
+    this.isChasm = l.Icon == "Chasm";
+    // Provide ObjectMinData so AppMapDetailsObj can fetch full data by hash.
+    this.obj = {
+      objid: 0,
+      hash_id: this.lm.getHashID(),
+      map_type: 'MainField',
+      map_name: '',
+      map_static: true,
+      name: 'LocationArea',
+      pos: [l.Translate.X, l.Translate.Y, l.Translate.Z],
+      Location: l.MessageID,
+    };
   }
 
   shouldBeShown() {
@@ -464,8 +521,23 @@ export class MapMarkerCave extends MapMarkerGenericLocationMarker {
 }
 
 export class MapMarkerLabo extends MapMarkerGenericLocationMarker {
+  public readonly obj: ObjectMinData;
   constructor(mb: MapBase, l: any) {
     super(mb, l, false, l.Icon);
+    this.obj = {
+      objid: 0,
+      hash_id: this.lm.getHashID(),
+      map_type: 'MainField',
+      map_name: '',
+      map_static: true,
+      name: 'LocationArea',
+      pos: [l.Translate.X, l.Translate.Y, l.Translate.Z],
+      Location: l.MessageID,
+    };
+  }
+
+  setMarked(_marked: boolean, _opacity: number) {
+    super.setMarked(false, 1.0);
   }
 
   shouldBeShown() {
