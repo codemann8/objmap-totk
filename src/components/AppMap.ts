@@ -1120,53 +1120,8 @@ export default class AppMap extends mixins(MixinUtil) {
     }).addTo(this.map.m);
   }
 
-  private findSearchMarkerAtSamePosition(filterMarker: MapMarker): MapMarkers.MapMarkerObj | null {
-    const filterLayer = filterMarker.getMarker();
-    if (!('getLatLng' in filterLayer))
-      return null;
-    const filterLatLng = filterLayer.getLatLng();
-
-    // Check "Add to map" search groups
-    for (const group of this.searchGroups) {
-      if (group.enabled === false)
-        continue;
-      for (const marker of group.getMarkers()) {
-        const markerLayer = marker.getMarker();
-        if (!('getLatLng' in markerLayer))
-          continue;
-        const markerLatLng = markerLayer.getLatLng();
-        if (Math.abs(filterLatLng.lat - markerLatLng.lat) < 1 && Math.abs(filterLatLng.lng - markerLatLng.lng) < 1) {
-          return marker;
-        }
-      }
-    }
-
-    // Check active search results
-    for (const wrapper of this.searchResultMarkers) {
-      const marker = wrapper.data;
-      const markerLayer = marker.getMarker();
-      if (!('getLatLng' in markerLayer))
-        continue;
-      const markerLatLng = markerLayer.getLatLng();
-      if (Math.abs(filterLatLng.lat - markerLatLng.lat) < 1 && Math.abs(filterLatLng.lng - markerLatLng.lng) < 1) {
-        return marker;
-      }
-    }
-
-    return null;
-  }
-
   initMarkerDetails() {
     this.map.registerMarkerSelectedCb((marker: MapMarker) => {
-      // If a filter marker was clicked and a search marker exists at the same spot,
-      // open the search marker details instead (richer info).
-      if (!(marker instanceof MapMarkers.MapMarkerObj) && !(marker instanceof MapMarkers.MapMarkerSearchResult)) {
-        const searchMarker = this.findSearchMarkerAtSamePosition(marker);
-        if (searchMarker) {
-          this.openMarkerDetails(getMarkerDetailsComponent(searchMarker), searchMarker);
-          return;
-        }
-      }
       this.openMarkerDetails(getMarkerDetailsComponent(marker), marker);
     });
     this.map.m.on({ 'click': () => this.closeMarkerDetails() });

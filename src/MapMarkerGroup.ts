@@ -54,10 +54,6 @@ export class MapMarkerGroup {
     this.isInitialUpdate = false;
   }
 
-  getMarkers() {
-    return this.markers;
-  }
-
   find(predicate: (marker: MapMarker) => boolean) {
     return this.markers.find(predicate)
   }
