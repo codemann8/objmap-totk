@@ -26,6 +26,7 @@ export class Settings {
 
   useActorNames!: boolean;
   useHexForHashIds!: boolean;
+  showObjectsCurrentLayer!: boolean;
 
   mapType!: string;
   mapName!: string;
@@ -62,6 +63,7 @@ export class Settings {
     this.colorPerActor = parse(data.colorPerActor, Id, true);
     this.useActorNames = parse(data.useActorNames, Id, false);
     this.useHexForHashIds = parse(data.useHexForHashIds, Id, true);
+    this.showObjectsCurrentLayer = parse(data.showObjectsCurrentLayer, Id, false);
     this.hardMode = parse(data.hardMode, Id, false);
     this.ohoMode = parse(data.ohoMode, Id, false);
     this.lastBossMode = parse(data.lastBossMode, Id, false);
@@ -89,6 +91,7 @@ export class Settings {
       colorPerActor: this.colorPerActor,
       useActorNames: this.useActorNames,
       useHexForHashIds: this.useHexForHashIds,
+      showObjectsCurrentLayer: this.showObjectsCurrentLayer,
       hardMode: this.hardMode,
       ohoMode: this.ohoMode,
       lastBossMode: this.lastBossMode,

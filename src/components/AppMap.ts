@@ -39,6 +39,7 @@ import {
   SEARCH_PRESETS,
   SearchExcludeSet,
   SearchResultGroup,
+  isObjectInLayer,
 } from '@/MapSearch';
 import * as save from '@/save';
 import {
@@ -499,6 +500,9 @@ export default class AppMap extends mixins(MixinUtil) {
     this.map.registerBaseLayerChangeCb(() => {
       this.updateMarkers();
       this.updateDrawLayers();
+      for (const group of this.searchGroups)
+        group.update(SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
+      this.updateSearchResultMarkerVisibility();
       this.updateRoute();
     });
   }
@@ -1305,7 +1309,24 @@ export default class AppMap extends mixins(MixinUtil) {
 
     this.localSearch = Object.assign({}, marks);
     this.updateTooltips();
+    this.updateSearchResultMarkerVisibility();
     this.searching = false;
+  }
+
+  private updateSearchResultMarkerVisibility() {
+    if (!this.settings)
+      return;
+    const useLayerFilter = this.settings.showObjectsCurrentLayer;
+    for (const marker of this.searchResultMarkers) {
+      const shouldShow = !useLayerFilter || isObjectInLayer(marker.data.obj, this.map.activeLayer);
+      const layer = marker.data.getMarker();
+      if (shouldShow) {
+        if (!this.map.m.hasLayer(layer))
+          layer.addTo(this.map.m);
+      } else if (this.map.m.hasLayer(layer)) {
+        layer.remove();
+      }
+    }
   }
 
   enableYTooltip(marker: any) {
@@ -1627,6 +1648,7 @@ export default class AppMap extends mixins(MixinUtil) {
       group.update(SearchResultUpdateMode.UpdateVisibility | SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateTitle, this.searchExcludedSets);
 
     this.searchResultMarkers.forEach(m => m.data.updateTitle());
+    this.updateSearchResultMarkerVisibility();
   }
 
   initAreaMap() {

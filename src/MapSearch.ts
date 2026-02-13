@@ -162,9 +162,14 @@ export class SearchResultGroup {
     const isExcluded = (marker: MapMarkers.MapMarkerObj) => {
       return excludedSets.some(set => set.ids.has(marker.obj.objid));
     };
+    const shouldShowForLayer = (marker: MapMarkers.MapMarkerObj) => {
+      if (!Settings.getInstance().showObjectsCurrentLayer)
+        return true;
+      return isObjectInLayer(marker.obj, marker.mb.activeLayer);
+    };
     for (const [i, marker] of this.markers.data.entries()) {
       const shouldShow = mode & SearchResultUpdateMode.UpdateVisibility
-        ? (this.enabled && !isExcluded(marker)) : this.shownMarkers.data[i];
+        ? (this.enabled && !isExcluded(marker) && shouldShowForLayer(marker)) : this.shownMarkers.data[i];
       if (shouldShow != this.shownMarkers.data[i]) {
         if (shouldShow)
           this.markerGroup.data.addLayer(marker.getMarker());
@@ -209,4 +214,29 @@ export class SearchResultGroup {
   private shownMarkers: ui.Unobservable<boolean[]> = new ui.Unobservable([]);
   private fillColor = '';
   private strokeColor = '';
+}
+
+function resolveObjectLayer(obj: ObjectMinData): string | null {
+  if (obj.map_type === 'MinusField')
+    return 'Depths';
+  if (obj.map_name && obj.map_name.startsWith('Sky'))
+    return 'Sky';
+  if (obj.pos && obj.pos.length >= 2) {
+    const y = obj.pos[1];
+    if (y > 1000)
+      return 'Sky';
+    if (y < 0)
+      return 'Depths';
+    return 'Surface';
+  }
+  if (obj.map_type === 'MainField')
+    return 'Surface';
+  return null;
+}
+
+export function isObjectInLayer(obj: ObjectMinData, activeLayer: string): boolean {
+  const layer = resolveObjectLayer(obj);
+  if (!layer)
+    return true;
+  return layer === activeLayer;
 }
