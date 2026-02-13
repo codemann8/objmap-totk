@@ -1341,6 +1341,14 @@ export default class AppMap extends mixins(MixinUtil) {
     this.search();
   }
 
+  async searchCreateChecklist(idx: number) {
+    const group = this.searchGroups[idx];
+    const list = await this.checklists.createFromSearch(group.label, group.query);
+    await this.clChangeQuery(list);
+    this.checklists.lists = [...this.checklists.lists];
+    this.switchPane('spane-checklist');
+  }
+
   searchColorGroup(ev: any) {
     const idx = parseInt(ev.target.dataset.id)
     const group = this.searchGroups[idx];
@@ -1534,6 +1542,8 @@ export default class AppMap extends mixins(MixinUtil) {
     for (const item of items) {
       list.items[item.hash_id] = item;
     }
+    await this.checklists.update(list);
+    this.checklists.lists = [...this.checklists.lists];
   }
 
   async clExport() {

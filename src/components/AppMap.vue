@@ -98,6 +98,7 @@
                 <span>{{group.label}}</span>
                 <a class="ml-2" @click="searchRemoveGroup(idx)"><i class="text-danger fa fa-times"></i></a>
                 <a class="ml-2" style="font-size: 90%" v-if="group.query" @click="searchViewGroup(idx)"><i class="fa fa-edit"></i></a>
+                <a class="ml-2" style="font-size: 90%" v-if="group.query" @click="searchCreateChecklist(idx)" title="Create checklist"><i class="fa fa-clipboard-list"></i></a>
                 <span class="ml-2" v-if="settings && !settings.colorPerActor"><input class="marker-color2" type="color" :data-id="`${idx}`" @input="searchColorGroup" :value="group.getFillColor()"></span>
                 <span class="ml-2">({{group.size()}})</span>
               </span>

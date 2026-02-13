@@ -53,6 +53,14 @@ export class Checklists {
     this.lists.push(list);
   }
 
+  async createFromSearch(label: string, query: string) {
+    const newList = { name: label || 'New List', query: query || '', items: {} } as List;
+    const id = await this.db.listAdd(newList);
+    const list = await this.db.listGet(id);
+    this.lists.push(list);
+    return list;
+  }
+
   async delete(id: number) {
     this.lists = this.lists.filter((list: any) => list.id != id);
     await this.db.listRemove(id);
