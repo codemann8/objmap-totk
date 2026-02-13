@@ -36,6 +36,8 @@ export class Settings {
   lastBossMode!: boolean;
 
   customSearchPresets!: Array<[string, string]>;
+  savedSearchGroups!: Array<{ label: string; query: string; enabled: boolean; color?: string }>;
+  savedSearchExcludeSets!: Array<{ label: string; query: string }>;
 
   left!: boolean;
   hylianMode!: boolean;
@@ -68,6 +70,8 @@ export class Settings {
     this.ohoMode = parse(data.ohoMode, Id, false);
     this.lastBossMode = parse(data.lastBossMode, Id, false);
     this.customSearchPresets = parse(data.customSearchPresets, Id, []);
+    this.savedSearchGroups = parse(data.savedSearchGroups, Id, []);
+    this.savedSearchExcludeSets = parse(data.savedSearchExcludeSets, Id, []);
     this.left = parse(data.left, Id, true);
     this.mapType = parse(data.mapType, (d) => {
       return (d == 'Totk') ? 'MainAndMinusField' : d;
@@ -96,6 +100,8 @@ export class Settings {
       ohoMode: this.ohoMode,
       lastBossMode: this.lastBossMode,
       customSearchPresets: this.customSearchPresets,
+      savedSearchGroups: this.savedSearchGroups,
+      savedSearchExcludeSets: this.savedSearchExcludeSets,
       left: this.left,
       mapType: this.mapType,
       mapName: this.mapName,

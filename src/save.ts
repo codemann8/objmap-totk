@@ -4,6 +4,7 @@ export interface SearchGroup {
   label: string;
   query: string;
   enabled: boolean | undefined;
+  color?: string;
 }
 
 export interface SearchExcludeSet {

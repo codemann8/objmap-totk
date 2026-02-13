@@ -1018,7 +1018,7 @@ export default class AppMap extends mixins(MixinUtil) {
         this.drawFromGeojson(data.drawData);
         if (version >= 2) {
           data.searchGroups.forEach(g => {
-            this.searchAddGroup(g.query, g.label, g.enabled);
+            this.searchAddGroup(g.query, g.label, g.enabled, g.color);
           });
           data.searchExcludeSets.forEach(g => {
             this.searchAddExcludedSet(g.query, g.label);
@@ -1042,6 +1042,7 @@ export default class AppMap extends mixins(MixinUtil) {
         label: g.label,
         query: g.query,
         enabled: g.enabled,
+        color: g.getFillColor(),
       })),
       searchExcludeSets: this.searchExcludedSets.filter(g => !g.hidden).map(g => ({
         label: g.label,
@@ -1179,6 +1180,32 @@ export default class AppMap extends mixins(MixinUtil) {
       for (const group of this.searchGroups)
         group.update(0, this.searchExcludedSets);
     });
+
+    this.restoreSearchGroupsFromSettings();
+  }
+
+  private persistSearchGroupsToSettings() {
+    if (!this.settings)
+      return;
+    this.settings.savedSearchGroups = this.searchGroups.map(g => ({
+      label: g.label,
+      query: g.query,
+      enabled: g.enabled,
+      color: g.getFillColor(),
+    }));
+    this.settings.savedSearchExcludeSets = this.searchExcludedSets.filter(g => !g.hidden).map(g => ({
+      label: g.label,
+      query: g.query,
+    }));
+  }
+
+  private restoreSearchGroupsFromSettings() {
+    if (!this.settings)
+      return;
+    const groups = this.settings.savedSearchGroups || [];
+    const excludes = this.settings.savedSearchExcludeSets || [];
+    groups.forEach(g => this.searchAddGroup(g.query, g.label, g.enabled, g.color));
+    excludes.forEach(g => this.searchAddExcludedSet(g.query, g.label));
   }
 
   searchGetQuery() {
@@ -1230,15 +1257,18 @@ export default class AppMap extends mixins(MixinUtil) {
     await set.init();
     for (const group of this.searchGroups)
       group.update(SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
+    this.persistSearchGroupsToSettings();
   }
 
-  async searchAddGroup(query: string, label?: string, enabled = true) {
+  async searchAddGroup(query: string, label?: string, enabled = true, color?: string) {
     if (this.searchGroups.some(g => !!g.query && g.query == query))
       return;
 
     const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
     const group = new SearchResultGroup(query, label || query, enabled);
     await group.init(this.map);
+    if (color)
+      group.setFillColor(color);
     group.update(SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
     group.getMarkers().forEach((marker: any) => {
       const hash_id = marker.obj.hash_id;
@@ -1248,11 +1278,13 @@ export default class AppMap extends mixins(MixinUtil) {
     });
     this.searchGroups.push(group);
     this.updateTooltips();
+    this.persistSearchGroupsToSettings();
   }
 
   searchToggleGroupEnabledStatus(idx: number) {
     const group = this.searchGroups[idx];
     group.update(SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
+    this.persistSearchGroupsToSettings();
   }
 
   searchViewGroup(idx: number) {
@@ -1267,18 +1299,21 @@ export default class AppMap extends mixins(MixinUtil) {
     group.setFillColor(ev.target.value)
     group.update(SearchResultUpdateMode.UpdateVisibility | SearchResultUpdateMode.UpdateStyle,
       this.searchExcludedSets);
+    this.persistSearchGroupsToSettings();
   }
 
   searchRemoveGroup(idx: number) {
     const group = this.searchGroups[idx];
     group.remove();
     this.searchGroups.splice(idx, 1);
+    this.persistSearchGroupsToSettings();
   }
 
   searchRemoveExcludeSet(idx: number) {
     this.searchExcludedSets.splice(idx, 1);
     for (const group of this.searchGroups)
       group.update(SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
+    this.persistSearchGroupsToSettings();
   }
 
   async search() {
