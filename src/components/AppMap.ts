@@ -437,6 +437,8 @@ export default class AppMap extends mixins(MixinUtil) {
   private tempObjMarker: ui.Unobservable<MapMarker> | null = null;
 
   private settings: Settings | null = null;
+  private lastSettingsMapType: string | null = null;
+  private lastSettingsMapName: string | null = null;
 
   // Replace current markers
   private importReplace: boolean = true;
@@ -1779,11 +1781,39 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   private reloadSettings() {
+    const currentMapType = Settings.getInstance().mapType;
+    const currentMapName = Settings.getInstance().mapName;
+    const mapChanged = this.lastSettingsMapType !== null
+      && (this.lastSettingsMapType !== currentMapType || this.lastSettingsMapName !== currentMapName);
+    this.lastSettingsMapType = currentMapType;
+    this.lastSettingsMapName = currentMapName;
+    if (mapChanged) {
+      void this.refreshSearchesForMapChange();
+    }
     for (const group of this.searchGroups)
       group.update(SearchResultUpdateMode.UpdateVisibility | SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateTitle, this.searchExcludedSets);
 
     this.searchResultMarkers.forEach(m => m.data.updateTitle());
     this.updateSearchResultMarkerVisibility();
+  }
+
+  private async refreshSearchesForMapChange() {
+    // Refresh excluded sets for the new map context
+    for (const set of this.searchExcludedSets) {
+      await set.init();
+    }
+
+    // Refresh search groups against the new map context
+    for (const group of this.searchGroups) {
+      if (!group.query)
+        continue;
+      const results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, group.query);
+      group.setObjects(this.map, results);
+      group.update(SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
+    }
+
+    // Refresh the active search (even if not added to the map yet)
+    await this.search();
   }
 
   initAreaMap() {
