@@ -20,6 +20,8 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
   private bgmObjs: ObjectMinData[] = [];
   private tboxObjs: ObjectMinData[] = [];
   private enemies: ObjectMinData[] = [];
+  private iceChunks: ObjectMinData[] = [];
+  private thinIce: ObjectMinData[] = [];
   private pos: number[] = [];
   private checked: { [key: string]: boolean } = {};
 
@@ -50,6 +52,14 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
     });
     MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:^"Enemy_"').then(d => {
       this.enemies = d;
+      this.updateChecked(d);
+    });
+    MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:IceWall*').then(d => {
+      this.iceChunks = d;
+      this.updateChecked(d);
+    });
+    MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:ThinFilmBoard').then(d => {
+      this.thinIce = d;
       this.updateChecked(d);
     });
     this.pos = this.marker.data.lm.getXYZ();

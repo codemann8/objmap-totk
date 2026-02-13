@@ -23,6 +23,18 @@
         <ObjectInfo v-for="enemy in enemies" :key="enemy.objid" :obj="enemy" :isChecked="isChecked(enemy)" />
       </div>
     </section>
+    <section v-if="iceChunks.length">
+      <h4 class="subsection-heading">Ice Chunks</h4>
+      <div class="search-results">
+        <ObjectInfo v-for="ice in iceChunks" :key="ice.objid" :obj="ice" :isChecked="isChecked(ice)" />
+      </div>
+    </section>
+    <section v-if="thinIce.length">
+      <h4 class="subsection-heading">Thin Ice</h4>
+      <div class="search-results">
+        <ObjectInfo v-for="ice in thinIce" :key="ice.objid" :obj="ice" :isChecked="isChecked(ice)" />
+      </div>
+    </section>
 
   </section>
 </template>
