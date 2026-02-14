@@ -16,12 +16,10 @@
           </span>
           <div class="clListName">{{list.name}}</div>
           <div>{{meta(list)}}</div>
-          <div>
-            <b-btn size="sm clButton" variant="link" style="padding: 0"
-                   @click.stop.prevent="show(list)" title="Add items to map">
-              Add items to map
-            </b-btn>
-          </div>
+          <b-btn size="sm clButton clAdd" variant="link"
+                 @click.stop.prevent="show(list)" title="Add items to map">
+            <i class="fas fa-map-marked-alt"></i>
+          </b-btn>
           <b-btn size="sm clButton clRemove" variant="link" 
                  @click.prevent.stop="remove(list)" title="Remove checklist">
             <i class="fas fa-times"></i>
@@ -229,6 +227,13 @@
     right: 0;
     padding: 10px;
     border: 0px solid fuchsia;
+}
+.clAdd {
+  position: absolute;
+  top: 0;
+  right: 26px;
+  padding: 10px;
+  border: 0px solid fuchsia;
 }
 </style>
 <script src="./AppMapChecklists.ts"></script>
