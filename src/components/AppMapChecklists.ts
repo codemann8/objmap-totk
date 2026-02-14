@@ -6,6 +6,7 @@ import { MapMgr, ObjectMinData } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
 import * as ui from '@/util/ui';
 import AppMapChecklistItem from '@/components/AppMapChecklistItem';
+import draggable from 'vuedraggable';
 
 // @ts-ignore
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller';
@@ -15,7 +16,8 @@ import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller';
   components: {
     AppMapChecklistItem,
     DynamicScroller,
-    DynamicScrollerItem
+    DynamicScrollerItem,
+    draggable
   },
 })
 export default class AppMapChecklists extends Vue {
@@ -25,6 +27,7 @@ export default class AppMapChecklists extends Vue {
   private activeList: number = -1;
   private xlist: any = {};
   private bus!: any;
+  private localLists: any[] = [];
 
   created() {
     // EventBus used here as there is an intermediate component
@@ -41,6 +44,12 @@ export default class AppMapChecklists extends Vue {
     });
     this.activeList = -1;
     this.xlist = {};
+    this.localLists = this.lists ? [...this.lists] : [];
+  }
+
+  @Watch('lists', { deep: true })
+  onListsChange() {
+    this.localLists = this.lists ? [...this.lists] : [];
   }
 
   back() {
@@ -88,6 +97,11 @@ export default class AppMapChecklists extends Vue {
   }
   create() {
     this.$parent.$emit('AppMap:checklist-create')
+  }
+
+  reorder() {
+    const ids = this.localLists.map((list: any) => list.id).filter((id: any) => id !== undefined);
+    this.$parent.$emit('AppMap:checklist-reorder', { ids });
   }
 
   changeName(list: any) {

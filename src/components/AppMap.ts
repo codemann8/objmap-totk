@@ -1732,6 +1732,12 @@ export default class AppMap extends mixins(MixinUtil) {
     this.$on('AppMap:checklist-create', () => {
       this.clCreate();
     });
+    this.$on('AppMap:checklist-reorder', async (value: any) => {
+      if (!value || !Array.isArray(value.ids))
+        return;
+      await this.checklists.reorder(value.ids);
+      this.checklists.lists = [...this.checklists.lists];
+    });
     this.$on('AppMap:update-checklist-name', async (value: any) => {
       let list = this.checklists.read(value.id);
       if (!list)

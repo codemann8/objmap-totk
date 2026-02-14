@@ -14,6 +14,7 @@ interface List {
   name: string;
   query: string;
   items: { [key: string]: ListItem };
+  order?: number;
 }
 
 interface ChecklistStore {
@@ -38,6 +39,7 @@ export class Checklists {
     await this.db.init();
     this.marked = await this.db.all();
     this.lists = await this.db.listGetAll();
+    this.normalizeOrder();
   }
 
   async clear() {
@@ -47,18 +49,82 @@ export class Checklists {
   }
 
   async create() {
-    const newList = { name: 'New List', query: '', items: {} } as List;
+    const newList = { name: 'New List', query: '', items: {}, order: this.nextOrder() } as List;
     const id = await this.db.listAdd(newList);
     const list = await this.db.listGet(id);
     this.lists.push(list);
   }
 
   async createFromSearch(label: string, query: string) {
-    const newList = { name: label || 'New List', query: query || '', items: {} } as List;
+    const newList = { name: label || 'New List', query: query || '', items: {}, order: this.nextOrder() } as List;
     const id = await this.db.listAdd(newList);
     const list = await this.db.listGet(id);
     this.lists.push(list);
     return list;
+  }
+
+  async reorder(ids: number[]) {
+    const byId = new Map<number, List>();
+    for (const list of this.lists) {
+      if (list.id !== undefined)
+        byId.set(list.id, list);
+    }
+    const ordered: List[] = [];
+    ids.forEach((id, idx) => {
+      const list = byId.get(id);
+      if (list) {
+        list.order = idx;
+        ordered.push(list);
+      }
+    });
+    // Append any lists not included in ids (safety)
+    for (const list of this.lists) {
+      if (list.id === undefined)
+        continue;
+      if (!ids.includes(list.id)) {
+        list.order = ordered.length;
+        ordered.push(list);
+      }
+    }
+    this.lists = ordered;
+    for (const list of this.lists) {
+      await this.update(list);
+    }
+  }
+
+  private normalizeOrder() {
+    if (!this.lists || this.lists.length === 0)
+      return;
+    let needsUpdate = false;
+    this.lists.forEach((list, idx) => {
+      if (list.order === undefined) {
+        list.order = idx;
+        needsUpdate = true;
+      }
+    });
+    this.lists.sort((a, b) => {
+      const ao = (a.order === undefined) ? 0 : a.order;
+      const bo = (b.order === undefined) ? 0 : b.order;
+      if (ao !== bo)
+        return ao - bo;
+      const aid = (a.id === undefined || a.id === null) ? 0 : a.id;
+      const bid = (b.id === undefined || b.id === null) ? 0 : b.id;
+      return aid - bid;
+    });
+    if (needsUpdate) {
+      for (const list of this.lists) {
+        this.update(list);
+      }
+    }
+  }
+
+  private nextOrder(): number {
+    if (!this.lists || this.lists.length === 0)
+      return 0;
+    return this.lists.reduce((max, list) => {
+      const order = list.order === undefined ? 0 : list.order;
+      return Math.max(max, order);
+    }, 0) + 1;
   }
 
   async delete(id: number) {

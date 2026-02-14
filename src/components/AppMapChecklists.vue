@@ -7,9 +7,13 @@
         <b-btn size="clButton" variant="link" @click="create()">New List</b-btn>
         <b-btn size="clButton" variant="link" @click="reset()">Reset</b-btn>
       </div>
-      <div class="clListWrap">
-        <div v-for="(list) in lists" :key="list.id" class="clListBox"
+      <draggable v-model="localLists" class="clListWrap" handle=".clDragHandle"
+                 ghost-class="clDragGhost" @end="reorder()">
+        <div v-for="(list) in localLists" :key="list.id" class="clListBox"
              @click="checkopen(list)">
+          <span class="clDragHandle" title="Drag to reorder" @click.stop.prevent>
+            <i class="fas fa-grip-vertical"></i>
+          </span>
           <div class="clListName">{{list.name}}</div>
           <div>{{meta(list)}}</div>
           <div>
@@ -23,7 +27,7 @@
             <i class="fas fa-times"></i>
           </b-btn>
         </div>
-      </div>
+      </draggable>
     </section>
     <div v-else class="clDetails">
       <section class="header">
@@ -147,7 +151,7 @@
     border-radius: 3px;
     border: 1px solid #a2a2a27a;
     background: rgba(0,0,0,0.35);
-    padding: 10px 10px;
+  padding: 10px 10px 10px 28px;
     margin-bottom: 10px;
     font-size: 85%;
     transition: background 0.2s, border 0.2s;
@@ -168,6 +172,22 @@
     }
   }
 }
+  .clDragHandle {
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    cursor: grab;
+    color: rgba(255,255,255,0.5);
+  }
+  .clDragHandle:active {
+    cursor: grabbing;
+  }
+  .clDragGhost {
+    opacity: 0.6;
+  }
 .clListWrap {
     display: flex;
     height: 100%;
