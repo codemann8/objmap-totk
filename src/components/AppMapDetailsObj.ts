@@ -796,9 +796,20 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
         'KorokCarryPassenger_Pair': { text: 'I need to reach my friend!' },
       }
       const objs = this.genGroup.filter(obj => obj.name in names);
-      const markers = objs.map(obj =>
-        this.getKorokMarkerWithIcon(obj).addTo(map.m).bindTooltip(names[obj.name].text)
-      );
+      const markers = objs.map(obj => {
+        const m = this.getKorokMarkerWithIcon(obj).addTo(map.m).bindTooltip(names[obj.name].text);
+        if (obj.name === 'KorokCarryPassenger_Pair') {
+          m.on('click', (e: any) => {
+            L.DomEvent.stopPropagation(e);
+            this.$parent.$emit('AppMap:open-obj', obj);
+          });
+          m.on('add', () => {
+            const el = m.getElement();
+            if (el) el.style.cursor = 'pointer';
+          });
+        }
+        return m;
+      });
       this.korokMarkers.push(...markers);
       const ll = objs.map((obj: any) => { return [obj.data.Translate[2], obj.data.Translate[0]] });
       const line = L.polyline(ll, { color: '#cccccc', weight: 1.5 }).addTo(map.m);
