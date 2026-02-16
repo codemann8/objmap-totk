@@ -81,7 +81,7 @@ interface MarkerComponent {
 const MARKER_OPACITIES: { [key: string]: number } = {
   'never': 0.0,
   always: 1.0,
-  opacity: 0.3
+  opacity: 0.2
 };
 
 
