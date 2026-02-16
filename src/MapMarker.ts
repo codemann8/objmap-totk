@@ -33,6 +33,30 @@ export abstract class MapMarker {
     this.getMarker().on({ 'click': () => this.mb.emitMarkerSelectedEvent(this) });
   }
 
+  protected setMarkerInteractivity(enabled: boolean) {
+    const marker = this.getMarker();
+    if (marker instanceof L.CircleMarker) {
+      marker.setStyle({ interactive: enabled });
+      if (!enabled) {
+        marker.closeTooltip();
+      }
+      return;
+    }
+
+    marker.options.interactive = enabled;
+    const iconEl = marker.getElement();
+    if (iconEl) {
+      iconEl.style.pointerEvents = enabled ? 'auto' : 'none';
+    }
+    const shadowEl = (marker as any)._shadow as HTMLElement | undefined;
+    if (shadowEl) {
+      shadowEl.style.pointerEvents = enabled ? 'auto' : 'none';
+    }
+    if (!enabled) {
+      marker.closeTooltip();
+    }
+  }
+
   setOpacity(opacity: number) {
     const marker = this.getMarker();
     if (marker instanceof L.CircleMarker) {
@@ -75,6 +99,7 @@ class MapMarkerImpl extends MapMarker {
   //  - icons[1] is the same icon with a checkmark in the upper-right
   //    Uses the shadow to add the checkmark
   private icons: L.Icon[] = [];
+  private readonly baseZIndexOffset: number;
 
   constructor(mb: MapBase, title: string, xyz: Point, options: L.MarkerOptions = {},
     category: string,
@@ -86,6 +111,7 @@ class MapMarkerImpl extends MapMarker {
       contextmenu: true,
       contextmenuItems: [toggleMenuItem(mb, hash_id || "", category)]
     }));
+    this.baseZIndexOffset = this.marker.options.zIndexOffset || 0;
     super.commonInit();
   }
 
@@ -103,6 +129,8 @@ class MapMarkerImpl extends MapMarker {
       this.marker.setIcon(this.icons[k]);
     }
     this.setOpacity(opacity);
+    this.marker.setZIndexOffset(marked ? this.baseZIndexOffset - 10000 : this.baseZIndexOffset);
+    this.setMarkerInteractivity(!(marked && opacity <= 0.0));
   }
 
   protected setTitle(title: string) {
@@ -138,6 +166,11 @@ class MapMarkerCanvasImpl extends MapMarker {
     // @ts-ignore
     this.marker.setBadge(marked);
     this.setOpacity(opacity);
+    if (marked)
+      this.marker.bringToBack();
+    else
+      this.marker.bringToFront();
+    this.setMarkerInteractivity(!(marked && opacity <= 0.0));
     this.marker.setStyle({});
   }
 
