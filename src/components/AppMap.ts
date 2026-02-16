@@ -2384,7 +2384,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   async initChecklist() {
     await this.checklists.init();
-    this.updateMarkers();
+    this.clUpdateMarkers();
     this.refreshMapTowerCompletion();
   }
 
