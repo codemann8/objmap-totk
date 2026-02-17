@@ -66,7 +66,7 @@ export abstract class MapMarker {
     }
   }
 
-  setMarked(_value: boolean, _opacity: number) { }
+  setMarked(_value: boolean, _opacity: number, _showCheckmark = true) { }
 
   getHashID() { return ""; }
 
@@ -123,8 +123,8 @@ class MapMarkerImpl extends MapMarker {
     this.icons = icons;
   }
 
-  setMarked(marked: boolean, opacity: number) {
-    const k = (marked) ? 1 : 0;
+  setMarked(marked: boolean, opacity: number, showCheckmark = true) {
+    const k = (marked && showCheckmark) ? 1 : 0;
     if (k < this.icons.length) {
       this.marker.setIcon(this.icons[k]);
     }
@@ -162,9 +162,9 @@ class MapMarkerCanvasImpl extends MapMarker {
 
   getMarker() { return this.marker; }
 
-  setMarked(marked: boolean, opacity: number) {
+  setMarked(marked: boolean, opacity: number, showCheckmark = true) {
     // @ts-ignore
-    this.marker.setBadge(marked);
+    this.marker.setBadge(marked && showCheckmark);
     this.setOpacity(opacity);
     if (marked)
       this.marker.bringToBack();

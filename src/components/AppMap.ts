@@ -546,9 +546,10 @@ export default class AppMap extends mixins(MixinUtil) {
 
   updateMarkerCheckmark(marker: MapMarker) {
     const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
+    const showCheckmark = this.clMarkerVisibility === 'always';
     const msg = marker.getHashID();
     if (this.checklists.isMarked(msg)) {
-      marker.setMarked(true, opacity);
+      marker.setMarked(true, opacity, showCheckmark);
     }
   }
 
@@ -1366,6 +1367,7 @@ export default class AppMap extends mixins(MixinUtil) {
       return true;
 
     const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
+    const showCheckmark = this.clMarkerVisibility === 'always';
     const group = new SearchResultGroup(query, label || query, enabled);
     try {
       await group.init(this.map);
@@ -1378,7 +1380,7 @@ export default class AppMap extends mixins(MixinUtil) {
     group.getMarkers().forEach((marker: any) => {
       const hash_id = marker.obj.hash_id;
       if (this.checklists.isMarked(hash_id)) {
-        marker.setMarked(true, opacity);
+        marker.setMarked(true, opacity, showCheckmark);
       }
     });
     this.searchGroups.push(group);
@@ -1450,12 +1452,13 @@ export default class AppMap extends mixins(MixinUtil) {
       this.searchLastSearchFailed = true;
     }
     const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
+    const showCheckmark = this.clMarkerVisibility === 'always';
     let marks: { [key: string]: boolean } = {};
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
       marks[result.hash_id] = false;
       if (this.checklists.isMarked(result.hash_id)) {
-        marker.data.setMarked(true, opacity);
+        marker.data.setMarked(true, opacity, showCheckmark);
         marks[result.hash_id] = true;
       }
       this.searchResultMarkers.push(marker);
@@ -1648,6 +1651,7 @@ export default class AppMap extends mixins(MixinUtil) {
       value = await this.checklists.setMarked(item.hash_id, value);
     }
     const opacity = (value) ? MARKER_OPACITIES[this.clMarkerVisibility] : 1.0;
+    const showCheckmark = this.clMarkerVisibility === 'always';
     this.$nextTick(() => {
       if (item.hash_id in this.localDetails)
         this.localDetails[item.hash_id] = value;
@@ -1656,14 +1660,14 @@ export default class AppMap extends mixins(MixinUtil) {
       // Search Result Markers
       const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
       if (marker) {
-        marker.data.setMarked(value, opacity);
+        marker.data.setMarked(value, opacity, showCheckmark);
       }
 
       // Group Marker (from Add to Map and Preset Searches)
       for (const group of this.searchGroups) { // Has a label and query
         const marker = group.getMarkers().find(marker => marker.obj.hash_id == item.hash_id);
         if (marker) {
-          marker.setMarked(value, opacity);
+          marker.setMarked(value, opacity, showCheckmark);
         }
       }
       for (const [key, group] of this.markerGroups) {
@@ -1674,7 +1678,7 @@ export default class AppMap extends mixins(MixinUtil) {
         const marker = group.find((marker) => { return marker.getHashID() == item.hash_id });
         if (marker) {
           // @ts-ignore
-          marker.setMarked(value, opacity);
+          marker.setMarked(value, opacity, showCheckmark);
         }
       }
       this.refreshMapTowerCompletion();
