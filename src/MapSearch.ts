@@ -217,21 +217,24 @@ export class SearchResultGroup {
 }
 
 function resolveObjectLayer(obj: ObjectMinData): string | null {
-  if (obj.map_type === 'MinusField')
+  if (!obj.map_name)
+    return null;
+
+  if (obj.map_type && obj.map_type.startsWith('MinusField'))
     return 'Depths';
-  if (obj.map_name && obj.map_name.startsWith('Sky'))
+  if (obj.map_name.startsWith('Sky'))
     return 'Sky';
-  if (obj.pos && obj.pos.length >= 2) {
-    const y = obj.pos[1];
-    if (y > 1000)
+  if (obj.map_name.startsWith('LargeDungeon')) {
+    if (obj.map_name.startsWith('LargeDungeon__LargeDungeonWater'))
       return 'Sky';
-    if (y < 0)
+    if (obj.map_name.startsWith('LargeDungeon__LargeDungeonWind'))
+      return 'Sky';
+    if (obj.map_name.startsWith('LargeDungeon__LargeDungeonFire'))
       return 'Depths';
     return 'Surface';
   }
-  if (obj.map_type === 'MainField')
-    return 'Surface';
-  return null;
+
+  return 'Surface';
 }
 
 export function isObjectInLayer(obj: ObjectMinData, activeLayer: string): boolean {
