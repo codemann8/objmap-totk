@@ -508,10 +508,10 @@ export default class AppMap extends mixins(MixinUtil) {
     this.map.registerZoomEndCb(() => this.updateRoute());
     this.updateRoute();
     this.map.registerBaseLayerChangeCb(() => {
-      this.updateMarkers();
+      this.clUpdateMarkers();
       this.updateDrawLayers();
       for (const group of this.searchGroups)
-        group.update(SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
+        group.update(SearchResultUpdateMode.UpdateVisibility | SearchResultUpdateMode.UpdateStyle, this.searchExcludedSets);
       this.updateSearchResultMarkerVisibility();
       this.refreshMapTowerCompletion();
       this.updateRoute();
