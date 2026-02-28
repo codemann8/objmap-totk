@@ -92,17 +92,22 @@
           <p class="text-center" v-show="settings.mapType !== 'MainAndMinusField'">Searching map: {{settings.mapType}} {{settings.mapName}}</p>
 
           <section class="search-groups" v-show="searchGroups.length || searchExcludedSets.length">
-            <div class="search-group d-flex align-items-center" v-for="(group, idx) in searchGroups" :key="'searchgroup' + idx">
-              <b-form-checkbox class="ml-2 d-inline-block search-enable-checkbox" v-model="group.enabled" @change="searchToggleGroupEnabledStatus(idx)"></b-form-checkbox>
-              <span class="d-inline-block">
-                <span>{{group.label}}</span>
-                <a class="ml-2" @click="searchRemoveGroup(idx)"><i class="text-danger fa fa-times"></i></a>
-                <a class="ml-2" style="font-size: 90%" v-if="group.query" @click="searchViewGroup(idx)"><i class="fa fa-edit"></i></a>
-                <a class="ml-2" style="font-size: 90%" v-if="group.query" @click="searchCreateChecklist(idx)" title="Create checklist"><i class="fa fa-clipboard-list"></i></a>
-                <span class="ml-2" v-if="settings && !settings.colorPerActor"><input class="marker-color2" type="color" :data-id="`${idx}`" @input="searchColorGroup" :value="group.getFillColor()"></span>
-                <span class="ml-2">({{group.size()}})</span>
-              </span>
-            </div>
+            <draggable v-model="searchGroups" handle=".search-drag-handle" @end="searchReorderGroups">
+              <div class="search-group d-flex align-items-center" v-for="(group, idx) in searchGroups" :key="group.query || ('searchgroup' + idx)">
+                <span class="search-drag-handle ml-1" title="Drag to reorder" @click.stop.prevent>
+                  <i class="fas fa-grip-vertical"></i>
+                </span>
+                <b-form-checkbox class="ml-2 d-inline-block search-enable-checkbox" v-model="group.enabled" @change="searchToggleGroupEnabledStatus(idx)"></b-form-checkbox>
+                <span class="d-inline-block">
+                  <span>{{group.label}}</span>
+                  <a class="ml-2" @click="searchRemoveGroup(idx)"><i class="text-danger fa fa-times"></i></a>
+                  <a class="ml-2" style="font-size: 90%" v-if="group.query" @click="searchViewGroup(idx)"><i class="fa fa-edit"></i></a>
+                  <a class="ml-2" style="font-size: 90%" v-if="group.query" @click="searchCreateChecklist(idx)" title="Create checklist"><i class="fa fa-clipboard-list"></i></a>
+                  <span class="ml-2" v-if="settings && !settings.colorPerActor"><input class="marker-color2" type="color" :data-id="`${idx}`" @input="searchColorGroup" :value="group.getFillColor()"></span>
+                  <span class="ml-2">({{group.size()}})</span>
+                </span>
+              </div>
+            </draggable>
             <div class="search-group" v-for="(set, idx) in searchExcludedSets" :key="'searchexclude' + idx">
               <div v-if="!set.hidden">[Hidden] {{set.label}} <a @click="searchRemoveExcludeSet(idx)"><i class="text-danger fa fa-times"></i></a> ({{set.size()}})</div>
             </div>
@@ -462,6 +467,17 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+}
+
+.search-drag-handle {
+  display: inline-flex;
+  align-items: center;
+  cursor: grab;
+  color: rgba(255,255,255,0.5);
+}
+
+.search-drag-handle:active {
+  cursor: grabbing;
 }
 
 .inline-block {

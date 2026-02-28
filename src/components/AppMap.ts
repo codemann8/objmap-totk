@@ -1398,6 +1398,11 @@ export default class AppMap extends mixins(MixinUtil) {
     this.refreshMapTowerCompletion();
   }
 
+  searchReorderGroups() {
+    this.persistSearchGroupsToSettings();
+    this.refreshMapTowerCompletion();
+  }
+
   searchViewGroup(idx: number) {
     const group = this.searchGroups[idx];
     this.searchQuery = group.query;
