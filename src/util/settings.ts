@@ -47,6 +47,7 @@ export class Settings {
   noTouchScreen!: boolean;
   inGameCoordinates!: boolean;
   copyCoordinatesXYZ!: boolean;
+  checklistMarkerVisibility!: string;
 
   private constructor() {
     this.load();
@@ -83,6 +84,7 @@ export class Settings {
     this.noTouchScreen = parse(data.noTouchScreen, Id, false);
     this.inGameCoordinates = parse(data.inGameCoordinates, Id, false);
     this.copyCoordinatesXYZ = parse(data.copyCoordinatesXYZ, Id, false);
+    this.checklistMarkerVisibility = parse(data.checklistMarkerVisibility, Id, 'opacity');
     this.invokeCallbacks();
   }
 
@@ -111,6 +113,7 @@ export class Settings {
       noTouchScreen: this.noTouchScreen,
       inGameCoordinates: this.inGameCoordinates,
       copyCoordinatesXYZ: this.copyCoordinatesXYZ,
+      checklistMarkerVisibility: this.checklistMarkerVisibility,
     };
     // Merge with existing data to avoid data loss.
     const existingDataStr = localStorage.getItem(Settings.KEY);

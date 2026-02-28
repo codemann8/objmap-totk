@@ -81,8 +81,24 @@ interface MarkerComponent {
 const MARKER_OPACITIES: { [key: string]: number } = {
   'never': 0.0,
   always: 1.0,
-  opacity: 0.2
+  opacity: 0.3,
+  'opacity-alt': 0.1,
 };
+
+const ALT_UNMARKED_ICON_URLS: { [key: string]: string } = {
+  '/icons/shrine.svg': '/icons/shrine_unmarked.svg',
+  '/icons/shrine_cave.svg': '/icons/shrine_cave_unmarked.svg',
+  '/icons/tower.svg': '/icons/tower_unmarked.svg',
+  '/icons/lightroot.svg': '/icons/lightroot_unmarked.svg',
+  '/icons/mapicon_labo.svg': '/icons/mapicon_labo_unmarked.svg',
+};
+
+const DEFAULT_ICON_URLS: { [key: string]: string } = {};
+for (const [base, alt] of Object.entries(ALT_UNMARKED_ICON_URLS)) {
+  DEFAULT_ICON_URLS[alt] = base;
+}
+
+const ACTIVE_SEARCH_MARKED_OPACITY = 0.5;
 
 
 const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
@@ -546,11 +562,96 @@ export default class AppMap extends mixins(MixinUtil) {
 
   updateMarkerCheckmark(marker: MapMarker) {
     const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
-    const showCheckmark = this.clMarkerVisibility === 'always';
-    const msg = marker.getHashID();
-    if (this.checklists.isMarked(msg)) {
-      marker.setMarked(true, opacity, showCheckmark);
+    const showCheckmark = this.shouldShowChecklistCheckmark();
+    const useAlternateUnmarkedIcon = this.shouldUseAlternateUnmarkedIcons();
+    const marked = this.isMarkerMarked(marker);
+    marker.setMarked(marked, marked ? opacity : 1.0, showCheckmark);
+    this.applyAlternateUnmarkedIcon(marker, !marked && useAlternateUnmarkedIcon);
+  }
+
+
+  private isMarkerMarked(marker: MapMarker) {
+    const markerHash = marker.getHashID();
+    if (markerHash && this.checklists.isMarked(markerHash)) {
+      return true;
     }
+
+    if (marker instanceof MapMarkers.MapMarkerDungeon) {
+      const bgmHash = this.shrineBgmHashByDungeonMessageId.get(marker.getMessageId());
+      if (bgmHash) {
+        return this.checklists.isMarked(bgmHash);
+      }
+    }
+
+    return false;
+  }
+
+  private async initShrineBgmHashIndex() {
+    this.shrineBgmHashByDungeonMessageId.clear();
+    try {
+      const info = MapMgr.getInstance().getInfoMainField();
+      const dungeons: any[] = info.markers.Dungeon || [];
+      const bgmObjs = await MapMgr.getInstance().getObjs('MainField', '', 'actor:^"BGM_Shrine"');
+
+      for (const dungeon of dungeons) {
+        const messageId: string = dungeon.MessageID;
+        if (!messageId || !dungeon.Translate)
+          continue;
+
+        let best: ObjectMinData | null = null;
+        let bestDist = Infinity;
+        for (const obj of bgmObjs) {
+          const dx = obj.pos[0] - dungeon.Translate.X;
+          const dy = obj.pos[1] - dungeon.Translate.Y;
+          const dz = obj.pos[2] - dungeon.Translate.Z;
+          const dist = dx * dx + dy * dy + dz * dz;
+          if (dist < bestDist) {
+            best = obj;
+            bestDist = dist;
+          }
+        }
+
+        if (best) {
+          this.shrineBgmHashByDungeonMessageId.set(messageId, best.hash_id);
+        }
+      }
+    } catch (e) {
+      // non-fatal
+    }
+  }
+  onChecklistMarkerVisibilityChanged() {
+    Settings.getInstance().checklistMarkerVisibility = this.clMarkerVisibility;
+    this.clUpdateMarkers();
+  }
+
+  private shouldShowChecklistCheckmark() {
+    return this.clMarkerVisibility === 'always';
+  }
+
+  private shouldUseAlternateUnmarkedIcons() {
+    return this.clMarkerVisibility === 'opacity-alt';
+  }
+
+  private applyAlternateUnmarkedIcon(marker: MapMarker, useAlternate: boolean) {
+    const layer = marker.getMarker();
+    if (!(layer instanceof L.Marker))
+      return;
+    const icon = layer.options.icon as L.Icon | undefined;
+    if (!icon || !icon.options || !icon.options.iconUrl)
+      return;
+
+    const currentUrl = String(icon.options.iconUrl);
+    const targetUrl = useAlternate
+      ? ALT_UNMARKED_ICON_URLS[currentUrl]
+      : DEFAULT_ICON_URLS[currentUrl];
+    if (!targetUrl)
+      return;
+
+    const nextIcon = L.icon({
+      ...icon.options,
+      iconUrl: targetUrl,
+    });
+    layer.setIcon(nextIcon);
   }
 
   updateMarkers() {
@@ -1367,7 +1468,8 @@ export default class AppMap extends mixins(MixinUtil) {
       return true;
 
     const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
-    const showCheckmark = this.clMarkerVisibility === 'always';
+    const showCheckmark = this.shouldShowChecklistCheckmark();
+    const useAlternateUnmarkedIcon = this.shouldUseAlternateUnmarkedIcons();
     const group = new SearchResultGroup(query, label || query, enabled);
     try {
       await group.init(this.map);
@@ -1379,9 +1481,9 @@ export default class AppMap extends mixins(MixinUtil) {
     group.update(SearchResultUpdateMode.UpdateStyle | SearchResultUpdateMode.UpdateVisibility, this.searchExcludedSets);
     group.getMarkers().forEach((marker: any) => {
       const hash_id = marker.obj.hash_id;
-      if (this.checklists.isMarked(hash_id)) {
-        marker.setMarked(true, opacity, showCheckmark);
-      }
+      const marked = this.checklists.isMarked(hash_id);
+      marker.setMarked(marked, marked ? opacity : 1.0, showCheckmark);
+      this.applyAlternateUnmarkedIcon(marker, !marked && useAlternateUnmarkedIcon);
     });
     this.searchGroups.push(group);
     this.updateTooltips();
@@ -1456,8 +1558,9 @@ export default class AppMap extends mixins(MixinUtil) {
       this.searchResults = [];
       this.searchLastSearchFailed = true;
     }
-    const opacity = MARKER_OPACITIES[this.clMarkerVisibility];
-    const showCheckmark = this.clMarkerVisibility === 'always';
+    const groupOpacity = MARKER_OPACITIES[this.clMarkerVisibility];
+    const showCheckmark = this.shouldShowChecklistCheckmark();
+    const useAlternateUnmarkedIcon = this.shouldUseAlternateUnmarkedIcons();
     let marks: { [key: string]: boolean } = {};
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
@@ -1655,8 +1758,9 @@ export default class AppMap extends mixins(MixinUtil) {
       value = !value;
       value = await this.checklists.setMarked(item.hash_id, value);
     }
-    const opacity = (value) ? MARKER_OPACITIES[this.clMarkerVisibility] : 1.0;
-    const showCheckmark = this.clMarkerVisibility === 'always';
+    const groupOpacity = (value) ? MARKER_OPACITIES[this.clMarkerVisibility] : 1.0;
+    const showCheckmark = this.shouldShowChecklistCheckmark();
+    const useAlternateUnmarkedIcon = this.shouldUseAlternateUnmarkedIcons();
     this.$nextTick(() => {
       if (item.hash_id in this.localDetails)
         this.localDetails[item.hash_id] = value;
@@ -1672,7 +1776,8 @@ export default class AppMap extends mixins(MixinUtil) {
       for (const group of this.searchGroups) { // Has a label and query
         const marker = group.getMarkers().find(marker => marker.obj.hash_id == item.hash_id);
         if (marker) {
-          marker.setMarked(value, opacity, showCheckmark);
+          marker.setMarked(value, groupOpacity, showCheckmark);
+          this.applyAlternateUnmarkedIcon(marker, !value && useAlternateUnmarkedIcon);
         }
       }
       for (const [key, group] of this.markerGroups) {
@@ -1683,7 +1788,24 @@ export default class AppMap extends mixins(MixinUtil) {
         const marker = group.find((marker) => { return marker.getHashID() == item.hash_id });
         if (marker) {
           // @ts-ignore
-          marker.setMarked(value, opacity, showCheckmark);
+          marker.setMarked(value, groupOpacity, showCheckmark);
+          // @ts-ignore
+          this.applyAlternateUnmarkedIcon(marker, !value && useAlternateUnmarkedIcon);
+          continue;
+        }
+
+        if (key === 'Dungeon') {
+          // @ts-ignore
+          const dungeonMarker = group.find((marker) => {
+            return marker instanceof MapMarkers.MapMarkerDungeon
+              && this.shrineBgmHashByDungeonMessageId.get(marker.getMessageId()) === item.hash_id;
+          });
+          if (dungeonMarker) {
+            // @ts-ignore
+            dungeonMarker.setMarked(value, groupOpacity, showCheckmark);
+            // @ts-ignore
+            this.applyAlternateUnmarkedIcon(dungeonMarker, !value && useAlternateUnmarkedIcon);
+          }
         }
       }
       this.refreshMapTowerCompletion();
@@ -1817,6 +1939,7 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   private reloadSettings() {
+    this.clMarkerVisibility = Settings.getInstance().checklistMarkerVisibility;
     const currentMapType = Settings.getInstance().mapType;
     const currentMapName = Settings.getInstance().mapName;
     const mapChanged = this.lastSettingsMapType !== null
@@ -2414,6 +2537,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   async initChecklist() {
     await this.checklists.init();
+    await this.initShrineBgmHashIndex();
     this.clUpdateMarkers();
     this.refreshMapTowerCompletion();
   }

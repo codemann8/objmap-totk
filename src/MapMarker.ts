@@ -348,7 +348,13 @@ export class MapMarkerDungeon extends MapMarkerGenericLocationMarker {
     const sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.lm.getMessageId() + '_sub');
     const cave = (l.ShrineInCave) ? "<br>Cave" : "";
     this.marker.bindTooltip(`${this.title}<br>${sub}${cave}`, { pane: 'front2' });
-    this.setIcons([icon, iconAddCheckmark(icon, shift)])
+    this.setIcons([icon, iconAddCheckmark(icon, shift)]);
+  }
+
+  setMarked(marked: boolean, opacity: number, showCheckmark = true) {
+    // Shrines should remain fully visible unless explicitly hidden (`never show`).
+    const effectiveOpacity = opacity <= 0.0 ? 0.0 : 1.0;
+    super.setMarked(marked, effectiveOpacity, showCheckmark);
   }
 
   shouldBeShown() {
