@@ -20,6 +20,8 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
   private bgmObjs: ObjectMinData[] = [];
   private tboxObjs: ObjectMinData[] = [];
   private enemies: ObjectMinData[] = [];
+  private weapons: ObjectMinData[] = [];
+  private items: ObjectMinData[] = [];
   private iceChunks: ObjectMinData[] = [];
   private thinIce: ObjectMinData[] = [];
   private pos: number[] = [];
@@ -54,7 +56,15 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
       this.enemies = d;
       this.updateChecked(d);
     });
-    MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:IceWall*').then(d => {
+    MapMgr.getInstance().getObjs('SmallDungeon', this.id, '(Dungeon020 OR Dungeon033 OR Dungeon038 OR Dungeon046 OR Dungeon050 OR Dungeon055 OR Dungeon062 OR Dungeon121 OR Dungeon122 OR Dungeon124 OR Dungeon126 OR Dungeon129 OR Dungeon136) AND actor:^"Weapon_"').then(d => {
+      this.weapons = d;
+      this.updateChecked(d);
+    });
+    MapMgr.getInstance().getObjs('SmallDungeon', this.id, '(Dungeon055 OR Dungeon062 OR Dungeon066 OR Dungeon123) AND ((IceFruit OR FireFruit) NOT Enemy)').then(d => {
+      this.items = d;
+      this.updateChecked(d);
+    });
+    MapMgr.getInstance().getObjs('SmallDungeon', this.id, 'actor:IceWall').then(d => {
       this.iceChunks = d;
       this.updateChecked(d);
     });

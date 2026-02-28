@@ -23,6 +23,18 @@
         <ObjectInfo v-for="enemy in enemies" :key="enemy.objid" :obj="enemy" :isChecked="isChecked(enemy)" />
       </div>
     </section>
+    <section v-if="weapons.length">
+      <h4 class="subsection-heading">Weapons</h4>
+      <div class="search-results">
+        <ObjectInfo v-for="weapon in weapons" :key="weapon.objid" :obj="weapon" :isChecked="isChecked(weapon)" />
+      </div>
+    </section>
+    <section v-if="items.length">
+      <h4 class="subsection-heading">Items</h4>
+      <div class="search-results">
+        <ObjectInfo v-for="item in items" :key="item.objid" :obj="item" :isChecked="isChecked(item)" />
+      </div>
+    </section>
     <section v-if="iceChunks.length">
       <h4 class="subsection-heading">Ice Chunks</h4>
       <div class="search-results">
@@ -35,7 +47,6 @@
         <ObjectInfo v-for="ice in thinIce" :key="ice.objid" :obj="ice" :isChecked="isChecked(ice)" />
       </div>
     </section>
-
   </section>
 </template>
 <style lang="less">
