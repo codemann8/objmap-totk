@@ -39,6 +39,38 @@ export class Checklists {
     await this.db.init();
     this.marked = await this.db.all();
     this.lists = await this.db.listGetAll();
+
+    // Auto-recover from localStorage backup if IndexedDB is empty
+    const markedCount = Object.keys(this.marked).length;
+    const listsCount = this.lists.length;
+    if (markedCount === 0) {
+      const backup = restoreMarkedFromLS();
+      if (backup && Object.keys(backup).length > 0) {
+        console.warn('[Checklist] IndexedDB empty but localStorage backup found ('
+          + Object.keys(backup).length + ' marks). Restoring...');
+        this.marked = backup;
+        for (const key of Object.keys(backup)) {
+          await this.db.setMarked(key, backup[key]);
+        }
+      }
+    }
+    if (listsCount === 0) {
+      const backupLists = restoreListsFromLS();
+      if (backupLists && backupLists.length > 0) {
+        console.warn('[Checklist] IndexedDB lists empty but localStorage backup found ('
+          + backupLists.length + ' lists). Restoring...');
+        for (const list of backupLists) {
+          delete (list as any).id; // let auto-increment assign new ids
+          await this.db.listAdd(list);
+        }
+        this.lists = await this.db.listGetAll();
+      }
+    }
+
+    // Always keep localStorage backup in sync
+    backupMarkedToLS(this.marked);
+    backupListsToLS(this.lists);
+
     this.normalizeOrder();
   }
 
@@ -46,6 +78,8 @@ export class Checklists {
     this.marked = {};
     this.lists = [];
     this.db.clear();
+    backupMarkedToLS(this.marked);
+    backupListsToLS(this.lists);
   }
 
   async create() {
@@ -53,6 +87,7 @@ export class Checklists {
     const id = await this.db.listAdd(newList);
     const list = await this.db.listGet(id);
     this.lists.push(list);
+    backupListsToLS(this.lists);
   }
 
   async createFromSearch(label: string, query: string) {
@@ -60,6 +95,7 @@ export class Checklists {
     const id = await this.db.listAdd(newList);
     const list = await this.db.listGet(id);
     this.lists.push(list);
+    backupListsToLS(this.lists);
     return list;
   }
 
@@ -130,6 +166,7 @@ export class Checklists {
   async delete(id: number) {
     this.lists = this.lists.filter((list: any) => list.id != id);
     await this.db.listRemove(id);
+    backupListsToLS(this.lists);
   }
 
   read(id: number) {
@@ -138,6 +175,7 @@ export class Checklists {
 
   async update(list: List) {
     await this.db.listUpdate(list);
+    backupListsToLS(this.lists);
   }
 
   isMarked(hash_id: string) {
@@ -151,6 +189,7 @@ export class Checklists {
   async setMarked(hash_id: string, value: boolean) {
     this.marked[hash_id] = value;
     this.db.setMarked(hash_id, value);
+    backupMarkedToLS(this.marked);
     for (const list of this.lists) {
       if (hash_id in list.items) {
         list.items[hash_id].marked = value;
@@ -159,6 +198,39 @@ export class Checklists {
     }
     return value;
   }
+}
+
+const LS_MARKED_KEY = 'objmap-totk-marked-backup';
+const LS_LISTS_KEY = 'objmap-totk-lists-backup';
+
+function backupMarkedToLS(marked: { [key: string]: boolean }) {
+  try {
+    localStorage.setItem(LS_MARKED_KEY, JSON.stringify(marked));
+  } catch (e) {
+    // localStorage full or unavailable — non-fatal
+  }
+}
+
+function restoreMarkedFromLS(): { [key: string]: boolean } | null {
+  try {
+    const raw = localStorage.getItem(LS_MARKED_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) { /* ignore */ }
+  return null;
+}
+
+function backupListsToLS(lists: List[]) {
+  try {
+    localStorage.setItem(LS_LISTS_KEY, JSON.stringify(lists));
+  } catch (e) { /* non-fatal */ }
+}
+
+function restoreListsFromLS(): List[] | null {
+  try {
+    const raw = localStorage.getItem(LS_LISTS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) { /* ignore */ }
+  return null;
 }
 
 export class ChecklistDB {
@@ -194,6 +266,15 @@ export class ChecklistDB {
         console.log("terminated");
       },
     });
+
+    // Request persistent storage so the browser won't silently evict IndexedDB
+    if (navigator.storage && navigator.storage.persist) {
+      const isPersisted = await navigator.storage.persisted();
+      if (!isPersisted) {
+        const granted = await navigator.storage.persist();
+        console.log('[Checklist] Persistent storage ' + (granted ? 'granted' : 'denied'));
+      }
+    }
   }
 
   async import(data: ChecklistStore, replace: boolean = false) {
