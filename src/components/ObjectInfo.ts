@@ -1,5 +1,5 @@
 import Component, { mixins } from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 import MixinUtil from '@/components/MixinUtil';
 import {
@@ -38,6 +38,17 @@ export default class ObjectInfo extends mixins(MixinUtil) {
     if (this.obj)
       this.data = this.obj;
   }
+
+  @Watch('obj')
+  private onObjChanged() {
+    if (this.obj)
+      this.data = this.obj;
+  }
+
+  private resolvedMapName() {
+    return this.getResolvedMapNameForObj(this.data as any);
+  }
+
   toggleCheck() {
     this.$parent.$emit('AppMap:update-search-markers', {
       hash_id: this.data.hash_id
