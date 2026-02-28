@@ -1565,10 +1565,9 @@ export default class AppMap extends mixins(MixinUtil) {
     for (const result of this.searchResults) {
       const marker = new ui.Unobservable(new MapMarkers.MapMarkerSearchResult(this.map, result));
       marks[result.hash_id] = false;
-      if (this.checklists.isMarked(result.hash_id)) {
-        marker.data.setMarked(true, opacity, showCheckmark);
-        marks[result.hash_id] = true;
-      }
+      const marked = this.checklists.isMarked(result.hash_id);
+      marker.data.setMarked(marked, marked ? ACTIVE_SEARCH_MARKED_OPACITY : 1.0, showCheckmark);
+      marks[result.hash_id] = marked;
       this.searchResultMarkers.push(marker);
       marker.data.getMarker().addTo(this.map.m);
     }
@@ -1759,6 +1758,7 @@ export default class AppMap extends mixins(MixinUtil) {
       value = await this.checklists.setMarked(item.hash_id, value);
     }
     const groupOpacity = (value) ? MARKER_OPACITIES[this.clMarkerVisibility] : 1.0;
+    const activeSearchOpacity = value ? ACTIVE_SEARCH_MARKED_OPACITY : 1.0;
     const showCheckmark = this.shouldShowChecklistCheckmark();
     const useAlternateUnmarkedIcon = this.shouldUseAlternateUnmarkedIcons();
     this.$nextTick(() => {
@@ -1769,7 +1769,7 @@ export default class AppMap extends mixins(MixinUtil) {
       // Search Result Markers
       const marker = this.searchResultMarkers.find(m => m.data.obj.hash_id == item.hash_id);
       if (marker) {
-        marker.data.setMarked(value, opacity, showCheckmark);
+        marker.data.setMarked(value, activeSearchOpacity, showCheckmark);
       }
 
       // Group Marker (from Add to Map and Preset Searches)
