@@ -14,6 +14,7 @@ import VueRouter from 'vue-router';
 import draggable from 'vuedraggable';
 
 import AppMapDetailsDungeon from '@/components/AppMapDetailsDungeon';
+import AppMapDetailsCave from './AppMapDetailsCave.vue';
 import AppMapDetailsLandmark from '@/components/AppMapDetailsLandmark';
 import AppMapDetailsObj from '@/components/AppMapDetailsObj';
 import AppMapDetailsPlace from '@/components/AppMapDetailsPlace';
@@ -149,7 +150,7 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
   },
   'Cave': {
     cl: MapMarkers.MapMarkerCave,
-    detailsComponent: 'AppMapDetailsObj',
+    detailsComponent: 'AppMapDetailsCave',
     filterIcon: MapIcons.CAVE.options.iconUrl,
     filterLabel: 'Cave/Well',
   },
@@ -186,6 +187,10 @@ const MARKER_COMPONENTS: { [type: string]: MarkerComponent } = Object.freeze({
 function getMarkerDetailsComponent(marker: MapMarker): string {
   if (marker instanceof MapMarkers.MapMarkerObj || marker instanceof MapMarkers.MapMarkerSearchResult)
     return 'AppMapDetailsObj';
+
+  // Cave and chasm markers share the same class; decide explicitly.
+  if (marker instanceof MapMarkers.MapMarkerCave)
+    return marker.isChasm ? 'AppMapDetailsObj' : 'AppMapDetailsCave';
 
   for (const component of Object.values(MARKER_COMPONENTS)) {
     if (marker instanceof component.cl)
@@ -365,6 +370,7 @@ class SingleEdit {
 
 @Component({
   components: {
+    AppMapDetailsCave,
     AppMapDetailsDungeon,
     AppMapDetailsLandmark,
     AppMapDetailsObj,
@@ -1362,9 +1368,29 @@ export default class AppMap extends mixins(MixinUtil) {
 
   searchGetQuery() {
     let query = this.searchQuery.trim();
+    query = this.expandCaveMapQuery(query);
     //if (/^0x[0-9A-Fa-f]{6}/g.test(query))
     //  query = BigInt(query).toString(10);
     return query;
+  }
+
+  private expandCaveMapQuery(query: string): string {
+    const mapTokenRegex = /map:("[^"]+"|[^\s]+)/g;
+    return query.replace(mapTokenRegex, (token: string, rawValue: string) => {
+      const value = rawValue.startsWith('"') && rawValue.endsWith('"')
+        ? rawValue.slice(1, -1)
+        : rawValue;
+
+      const normalized = value.startsWith('MainField/') ? value.slice('MainField/'.length) : value;
+      if (!normalized.startsWith('Cave__Cave_'))
+        return token;
+
+      const locationToken = normalized.replace(/^Cave__/, '').replace(/\*+$/, '');
+      if (!locationToken)
+        return token;
+
+      return `(${token} OR ${locationToken})`;
+    });
   }
 
 
