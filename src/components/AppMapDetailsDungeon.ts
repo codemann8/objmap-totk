@@ -102,4 +102,11 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
   private isChecked(obj: ObjectMinData) {
     return !!this.checked[obj.hash_id];
   }
+
+  private openContainingCave() {
+    const appMap: any = this.$parent;
+    if (appMap && typeof appMap.$emit === 'function') {
+      appMap.$emit('AppMap:open-cave-from-shrine', this.bgmObjs[0]);
+    }
+  }
 }

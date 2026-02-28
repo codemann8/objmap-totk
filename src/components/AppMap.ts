@@ -434,6 +434,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   private skipCompletedObjects: boolean = false;
   private checklists: Checklists = new Checklists();
+  private shrineBgmHashByDungeonMessageId: Map<string, string> = new Map();
 
   shownAreaMap = '';
   areaWhitelist = '';
@@ -1939,6 +1940,79 @@ export default class AppMap extends mixins(MixinUtil) {
       this.tempObjMarker = new ui.Unobservable(new MapMarkers.MapMarkerObj(this.map, obj, '#e02500', '#ff2a00'));
       this.tempObjMarker.data.getMarker().addTo(this.map.m);
       this.openMarkerDetails(getMarkerDetailsComponent(this.tempObjMarker.data), this.tempObjMarker.data);
+    });
+
+    this.$on('AppMap:open-shrine-from-bgm', (bgmObj: ObjectMinData) => {
+      if (!bgmObj || !Array.isArray(bgmObj.pos) || bgmObj.pos.length < 3)
+        return;
+
+      // Use static data directly — always loaded, independent of filter state.
+      const info = MapMgr.getInstance().getInfoMainField();
+      const dungeonEntries: any[] = info.markers.Dungeon || [];
+      // Narrow to cave shrines only for a tight match.
+      const caveShrines = dungeonEntries.filter((e: any) => e.ShrineInCave);
+      const candidates = caveShrines.length > 0 ? caveShrines : dungeonEntries;
+
+      let best: any = null;
+      let bestDist = Infinity;
+      for (const entry of candidates) {
+        const dx = entry.Translate.X - bgmObj.pos[0];
+        const dy = entry.Translate.Y - bgmObj.pos[1];
+        const dz = entry.Translate.Z - bgmObj.pos[2];
+        const dist = dx * dx + dy * dy + dz * dz;
+        if (dist < bestDist) {
+          best = entry;
+          bestDist = dist;
+        }
+      }
+
+      if (best) {
+        const shrineMarker = new MapMarkers.MapMarkerDungeon(this.map, best);
+        this.openMarkerDetails('AppMapDetailsDungeon', shrineMarker);
+      }
+    });
+
+    this.$on('AppMap:open-cave-from-shrine', (payload: ObjectMinData) => {
+      let shrinePos = payload.pos;
+      let bgmMapName = payload.map_name || '';
+
+      if (!shrinePos)
+        return;
+
+      const info = MapMgr.getInstance().getInfoMainField();
+      const caveEntries: any[] = info.markers.Cave || [];
+      const caveAndWellEntries = caveEntries.filter((e: any) => e.Icon === 'Cave' || e.Icon === 'Well');
+      const candidates = caveAndWellEntries.length > 0 ? caveAndWellEntries : caveEntries;
+
+      if (bgmMapName) {
+        const exact = candidates.find((e: any) => {
+          const messageId = e && e.MessageID ? String(e.MessageID) : '';
+          return !!messageId && bgmMapName.includes(`Cave__${messageId}`);
+        });
+        if (exact) {
+          const caveMarker = new MapMarkers.MapMarkerCave(this.map, exact);
+          this.openMarkerDetails('AppMapDetailsCave', caveMarker);
+          return;
+        }
+      }
+
+      let best: any = null;
+      let bestDist = Infinity;
+      for (const entry of candidates) {
+        const dx = entry.Translate.X - shrinePos[0];
+        const dy = entry.Translate.Y - shrinePos[1];
+        const dz = entry.Translate.Z - shrinePos[2];
+        const dist = dx * dx + dy * dy + dz * dz;
+        if (dist < bestDist) {
+          best = entry;
+          bestDist = dist;
+        }
+      }
+
+      if (best) {
+        const caveMarker = new MapMarkers.MapMarkerCave(this.map, best);
+        this.openMarkerDetails('AppMapDetailsCave', caveMarker);
+      }
     });
 
     this.map.m.on('click', () => {

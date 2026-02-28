@@ -2,7 +2,12 @@
   <section>
     <h2 class="location-sub">{{sub}}</h2>
     <div>Dungeon number: {{marker.data.dungeonNum}}</div>
-    <div v-if="marker.data.lm.l.ShrineInCave" style="color: orange"><i class="fa fa-exclamation-circle"></i> Inside Cave</div>
+    <div v-if="marker.data.lm.l.ShrineInCave" style="color: orange">
+      <i class="fa fa-exclamation-circle"></i> Inside Cave
+      <div style="margin-top: 4px;">
+        <a href="#" @click.stop.prevent="openContainingCave">Open cave/well details</a>
+      </div>
+    </div>
     <section title="Warning: This is the marker position; actual Dungeon Position may be different ">Position: {{formatPosition(pos)}}</section>
     <hr>
     <section v-if="bgmObjs.length">
