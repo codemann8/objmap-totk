@@ -79,7 +79,7 @@ export default class AppMapDetailsCave extends AppMapDetailsBase<MapMarkerCave> 
     };
 
     caveQuery('BGM_Shrine').then(d => assign('shrines', d));
-    caveQuery('actor:^"TBox_"').then(d => assign('tboxObjs', d));
+    caveQuery('actor:^"TBox_" NOT actor:_Opened NOT actor:_CanNotOpen').then(d => assign('tboxObjs', d));
     caveQuery('Bubbulfrog').then(d => assign('bubbulfrogObjs', d));
     caveQuery('actor:^"Enemy_" NOT Bubbulfrog').then(d => assign('enemies', d));
     caveQuery('AND (actor:npc* NOT korok* NOT npc_craft* NOT footsoldier NOT blademaster NOT npc_minus* NOT NpcGarden* OR npc_korokfly* OR HorseAssociation* OR actor:subchallnpc*)').then(d => assign('npcs', d));
