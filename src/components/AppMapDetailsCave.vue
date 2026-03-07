@@ -69,6 +69,13 @@
       </div>
     </section>
 
+    <section v-if="sandPiles.length">
+      <h4 class="subsection-heading">Sand Piles</h4>
+      <div class="search-results">
+        <ObjectInfo v-for="sandPile in sandPiles" :key="sandPile.objid" :obj="sandPile" :isChecked="isChecked(sandPile)" />
+      </div>
+    </section>
+
     <section v-if="iceWalls.length">
       <h4 class="subsection-heading">Ice Walls</h4>
       <div class="search-results">
