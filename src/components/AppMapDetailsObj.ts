@@ -90,6 +90,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   private staticData = staticData;
 
   private korokMarkers: any[] = [];
+  private shrineCrystalMarkers: (L.Marker | L.Polyline)[] = [];
 
   rails: { [key: string]: any }[] = [];
   railsWithMarkers: { [key: string]: any }[] = [];
@@ -109,6 +110,8 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.dropTables = {};
     this.areaMarkers.forEach(m => m.remove());
     this.areaMarkers = [];
+    this.shrineCrystalMarkers.forEach(m => m.remove());
+    this.shrineCrystalMarkers = [];
     this.rails = [];
     this.railMarkers.forEach(m => m.remove());
     this.railMarkers = [];
@@ -182,6 +185,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.korokMarkers.forEach(m => m.remove());
     this.korokMarkers = [];
     this.initKorokMarkers();
+    this.initShrineCrystalMarkers();
     this.initRails();
   }
 
@@ -290,6 +294,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   beforeDestroy() {
     this.areaMarkers.forEach(m => m.remove());
     this.korokMarkers.forEach(m => m.remove());
+    this.shrineCrystalMarkers.forEach(m => m.remove());
     this.railMarkers.forEach(m => m.remove());
     // Rails
     this.railLimits = {};
@@ -707,6 +712,44 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   getKorokMarkerWithIcon(obj: any, style: string = "", text: string = "") {
     let icon = this.getKorokIcon(obj.name, style, text);
     return L.marker([obj.data.Translate[2], obj.data.Translate[0]], { icon: icon });
+  }
+
+  initShrineCrystalMarkers() {
+    if (!this.obj || !this.obj.name.startsWith('FldObj_ZonauShrine_KeyCrystal'))
+      return;
+
+    const dungeonId = this.obj.data.Dynamic && this.obj.data.Dynamic.DungeonIndexStr;
+    if (!dungeonId)
+      return;
+
+    const info = MapMgr.getInstance().getInfoMainField();
+    const dungeonEntries: any[] = info.markers.Dungeon || [];
+    const shrine = dungeonEntries.find((entry: any) => entry.MessageID === dungeonId);
+    if (!shrine || !shrine.Translate)
+      return;
+
+    const map = this.marker.data.mb;
+    const crystalPos: [number, number] = [this.obj.data.Translate[2], this.obj.data.Translate[0]];
+    const shrinePos: [number, number] = [shrine.Translate.Z, shrine.Translate.X];
+
+    // Line from crystal to its shrine.
+    const line = L.polyline([crystalPos, shrinePos], {
+      color: 'springgreen',
+      weight: 2,
+      opacity: 0.8,
+    }).addTo(map.m);
+    this.shrineCrystalMarkers.push(line);
+
+    // Crystal icon at this crystal's position.
+    const crystalIcon = L.icon({
+      iconUrl: '/icons/shrine_crystal.svg',
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+    });
+    const crystalMarker = L.marker(crystalPos, { icon: crystalIcon })
+      .bindTooltip('Shrine Crystal', { pane: 'front2' })
+      .addTo(map.m);
+    this.shrineCrystalMarkers.push(crystalMarker);
   }
 
   initKorokMarkers() {

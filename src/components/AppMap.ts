@@ -1941,7 +1941,13 @@ export default class AppMap extends mixins(MixinUtil) {
       this.tempObjMarker.data.getMarker().addTo(this.map.m);
       this.openMarkerDetails(getMarkerDetailsComponent(this.tempObjMarker.data), this.tempObjMarker.data);
     });
-
+    this.$on('AppMap:open-obj-no-temp-marker', async (obj: ObjectData) => {
+      if (this.tempObjMarker)
+        this.tempObjMarker.data.getMarker().remove();
+      this.tempObjMarker = null;
+      const marker = new MapMarkers.MapMarkerObj(this.map, obj, '#e02500', '#ff2a00');
+      this.openMarkerDetails(getMarkerDetailsComponent(marker), marker);
+    });
     this.$on('AppMap:open-shrine-from-bgm', (bgmObj: ObjectMinData) => {
       if (!bgmObj || !Array.isArray(bgmObj.pos) || bgmObj.pos.length < 3)
         return;

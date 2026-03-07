@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 64 64"
+   version="1.1"
+   id="svg149"
+   sodipodi:docname="shrine_crystal.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview151"
+     pagecolor="#ffffff"
+     bordercolor="#111111"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="13.34375"
+     inkscape:cx="31.962529"
+     inkscape:cy="32"
+     inkscape:window-width="1858"
+     inkscape:window-height="1057"
+     inkscape:window-x="1976"
+     inkscape:window-y="383"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg149" />
+  <defs
+     id="defs141">
+    <linearGradient
+       id="crystalGrad"
+       x1="18.903777"
+       y1="1.5870177"
+       x2="61.752329"
+       y2="44.435569"
+       gradientTransform="matrix(0.79349231,0,0,1.2602517,0.07494145,3.147541)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#8fffd6"
+         id="stop132"
+         style="stop-color:#8fffde;stop-opacity:1;" />
+      <stop
+         offset="0.40000001"
+         stop-color="#37e0b0"
+         id="stop134"
+         style="stop-color:#37e083;stop-opacity:1;" />
+      <stop
+         offset="0.80000001"
+         stop-color="#159a73"
+         id="stop136"
+         style="stop-color:#159a55;stop-opacity:1;" />
+      <stop
+         offset="1"
+         stop-color="#0c5c46"
+         id="stop138"
+         style="stop-color:#0c5c35;stop-opacity:1;" />
+    </linearGradient>
+  </defs>
+  <!-- silhouette with flatter base and slimmer taper -->
+  <path
+     d="m 33.074941,6.147541 7,8 6,9 2,10 -2,10 -4,8 -6,7 h -8 l -6,-7 -4,-8 -2,-10 2,-10 6,-9 z"
+     fill="url(#crystalGrad)"
+     stroke="#0b4e3b"
+     stroke-width="2"
+     stroke-linejoin="round"
+     id="path143"
+     style="fill:url(#crystalGrad);stroke:#0c6a40;stroke-opacity:1;stroke-width:1.3;stroke-dasharray:none" />
+  <!-- flat base -->
+  <!-- subtle internal glow -->
+  <path
+     d="m 31.074941,19.147541 4,6 -1,16 -3,8 -2,-8 v -14 z"
+     fill="#eafff7"
+     opacity="0.35"
+     id="path147"
+     style="fill:#eafff3;fill-opacity:1" />
+</svg>

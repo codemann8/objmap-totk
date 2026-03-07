@@ -1,3 +1,4 @@
+import * as L from 'leaflet';
 import Component from 'vue-class-component';
 
 import AppMapDetailsBase from '@/components/AppMapDetailsBase';
@@ -8,6 +9,33 @@ import {
   ObjectMinData,
 } from '@/services/MapMgr';
 import { MsgMgr } from '@/services/MsgMgr';
+
+// Cache: maps dungeon ID (e.g. "Dungeon132") to the first matching crystal ObjectMinData.
+// null means we looked and found no crystal for that dungeon.
+let crystalCache: Map<string, ObjectMinData | null> | null = null;
+
+async function getCrystalForDungeon(dungeonId: string): Promise<ObjectMinData | null> {
+  if (!crystalCache) {
+    crystalCache = new Map();
+    const allCrystals = await MapMgr.getInstance().getObjs('MainField', '', 'actor:FldObj_ZonauShrine_KeyCrystal');
+    // For each crystal, fetch full data to read DungeonIndexStr.
+    // Use Promise.all to parallelise.
+    const fullData = await Promise.all(
+      allCrystals.map(c => MapMgr.getInstance().getObjByObjId(c.objid))
+    );
+    for (let i = 0; i < allCrystals.length; i++) {
+      const full = fullData[i];
+      if (!full || !full.data.Dynamic) continue;
+      const did = full.data.Dynamic.DungeonIndexStr as string | undefined;
+      if (!did) continue;
+      // Only store the first crystal per dungeon (user requirement: show at most 1).
+      if (!crystalCache.has(did)) {
+        crystalCache.set(did, allCrystals[i]);
+      }
+    }
+  }
+  return crystalCache.get(dungeonId) || null;
+}
 
 @Component({
   components: {
@@ -26,8 +54,15 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
   private thinIce: ObjectMinData[] = [];
   private pos: number[] = [];
   private checked: { [key: string]: boolean } = {};
+  private crystalMarkers: (L.Marker | L.Polyline)[] = [];
+  private crystalObj: ObjectMinData | null = null;
 
   protected init() {
+    // Clean up any existing crystal markers from a previous init.
+    this.crystalMarkers.forEach(m => m.remove());
+    this.crystalMarkers = [];
+    this.crystalObj = null;
+
     this.id = this.marker.data.lm.getMessageId();
     this.sub = MsgMgr.getInstance().getMsgWithFile('StaticMsg/Dungeon', this.id + '_sub');
 
@@ -73,6 +108,55 @@ export default class AppMapDetailsDungeon extends AppMapDetailsBase<MapMarkerDun
       this.updateChecked(d);
     });
     this.pos = this.marker.data.lm.getXYZ();
+    this.initCrystalMarker();
+  }
+
+  private async initCrystalMarker() {
+    const crystal = await getCrystalForDungeon(this.id);
+    if (!crystal) return;
+    this.crystalObj = crystal;
+
+    const map = this.marker.data.mb;
+    const shrinePos: [number, number] = [this.pos[2], this.pos[0]];
+    const crystalPos: [number, number] = [crystal.pos[2], crystal.pos[0]];
+
+    // Draw connecting line from shrine to crystal.
+    const line = L.polyline([shrinePos, crystalPos], {
+      color: 'springgreen',
+      weight: 2,
+      opacity: 0.8,
+    }).addTo(map.m);
+    this.crystalMarkers.push(line);
+
+    // Place a crystal icon marker at the crystal location.
+    const icon = L.icon({
+      iconUrl: '/icons/shrine_crystal.svg',
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+    });
+    const marker = L.marker(crystalPos, { icon })
+      .bindTooltip('Shrine Crystal', { pane: 'front2' })
+      .addTo(map.m);
+    marker.on('click', (e: any) => {
+      L.DomEvent.stopPropagation(e);
+      this.$parent.$emit('AppMap:open-obj-no-temp-marker', crystal);
+    });
+    marker.on('add', () => {
+      const el = marker.getElement();
+      if (el) el.style.cursor = 'pointer';
+    });
+    this.crystalMarkers.push(marker);
+  }
+
+  private beforeDestroy() {
+    this.crystalMarkers.forEach(m => m.remove());
+    this.crystalMarkers = [];
+  }
+
+  private openCrystalObj() {
+    if (this.crystalObj) {
+      this.$parent.$emit('AppMap:open-obj-no-temp-marker', this.crystalObj);
+    }
   }
 
   private mounted() {
