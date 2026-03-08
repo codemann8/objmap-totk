@@ -442,6 +442,11 @@ export default class AppMap extends mixins(MixinUtil) {
   shownAutoItem = '';
   staticTooltip = false;
 
+  private caveDetailEntries: Array<{ title: string, layers: L.GeoJSON[], features: any[] }> = [];
+  private caveDetailHoveredTitle: string | null = null;
+  private caveDetailTooltip: L.Tooltip | null = null;
+  private caveDetailHoverInitialized = false;
+  private markerTooltipOpen = false;
   private mapUnitGrid = new ui.Unobservable(L.layerGroup());
   showMapUnitGrid = false;
   private revivalMapUnitGrid = new ui.Unobservable(L.layerGroup());
@@ -2151,6 +2156,102 @@ export default class AppMap extends mixins(MixinUtil) {
     return this.lerpColor(colors[idx], colors[idx + 1], t);
   }
 
+  private initCaveDetailHover() {
+    if (this.caveDetailHoverInitialized)
+      return;
+    this.caveDetailHoverInitialized = true;
+
+    // Track whether any non-cave-detail tooltip is open (i.e. a marker tooltip).
+    // When one is, suppress our manual cave-area tooltip entirely.
+    this.map.m.on('tooltipopen', (e: any) => {
+      if (e.tooltip && e.tooltip !== this.caveDetailTooltip) {
+        this.markerTooltipOpen = true;
+        this.clearCaveDetailHover();
+      }
+    });
+    this.map.m.on('tooltipclose', (e: any) => {
+      if (e.tooltip && e.tooltip !== this.caveDetailTooltip) {
+        this.markerTooltipOpen = false;
+      }
+    });
+
+    this.map.m.on('mousemove', (e: L.LeafletMouseEvent) => {
+      if (!this.caveDetailEntries.length)
+        return;
+      if (this.markerTooltipOpen) {
+        this.clearCaveDetailHover();
+        return;
+      }
+
+      let found: { title: string, layers: L.GeoJSON[] } | null = null;
+
+      for (const entry of this.caveDetailEntries) {
+        let hit = false;
+        for (const layer of entry.layers) {
+          layer.eachLayer((subLayer: any) => {
+            if (hit) return;
+            if (subLayer.getBounds && subLayer.getBounds().contains(e.latlng)) {
+              // Bounds check passed — do precise point-in-polygon using
+              // the LatLng rings that Leaflet already parsed from the GeoJSON.
+              const rings: L.LatLng[][] = subLayer.getLatLngs();
+              if (rings.length && this.pointInRingLatLng(e.latlng, rings[0])) {
+                // Check holes: if point is inside a hole, it's not inside the polygon
+                let inHole = false;
+                for (let h = 1; h < rings.length; h++) {
+                  if (this.pointInRingLatLng(e.latlng, rings[h])) {
+                    inHole = true;
+                    break;
+                  }
+                }
+                if (!inHole) hit = true;
+              }
+            }
+          });
+          if (hit) break;
+        }
+        if (hit) { found = entry; break; }
+      }
+
+      const newTitle = found ? found.title : null;
+      if (newTitle === this.caveDetailHoveredTitle) {
+        if (this.caveDetailTooltip && found) {
+          this.caveDetailTooltip.setLatLng(e.latlng);
+        }
+        return;
+      }
+
+      // Unhover previous
+      this.clearCaveDetailHover();
+
+      this.caveDetailHoveredTitle = newTitle;
+
+      // Hover new
+      if (found) {
+        found.layers.forEach(l => l.setStyle({ weight: 4, fillOpacity: (this.showAreaColor) ? 0.3 : 0.0 }));
+        const tt = L.tooltip({ pane: 'front', sticky: true })
+          .setLatLng(e.latlng)
+          .setContent(found.title);
+        // Assign BEFORE addTo so the tooltipopen handler recognises this as ours
+        this.caveDetailTooltip = tt;
+        tt.addTo(this.map.m);
+      }
+    });
+  }
+
+  private clearCaveDetailHover() {
+    if (this.caveDetailHoveredTitle) {
+      const prev = this.caveDetailEntries.find(e2 => e2.title === this.caveDetailHoveredTitle);
+      if (prev) {
+        prev.layers.forEach(l => l.setStyle({ weight: 2, fillOpacity: (this.showAreaColor) ? 0.2 : 0.0 }));
+      }
+    }
+    if (this.caveDetailTooltip) {
+      this.map.m.closeTooltip(this.caveDetailTooltip);
+      this.caveDetailTooltip = null;
+    }
+    this.caveDetailHoveredTitle = null;
+  }
+
   private pointInRing(x: number, z: number, ring: number[][]): boolean {
     let inside = false;
     for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
@@ -2158,6 +2259,20 @@ export default class AppMap extends mixins(MixinUtil) {
       const xj = ring[j][0], zj = ring[j][1];
       const intersect = ((zi > z) !== (zj > z)) &&
         (x < (xj - xi) * (z - zi) / (zj - zi + 0.0) + xi);
+      if (intersect)
+        inside = !inside;
+    }
+    return inside;
+  }
+
+  private pointInRingLatLng(latlng: L.LatLng, ring: L.LatLng[]): boolean {
+    let inside = false;
+    const x = latlng.lng, z = latlng.lat;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const xi = ring[i].lng, zi = ring[i].lat;
+      const xj = ring[j].lng, zj = ring[j].lat;
+      const intersect = ((zi > z) !== (zj > z)) &&
+        (x < (xj - xi) * (z - zi) / (zj - zi) + xi);
       if (intersect)
         inside = !inside;
     }
@@ -2267,6 +2382,12 @@ export default class AppMap extends mixins(MixinUtil) {
   async loadAreaMap(name: string) {
     this.areaMapLayer.data.clearLayers();
     this.areaMapLayersByData.data.clear();
+    this.caveDetailEntries = [];
+    this.caveDetailHoveredTitle = null;
+    if (this.caveDetailTooltip) {
+      this.map.m.closeTooltip(this.caveDetailTooltip);
+      this.caveDetailTooltip = null;
+    }
     if (!name)
       return;
     const isMapTowerCompletion = name === 'MapTowerCompletion';
@@ -2314,12 +2435,14 @@ export default class AppMap extends mixins(MixinUtil) {
     for (const [data, features] of entries) {
       const completionInfo = completion ? completion.get(data) : null;
       const completionColor = completionInfo ? this.completionToColor(completionInfo.ratio) : undefined;
+      const isCaveDetail = (name == 'cave_polys_detail');
       const layers: L.GeoJSON[] = features.map((feature: any) => {
         if (completionColor) {
           feature.properties = feature.properties || {};
           feature.properties.color = completionColor;
         }
         return L.geoJSON(feature, {
+          interactive: !isCaveDetail,
           pointToLayer: function(_geoJsonPoint, latlng) {
             let color = feature.properties.color || '#3388ff'
             return L.marker(latlng, { icon: ui.svgIcon(color) });
@@ -2335,15 +2458,22 @@ export default class AppMap extends mixins(MixinUtil) {
       });
       this.areaMapLayersByData.data.set(data, layers);
 
+      if (isCaveDetail) {
+        const title = features[0].properties.title.split('::').at(0) || data;
+        this.caveDetailEntries.push({ title, layers, features });
+      }
+
       for (const layer of layers) {
-        layer.on('mouseover', () => {
-          layers.forEach(l => {
-            l.setStyle({ weight: 4, fillOpacity: fillOpacityOver });
+        if (!isCaveDetail) {
+          layer.on('mouseover', () => {
+            layers.forEach(l => {
+              l.setStyle({ weight: 4, fillOpacity: fillOpacityOver });
+            });
           });
-        });
-        layer.on('mouseout', () => {
-          layers.forEach(l => l.setStyle({ weight: 2, fillOpacity }));
-        });
+          layer.on('mouseout', () => {
+            layers.forEach(l => l.setStyle({ weight: 2, fillOpacity }));
+          });
+        }
         if (isMapTowerCompletion) {
           const title = features[0].properties.title || data;
           const total = completionInfo ? completionInfo.total : 0;
@@ -2361,8 +2491,6 @@ export default class AppMap extends mixins(MixinUtil) {
           continue
         }
         if (name == "cave_polys_detail") {
-          let title = features[0].properties.title.split("::").at(0)
-          layer.bindTooltip(title);
           continue;
         }
         const area = await MsgMgr.getInstance().getAreaData(name, parseInt(data));
@@ -2398,6 +2526,9 @@ export default class AppMap extends mixins(MixinUtil) {
       }
       ++i;
     }
+    if (this.caveDetailEntries.length > 0) {
+      this.initCaveDetailHover();
+    }
     this.updateAreaMapVisibility();
   }
 
@@ -2422,7 +2553,12 @@ export default class AppMap extends mixins(MixinUtil) {
     this.areaMapLayer.data.clearLayers();
     for (const [data, layers] of this.areaMapLayersByData.data.entries()) {
       if (!hasWhitelist || shown.includes(data))
-        layers.forEach(l => this.areaMapLayer.data.addLayer(l));
+        layers.forEach(l => {
+          this.areaMapLayer.data.addLayer(l);
+          // Push area polygons to the back of the canvas draw order so that
+          // markers (both filter and search) are always hit-tested first.
+          (l as any).bringToBack();
+        });
     }
   }
 
