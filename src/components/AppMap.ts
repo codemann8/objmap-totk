@@ -419,6 +419,7 @@ export default class AppMap extends mixins(MixinUtil) {
   private searchLastSearchFailed = false;
   private searchResults: ObjectMinData[] = [];
   private searchResultMarkers: ui.Unobservable<MapMarkers.MapMarkerSearchResult>[] = [];
+  private searchGeneration = 0;
   private searchGroups: SearchResultGroup[] = [];
   private searchPresets = SEARCH_PRESETS;
   private searchExcludedSets: SearchExcludeSet[] = [];
@@ -1582,14 +1583,22 @@ export default class AppMap extends mixins(MixinUtil) {
     this.searchResultMarkers.forEach(m => m.data.getMarker().remove());
     this.searchResultMarkers = [];
 
+    const generation = ++this.searchGeneration;
     const query = this.searchGetQuery();
+    let results: ObjectMinData[];
+    let failed = false;
     try {
-      this.searchResults = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false, this.MAX_SEARCH_RESULT_COUNT);
-      this.searchLastSearchFailed = false;
+      results = await MapMgr.getInstance().getObjs(this.settings!.mapType, this.settings!.mapName, query, false, this.MAX_SEARCH_RESULT_COUNT);
     } catch (e) {
-      this.searchResults = [];
-      this.searchLastSearchFailed = true;
+      results = [];
+      failed = true;
     }
+    // A newer search was started while we were waiting; discard these results.
+    if (generation !== this.searchGeneration) {
+      return;
+    }
+    this.searchResults = results;
+    this.searchLastSearchFailed = failed;
     const groupOpacity = MARKER_OPACITIES[this.clMarkerVisibility];
     const showCheckmark = this.shouldShowChecklistCheckmark();
     const useAlternateUnmarkedIcon = this.shouldUseAlternateUnmarkedIcons();
