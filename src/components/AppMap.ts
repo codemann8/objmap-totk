@@ -544,6 +544,7 @@ export default class AppMap extends mixins(MixinUtil) {
       this.updateSearchResultMarkerVisibility();
       this.refreshMapTowerCompletion();
       this.updateRoute();
+      this.updateAreaMapVisibility();
     });
   }
 
@@ -2559,7 +2560,12 @@ export default class AppMap extends mixins(MixinUtil) {
   updateAreaMapVisibility() {
     const hasWhitelist = !!this.areaWhitelist;
     const shown = this.areaWhitelist.trim().split(',').map(s => s.trim());
+    const hideCaves = (this.shownAreaMap === 'cave_polys_detail' || this.shownAreaMap === 'cave_polys')
+      && this.settings && this.settings.showObjectsCurrentLayer
+      && this.map.activeLayer !== 'Surface';
     this.areaMapLayer.data.clearLayers();
+    if (hideCaves)
+      return;
     for (const [data, layers] of this.areaMapLayersByData.data.entries()) {
       if (!hasWhitelist || shown.includes(data))
         layers.forEach(l => {
