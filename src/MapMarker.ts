@@ -624,7 +624,11 @@ export class MapMarkerKorok extends MapMarkerCanvasImpl {
 
   constructor(mb: MapBase, info: any, extra: any) {
     let id = info.id || 'Korok';
-    super(mb, `${id}`, [info.Translate.X, info.Translate.Y, info.Translate.Z], {
+    const isOpacityAlt = Settings.getInstance().checklistMarkerVisibility === 'opacity-alt';
+    const pos = (isOpacityAlt && info.origin_pos)
+      ? info.origin_pos
+      : [info.Translate.X, info.Translate.Y, info.Translate.Z];
+    super(mb, `${id}`, pos, {
       icon: KOROK_ICON,
       iconWidth: 20,
       iconHeight: 20,
@@ -637,7 +641,20 @@ export class MapMarkerKorok extends MapMarkerCanvasImpl {
     this.obj = info;
   }
 
+  setMarked(marked: boolean, opacity: number, showCheckmark: boolean = true) {
+    if (this.info.origin_pos) {
+      const isOpacityAlt = Settings.getInstance().checklistMarkerVisibility === 'opacity-alt';
+      const pos = (isOpacityAlt && !marked)
+        ? this.info.origin_pos
+        : [this.info.Translate.X, this.info.Translate.Y, this.info.Translate.Z];
+      this.marker.setLatLng(this.mb.fromXYZ(pos));
+    }
+    super.setMarked(marked, opacity, showCheckmark);
+  }
+
   shouldBeShown() {
+    if (this.info.is_passenger && Settings.getInstance().checklistMarkerVisibility !== 'opacity-alt')
+      return false;
     return this.info.map_name == this.mb.activeLayer;
   }
 

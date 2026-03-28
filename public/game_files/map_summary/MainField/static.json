@@ -474,7 +474,8 @@
         "name": "PF12",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xcaf6f65aef1fba7a"
       },
       {
         "id": "PF22",
@@ -487,7 +488,8 @@
         "name": "PF22",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xc881e05de2cf9e12"
       },
       {
         "id": "ML26",
@@ -500,7 +502,8 @@
         "name": "ML26",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x4f949c09ffce186c"
       },
       {
         "id": "GC35",
@@ -513,7 +516,8 @@
         "name": "GC35",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xf9d63b0bebecff1a"
       },
       {
         "id": "TR09",
@@ -526,7 +530,8 @@
         "name": "TR09",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xfa8b2dcf31c4177b"
       },
       {
         "id": "RP38",
@@ -539,7 +544,8 @@
         "name": "RP38",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xf8dfc9c1fe5fe676"
       },
       {
         "id": "UZ44",
@@ -552,7 +558,8 @@
         "name": "UZ44",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xc4d8ae343625f05d"
       },
       {
         "id": "EC06",
@@ -565,7 +572,8 @@
         "name": "EC06",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xf4f41b8ff622a1a7"
       },
       {
         "id": "SS07",
@@ -578,7 +586,8 @@
         "name": "SS07",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xfafad27300f2074b"
       },
       {
         "id": "GH47",
@@ -591,7 +600,8 @@
         "name": "GH47",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xfff9dcdec8903b74"
       },
       {
         "id": "RW36",
@@ -604,7 +614,8 @@
         "name": "RW36",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x28108f16f2359087"
       },
       {
         "id": "RP26",
@@ -617,7 +628,8 @@
         "name": "RP26",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xeb9a69bebafd2439"
       },
       {
         "id": "UZ18",
@@ -630,7 +642,8 @@
         "name": "UZ18",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x20e52363b0ea94f8"
       },
       {
         "id": "GC19",
@@ -643,7 +656,8 @@
         "name": "GC19",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x2050d0934a222d96"
       },
       {
         "id": "LB54",
@@ -656,7 +670,8 @@
         "name": "LB54",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x7749464eb602a0bc"
       },
       {
         "id": "GSI04",
@@ -669,7 +684,8 @@
         "name": "GSI04",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x550d912276db44be"
       },
       {
         "id": "ML24",
@@ -682,7 +698,8 @@
         "name": "ML24",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xd33ca4ecbf243972"
       },
       {
         "id": "UM17",
@@ -695,7 +712,8 @@
         "name": "UM17",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xc94745453653229a"
       },
       {
         "id": "PF62",
@@ -708,7 +726,8 @@
         "name": "PF62",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x191ccd03cdcba219"
       },
       {
         "id": "SS60",
@@ -721,7 +740,8 @@
         "name": "SS60",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xd69247b51e2814f1"
       },
       {
         "id": "TR17",
@@ -734,7 +754,8 @@
         "name": "TR17",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x244d6a6048b22b80"
       },
       {
         "id": "PF86",
@@ -747,7 +768,8 @@
         "name": "PF86",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x10642f056d64787f"
       },
       {
         "id": "SS26",
@@ -760,7 +782,8 @@
         "name": "SS26",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xdda3c0a174357b1e"
       },
       {
         "id": "GC45",
@@ -773,7 +796,8 @@
         "name": "GC45",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xe67e7dd66e455f35"
       },
       {
         "id": "GH10",
@@ -786,7 +810,8 @@
         "name": "GH10",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xd1befa7b75d0d2e2"
       },
       {
         "id": "UZ50",
@@ -799,7 +824,8 @@
         "name": "UZ50",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xe1ee1f28d6b61998"
       },
       {
         "id": "RP06",
@@ -812,7 +838,8 @@
         "name": "RP06",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xdd1998ff1f641d21"
       },
       {
         "id": "TR21",
@@ -825,7 +852,8 @@
         "name": "TR21",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x0aef926f0a73a3c0"
       },
       {
         "id": "HF01",
@@ -838,7 +866,8 @@
         "name": "HF01",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x05bae05d95dd6b22"
       },
       {
         "id": "RP13",
@@ -851,7 +880,8 @@
         "name": "RP13",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x0d922a4f1c7a2f00"
       },
       {
         "id": "EC42",
@@ -864,7 +894,8 @@
         "name": "EC42",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x0b51a045caac75b9"
       },
       {
         "id": "UZ73",
@@ -877,7 +908,8 @@
         "name": "UZ73",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x025d90e226fc9275"
       },
       {
         "id": "PS07",
@@ -890,7 +922,8 @@
         "name": "PS07",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x71eb61633f131db3"
       },
       {
         "id": "EC03",
@@ -903,7 +936,8 @@
         "name": "EC03",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x0bcf29ea999dfaed"
       },
       {
         "id": "UZ13",
@@ -916,7 +950,8 @@
         "name": "UZ13",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x0979af33bcd5bbd5"
       },
       {
         "id": "HF58",
@@ -929,7 +964,8 @@
         "name": "HF58",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x0e948ff8a969ce29"
       },
       {
         "id": "UM26",
@@ -942,7 +978,8 @@
         "name": "UM26",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x2f4c569ed97998d1"
       },
       {
         "id": "ML08",
@@ -955,7 +992,8 @@
         "name": "ML08",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x35aab4a050886804"
       },
       {
         "id": "EC33",
@@ -968,7 +1006,8 @@
         "name": "EC33",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x32841970c93c84d6"
       },
       {
         "id": "SS27",
@@ -981,7 +1020,8 @@
         "name": "SS27",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x281f58287777a4e0"
       },
       {
         "id": "UZ22",
@@ -994,7 +1034,8 @@
         "name": "UZ22",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x3867aafde189c855"
       },
       {
         "id": "GC22",
@@ -1007,7 +1048,8 @@
         "name": "GC22",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x67d1d0e38ffbd77e"
       },
       {
         "id": "GC21",
@@ -1020,7 +1062,8 @@
         "name": "GC21",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x011cab773f6f13a3"
       },
       {
         "id": "EC36",
@@ -1033,7 +1076,8 @@
         "name": "EC36",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x00e7f477db742c14"
       },
       {
         "id": "GSI17",
@@ -1046,7 +1090,8 @@
         "name": "GSI17",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xb1eafa34d7928d2f"
       },
       {
         "id": "UZ71",
@@ -1059,7 +1104,8 @@
         "name": "UZ71",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x38896dc2b41a9381"
       },
       {
         "id": "EC15",
@@ -1072,7 +1118,8 @@
         "name": "EC15",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x168b1886ca3a5e93"
       },
       {
         "id": "RW40",
@@ -1085,7 +1132,8 @@
         "name": "RW40",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x64211956f4462f88"
       },
       {
         "id": "LB53",
@@ -1098,7 +1146,8 @@
         "name": "LB53",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x6fad9353d1760c3a"
       },
       {
         "id": "UM29",
@@ -1111,7 +1160,8 @@
         "name": "UM29",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x6dadbd4681058df8"
       },
       {
         "id": "LB43",
@@ -1124,7 +1174,8 @@
         "name": "LB43",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x515e3c682714606c"
       },
       {
         "id": "EC54",
@@ -1137,7 +1188,8 @@
         "name": "EC54",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x50b7f00accf9598c"
       },
       {
         "id": "UZ37",
@@ -1150,7 +1202,8 @@
         "name": "UZ37",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x10d3910b23f8b9b4"
       },
       {
         "id": "PF68",
@@ -1163,7 +1216,8 @@
         "name": "PF68",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x5a785bcb9d7225c8"
       },
       {
         "id": "ML19",
@@ -1176,7 +1230,8 @@
         "name": "ML19",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x22a774537c466e8b"
       },
       {
         "id": "PF03",
@@ -1189,7 +1244,8 @@
         "name": "PF03",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x46280ff1236ca0e3"
       },
       {
         "id": "ML39",
@@ -1202,7 +1258,8 @@
         "name": "ML39",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x74c4d621a8dff54f"
       },
       {
         "id": "PS13",
@@ -1215,7 +1272,8 @@
         "name": "PS13",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x7b3c479ee74cee72"
       },
       {
         "id": "HF50",
@@ -1228,7 +1286,8 @@
         "name": "HF50",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x64bc788070f63839"
       },
       {
         "id": "EC10",
@@ -1241,7 +1300,8 @@
         "name": "EC10",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xa73b2de643ab410d"
       },
       {
         "id": "UM09",
@@ -1254,7 +1314,8 @@
         "name": "UM09",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xadda2fdb3470703e"
       },
       {
         "id": "RW41",
@@ -1267,7 +1328,8 @@
         "name": "RW41",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x53a63f89c3a10b65"
       },
       {
         "id": "TR02",
@@ -1280,7 +1342,8 @@
         "name": "TR02",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xa4454506c6584e6a"
       },
       {
         "id": "HF38",
@@ -1293,7 +1356,8 @@
         "name": "HF38",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x9d42d1a1f0072590"
       },
       {
         "id": "GH03",
@@ -1306,7 +1370,8 @@
         "name": "GH03",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x9db217c87678593b"
       },
       {
         "id": "TR03",
@@ -1319,7 +1384,8 @@
         "name": "TR03",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x522a94e956e97d33"
       },
       {
         "id": "HF43",
@@ -1332,7 +1398,8 @@
         "name": "HF43",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x5ba09f257eb9ec25"
       },
       {
         "id": "SS63",
@@ -1345,7 +1412,8 @@
         "name": "SS63",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x59ea8674743ae409"
       },
       {
         "id": "LB02",
@@ -1358,7 +1426,8 @@
         "name": "LB02",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x80777291d0e95b60"
       },
       {
         "id": "UM25",
@@ -1371,7 +1440,8 @@
         "name": "UM25",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xb4f2021c67d8b7f4"
       },
       {
         "id": "HF68",
@@ -1384,7 +1454,8 @@
         "name": "HF68",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x8d697c2cfe1e88c5"
       },
       {
         "id": "SS72",
@@ -1397,7 +1468,8 @@
         "name": "SS72",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xb275574e9b630238"
       },
       {
         "id": "PF34",
@@ -1410,7 +1482,8 @@
         "name": "PF34",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x7f96a09d207c8c19"
       },
       {
         "id": "PF82",
@@ -1423,7 +1496,8 @@
         "name": "PF82",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x81ac7cd4136278c2"
       },
       {
         "id": "RW24",
@@ -1436,7 +1510,8 @@
         "name": "RW24",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xb4e0c6aa28e3f92b"
       },
       {
         "id": "PF73",
@@ -1449,7 +1524,8 @@
         "name": "PF73",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xb3e9d3447878c98c"
       },
       {
         "id": "UZ12",
@@ -1462,7 +1538,8 @@
         "name": "UZ12",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x522065f7a820ef96"
       },
       {
         "id": "RW42",
@@ -1475,7 +1552,8 @@
         "name": "RW42",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xb175928c097f7d8c"
       },
       {
         "id": "GC42",
@@ -1488,7 +1566,8 @@
         "name": "GC42",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x4e16b8e9e8391c04"
       },
       {
         "id": "HF22",
@@ -1501,7 +1580,8 @@
         "name": "HF22",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x4e08085255170991"
       },
       {
         "id": "SS16",
@@ -1514,7 +1594,8 @@
         "name": "SS16",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xe253f94e0755ebff"
       },
       {
         "id": "PS21",
@@ -1527,7 +1608,8 @@
         "name": "PS21",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xe7ff8fdfc926d4d1"
       },
       {
         "id": "GC09",
@@ -1540,7 +1622,8 @@
         "name": "GC09",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x97366017b2dcb12b"
       },
       {
         "id": "ML42",
@@ -1553,7 +1636,8 @@
         "name": "ML42",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xeb63e3efe091789c"
       },
       {
         "id": "SS13",
@@ -1566,7 +1650,8 @@
         "name": "SS13",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xe85d3592b32acbc5"
       },
       {
         "id": "PF14",
@@ -1579,7 +1664,8 @@
         "name": "PF14",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xeec08ed585c22982"
       },
       {
         "id": "GH12",
@@ -1592,7 +1678,8 @@
         "name": "GH12",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x9661a75839973c27"
       },
       {
         "id": "GC50",
@@ -1605,7 +1692,8 @@
         "name": "GC50",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x4075b12010df7a70"
       },
       {
         "id": "GC05",
@@ -1618,7 +1706,8 @@
         "name": "GC05",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x498b637f0631a3b9"
       },
       {
         "id": "SS28",
@@ -1631,7 +1720,8 @@
         "name": "SS28",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x4fb2ff7f0d0b0cad"
       },
       {
         "id": "PF67",
@@ -1644,7 +1734,8 @@
         "name": "PF67",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x914f9cd862cf9aae"
       },
       {
         "id": "TR13",
@@ -1657,7 +1748,8 @@
         "name": "TR13",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xdb1afacf0acc5343"
       },
       {
         "id": "HF10",
@@ -1670,7 +1762,8 @@
         "name": "HF10",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0x90543aa17522c4a0"
       },
       {
         "id": "UM07",
@@ -1683,7 +1776,8 @@
         "name": "UM07",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xfc0c55443334d8a0"
       },
       {
         "id": "UM21",
@@ -1696,7 +1790,8 @@
         "name": "UM21",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xc220611f3fdaf78b"
       },
       {
         "id": "LB30",
@@ -1709,7 +1804,8 @@
         "name": "LB30",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xc0f953c29ff7f374"
       },
       {
         "id": "SS30",
@@ -1722,7 +1818,8 @@
         "name": "SS30",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xcbc5b5826d42ccbf"
       },
       {
         "id": "PS14",
@@ -1735,7 +1832,8 @@
         "name": "PS14",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xf7c5c8b2b584883d"
       },
       {
         "id": "LL05",
@@ -1748,7 +1846,8 @@
         "name": "LL05",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xc73bbbb212e83b6d"
       },
       {
         "id": "TR10",
@@ -1761,7 +1860,8 @@
         "name": "TR10",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "friend_hash_id": "0xc4aee547a6b56906"
       },
       {
         "id": "GH16",
@@ -1839,7 +1939,12 @@
         "name": "LB46",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3649.74,
+          392.25,
+          -511.11
+        ]
       },
       {
         "id": "SS14",
@@ -2073,7 +2178,12 @@
         "name": "UZ41",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          2751.8,
+          215.75,
+          -251.41
+        ]
       },
       {
         "id": "HF60",
@@ -2125,7 +2235,12 @@
         "name": "LL43",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -526.67,
+          167.71,
+          -188.48
+        ]
       },
       {
         "id": "PF88",
@@ -2151,7 +2266,12 @@
         "name": "TR06",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          60.64,
+          295.65,
+          -3113.63
+        ]
       },
       {
         "id": "UM13",
@@ -2216,7 +2336,12 @@
         "name": "RP50",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -4123.65,
+          304.11,
+          -1942.26
+        ]
       },
       {
         "id": "UZ30",
@@ -2229,7 +2354,12 @@
         "name": "UZ30",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          3667.01,
+          358.25,
+          -447.53
+        ]
       },
       {
         "id": "GH33",
@@ -2372,7 +2502,12 @@
         "name": "LBS01",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3612.4,
+          1919.96,
+          -1030.28
+        ]
       },
       {
         "id": "PF48",
@@ -2385,7 +2520,12 @@
         "name": "PF48",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -35.61,
+          213.96,
+          2944.21
+        ]
       },
       {
         "id": "LL32",
@@ -2567,7 +2707,12 @@
         "name": "GC07",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -4482.4,
+          173.76,
+          2133.92
+        ]
       },
       {
         "id": "GC06",
@@ -2892,7 +3037,12 @@
         "name": "GC34",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3592.1,
+          141.32,
+          3006.34
+        ]
       },
       {
         "id": "GC39",
@@ -2905,7 +3055,12 @@
         "name": "GC39",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -935.05,
+          356.98,
+          3236.81
+        ]
       },
       {
         "id": "UZ34",
@@ -3048,7 +3203,12 @@
         "name": "ML11",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          4527.13,
+          108.12,
+          1533.55
+        ]
       },
       {
         "id": "HF31",
@@ -3152,7 +3312,12 @@
         "name": "PSS01",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -1696.6,
+          1093.08,
+          -3552.35
+        ]
       },
       {
         "id": "RW22",
@@ -3191,7 +3356,12 @@
         "name": "LL55",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -1109.67,
+          167.7,
+          420.47
+        ]
       },
       {
         "id": "ML30",
@@ -3412,7 +3582,12 @@
         "name": "EC34",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          2280.44,
+          430.63,
+          -1826.03
+        ]
       },
       {
         "id": "RP33",
@@ -3490,7 +3665,12 @@
         "name": "UM03",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          3152.96,
+          241.97,
+          -3430.86
+        ]
       },
       {
         "id": "HF18",
@@ -3594,7 +3774,12 @@
         "name": "PF23",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          278.12,
+          142.13,
+          2219.83
+        ]
       },
       {
         "id": "ML23",
@@ -3607,7 +3792,12 @@
         "name": "ML23",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          3017.92,
+          155.38,
+          2033.4
+        ]
       },
       {
         "id": "PF29",
@@ -3711,7 +3901,12 @@
         "name": "PF57",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          1535.88,
+          202.44,
+          3252.61
+        ]
       },
       {
         "id": "RP02",
@@ -3828,7 +4023,12 @@
         "name": "HF54",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -683.04,
+          199.9,
+          1842.77
+        ]
       },
       {
         "id": "UZ24",
@@ -3984,7 +4184,12 @@
         "name": "HF49",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -1173.44,
+          187.54,
+          1655.07
+        ]
       },
       {
         "id": "GC02",
@@ -4088,7 +4293,12 @@
         "name": "EC22",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          2222.15,
+          635.01,
+          -2379.82
+        ]
       },
       {
         "id": "PS06",
@@ -4296,7 +4506,12 @@
         "name": "PF79",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          804.12,
+          212.74,
+          3727.86
+        ]
       },
       {
         "id": "RW14",
@@ -4582,7 +4797,12 @@
         "name": "UM37",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          3675.21,
+          197.37,
+          -1440.25
+        ]
       },
       {
         "id": "RW11",
@@ -4777,7 +4997,12 @@
         "name": "PF15",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          479.24,
+          149.96,
+          1759.45
+        ]
       },
       {
         "id": "TR04",
@@ -4933,7 +5158,12 @@
         "name": "GH54",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -2931.36,
+          314.48,
+          2216.55
+        ]
       },
       {
         "id": "RP40",
@@ -4946,7 +5176,12 @@
         "name": "RP40",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3789.21,
+          276.1,
+          -2314.91
+        ]
       },
       {
         "id": "RP11",
@@ -5154,7 +5389,12 @@
         "name": "HF08",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -2479.18,
+          327.36,
+          509.34
+        ]
       },
       {
         "id": "UZ60",
@@ -5219,7 +5459,12 @@
         "name": "UZ21",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          4697.57,
+          335.54,
+          -546.61
+        ]
       },
       {
         "id": "GH38",
@@ -5362,7 +5607,12 @@
         "name": "GH08",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -2838.84,
+          157.52,
+          437.44
+        ]
       },
       {
         "id": "GH20",
@@ -5375,7 +5625,12 @@
         "name": "GH20",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3744.84,
+          636.96,
+          1056.4
+        ]
       },
       {
         "id": "LB29",
@@ -5921,7 +6176,12 @@
         "name": "RP17",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3816.69,
+          429.61,
+          -3350.79
+        ]
       },
       {
         "id": "GSI14",
@@ -5960,7 +6220,12 @@
         "name": "SS54",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          1600.39,
+          116.03,
+          1355.77
+        ]
       },
       {
         "id": "UM33",
@@ -6103,7 +6368,12 @@
         "name": "LB41",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -2935.23,
+          306.85,
+          -548.1
+        ]
       },
       {
         "id": "GC04",
@@ -6181,7 +6451,12 @@
         "name": "LL16",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -454.37,
+          207.03,
+          -863.23
+        ]
       },
       {
         "id": "HF46",
@@ -6324,7 +6599,12 @@
         "name": "SS05",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          965.82,
+          194.18,
+          -660.56
+        ]
       },
       {
         "id": "PS20",
@@ -6428,7 +6708,12 @@
         "name": "RW08",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          1913.13,
+          144.97,
+          2407.45
+        ]
       },
       {
         "id": "PF24",
@@ -6571,7 +6856,12 @@
         "name": "UMS02",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          4613.21,
+          1404.4,
+          -2283.76
+        ]
       },
       {
         "id": "UZ04",
@@ -6792,7 +7082,12 @@
         "name": "SSS05",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          2334.86,
+          1791.03,
+          1845.45
+        ]
       },
       {
         "id": "GHS01",
@@ -6805,7 +7100,12 @@
         "name": "GHS01",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3374.14,
+          2429.17,
+          -12.18
+        ]
       },
       {
         "id": "RW21",
@@ -6831,7 +7131,12 @@
         "name": "GSI05",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          511.26,
+          1527.11,
+          1328.84
+        ]
       },
       {
         "id": "PF52",
@@ -7234,7 +7539,12 @@
         "name": "SS44",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          1233.12,
+          246.09,
+          1022.94
+        ]
       },
       {
         "id": "RP24",
@@ -7351,7 +7661,12 @@
         "name": "SSS07",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          1300.12,
+          733.69,
+          1977.47
+        ]
       },
       {
         "id": "HF52",
@@ -8274,7 +8589,12 @@
         "name": "LB10",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3621.34,
+          250.44,
+          -1522.18
+        ]
       },
       {
         "id": "GC51",
@@ -8339,7 +8659,12 @@
         "name": "PS10",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -2001.65,
+          490.19,
+          -3147.14
+        ]
       },
       {
         "id": "RP47",
@@ -8781,7 +9106,12 @@
         "name": "LB32",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3966.26,
+          293.96,
+          -625.12
+        ]
       },
       {
         "id": "PF04",
@@ -9054,7 +9384,12 @@
         "name": "GCS01",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -1829.72,
+          1305.17,
+          1917.68
+        ]
       },
       {
         "id": "GC44",
@@ -9093,7 +9428,12 @@
         "name": "UM15",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          3575.36,
+          215.1,
+          -3046.11
+        ]
       },
       {
         "id": "SS70",
@@ -9106,7 +9446,12 @@
         "name": "SS70",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          1243.54,
+          541.58,
+          1941.41
+        ]
       },
       {
         "id": "LB35",
@@ -9379,7 +9724,12 @@
         "name": "LB12",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3820.74,
+          392.28,
+          -1319.24
+        ]
       },
       {
         "id": "RW17",
@@ -9600,7 +9950,12 @@
         "name": "LB50",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3122.05,
+          213.27,
+          -255.18
+        ]
       },
       {
         "id": "RP08",
@@ -9652,7 +10007,12 @@
         "name": "UZ70",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          3739.83,
+          107.05,
+          616.08
+        ]
       },
       {
         "id": "MLS02",
@@ -9704,7 +10064,12 @@
         "name": "RPS04",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3063.68,
+          798.42,
+          -2136.81
+        ]
       },
       {
         "id": "RW26",
@@ -9717,7 +10082,12 @@
         "name": "RW26",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          2549.02,
+          197.44,
+          3208.38
+        ]
       },
       {
         "id": "UZ19",
@@ -9743,7 +10113,12 @@
         "name": "UM08",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          4424.13,
+          352.73,
+          -3188.46
+        ]
       },
       {
         "id": "GC13",
@@ -9808,7 +10183,12 @@
         "name": "UZ54",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          3292.69,
+          399.33,
+          10.05
+        ]
       },
       {
         "id": "RP43",
@@ -10003,7 +10383,12 @@
         "name": "UZ63",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          2989.67,
+          287.56,
+          361.03
+        ]
       },
       {
         "id": "RWS01",
@@ -10055,7 +10440,12 @@
         "name": "EC28",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          1799.11,
+          602.53,
+          -2210.18
+        ]
       },
       {
         "id": "RPS02",
@@ -10120,7 +10510,12 @@
         "name": "HF09",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -2536.78,
+          307.75,
+          629.07
+        ]
       },
       {
         "id": "UZ09",
@@ -10536,7 +10931,12 @@
         "name": "GC37",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3422.28,
+          189.83,
+          3119.48
+        ]
       },
       {
         "id": "HF61",
@@ -10614,7 +11014,12 @@
         "name": "ML02",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          4486.63,
+          171.22,
+          782.22
+        ]
       },
       {
         "id": "HF03",
@@ -10718,7 +11123,12 @@
         "name": "SS03",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          836.85,
+          231.99,
+          -736.75
+        ]
       },
       {
         "id": "LL29",
@@ -10926,7 +11336,12 @@
         "name": "GC14",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -4433.13,
+          179.1,
+          2275.43
+        ]
       },
       {
         "id": "LB09",
@@ -11030,7 +11445,12 @@
         "name": "LBS05",
         "map_static": 1,
         "map_name": "Sky",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3960.01,
+          1610.81,
+          -649.91
+        ]
       },
       {
         "id": "UZ40",
@@ -11056,7 +11476,12 @@
         "name": "SS48",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          2766.35,
+          272.34,
+          1217.46
+        ]
       },
       {
         "id": "LL52",
@@ -11147,7 +11572,12 @@
         "name": "LL36",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          370.33,
+          140.72,
+          -473.93
+        ]
       },
       {
         "id": "UZ02",
@@ -11199,7 +11629,12 @@
         "name": "LL02",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -302.86,
+          195.56,
+          -1123.4
+        ]
       },
       {
         "id": "SS57",
@@ -11355,7 +11790,12 @@
         "name": "HF59",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          7.69,
+          212.15,
+          1892.69
+        ]
       },
       {
         "id": "GH26",
@@ -11459,7 +11899,12 @@
         "name": "RP03",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -3992.95,
+          325.28,
+          -3836.32
+        ]
       },
       {
         "id": "LB25",
@@ -11797,7 +12242,12 @@
         "name": "LL08",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -1034.59,
+          167.12,
+          -1083.4
+        ]
       },
       {
         "id": "HFS02",
@@ -11992,7 +12442,12 @@
         "name": "RP57",
         "map_static": 1,
         "map_name": "Surface",
-        "map_type": "Totk"
+        "map_type": "Totk",
+        "origin_pos": [
+          -4227.1,
+          224.09,
+          -1748.56
+        ]
       },
       {
         "id": "ML36",
@@ -12162,6 +12617,1506 @@
         "map_static": 1,
         "map_name": "Surface",
         "map_type": "Totk"
+      },
+      {
+        "id": "PF12",
+        "Translate": {
+          "X": 48,
+          "Y": 163.52,
+          "Z": 1694
+        },
+        "hash_id": "0xcaf6f65aef1fba7a",
+        "name": "PF12",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x8b45adf446286360",
+        "is_passenger": true
+      },
+      {
+        "id": "PF22",
+        "Translate": {
+          "X": 522.99,
+          "Y": 161.42,
+          "Z": 2196
+        },
+        "hash_id": "0xc881e05de2cf9e12",
+        "name": "PF22",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x8cd4a0e3b1a3d4c9",
+        "is_passenger": true
+      },
+      {
+        "id": "ML26",
+        "Translate": {
+          "X": 2858.53,
+          "Y": 145.86,
+          "Z": 1912.98
+        },
+        "hash_id": "0x4f949c09ffce186c",
+        "name": "ML26",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x0e43951fb77c4253",
+        "is_passenger": true
+      },
+      {
+        "id": "GC35",
+        "Translate": {
+          "X": -3344.82,
+          "Y": 146.65,
+          "Z": 3055.67
+        },
+        "hash_id": "0xf9d63b0bebecff1a",
+        "name": "GC35",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x9223f8594a723522",
+        "is_passenger": true
+      },
+      {
+        "id": "TR09",
+        "Translate": {
+          "X": -323.05,
+          "Y": 205.51,
+          "Z": -3159.04
+        },
+        "hash_id": "0xfa8b2dcf31c4177b",
+        "name": "TR09",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x93c7e6b9fd7e6e7c",
+        "is_passenger": true
+      },
+      {
+        "id": "RP38",
+        "Translate": {
+          "X": -4260.5,
+          "Y": 94.76,
+          "Z": -2175
+        },
+        "hash_id": "0xf8dfc9c1fe5fe676",
+        "name": "RP38",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x95684aa7a4c3b176",
+        "is_passenger": true
+      },
+      {
+        "id": "UZ44",
+        "Translate": {
+          "X": 2239.98,
+          "Y": 119.82,
+          "Z": -245.02
+        },
+        "hash_id": "0xc4d8ae343625f05d",
+        "name": "UZ44",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x970d75f6ffc93a9f",
+        "is_passenger": true
+      },
+      {
+        "id": "EC06",
+        "Translate": {
+          "X": 1723.1,
+          "Y": 536.21,
+          "Z": -2610.61
+        },
+        "hash_id": "0xf4f41b8ff622a1a7",
+        "name": "EC06",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x9979049cb93468c4",
+        "is_passenger": true
+      },
+      {
+        "id": "SS07",
+        "Translate": {
+          "X": 434.03,
+          "Y": 134.61,
+          "Z": -483.98
+        },
+        "hash_id": "0xfafad27300f2074b",
+        "name": "SS07",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x9b7753905308f290",
+        "is_passenger": true
+      },
+      {
+        "id": "GH47",
+        "Translate": {
+          "X": -4135.99,
+          "Y": 151.1,
+          "Z": 2259.98
+        },
+        "hash_id": "0xfff9dcdec8903b74",
+        "name": "GH47",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x9c6ce54cb8aa0d77",
+        "is_passenger": true
+      },
+      {
+        "id": "RW36",
+        "Translate": {
+          "X": 3686.96,
+          "Y": 350.35,
+          "Z": 3317.51
+        },
+        "hash_id": "0x28108f16f2359087",
+        "name": "RW36",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xa3ec81f3a4014875",
+        "is_passenger": true
+      },
+      {
+        "id": "RP26",
+        "Translate": {
+          "X": -2832.5,
+          "Y": 687.2,
+          "Z": -2840
+        },
+        "hash_id": "0xeb9a69bebafd2439",
+        "name": "RP26",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xa4cf2b8c7b89febe",
+        "is_passenger": true
+      },
+      {
+        "id": "UZ18",
+        "Translate": {
+          "X": 2543.69,
+          "Y": 233.48,
+          "Z": -639.5
+        },
+        "hash_id": "0x20e52363b0ea94f8",
+        "name": "UZ18",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xa519e141425c6ff1",
+        "is_passenger": true
+      },
+      {
+        "id": "GC19",
+        "Translate": {
+          "X": -1708,
+          "Y": 91.15,
+          "Z": 2341.18
+        },
+        "hash_id": "0x2050d0934a222d96",
+        "name": "GC19",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xa5ac2e959b3cf697",
+        "is_passenger": true
+      },
+      {
+        "id": "LB54",
+        "Translate": {
+          "X": -2961.94,
+          "Y": 249.42,
+          "Z": -87.53
+        },
+        "hash_id": "0x7749464eb602a0bc",
+        "name": "LB54",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x109d5c3cfc1cdbb3",
+        "is_passenger": true
+      },
+      {
+        "id": "GSI04",
+        "Translate": {
+          "X": 18.85,
+          "Y": 1524.1,
+          "Z": 1262.96
+        },
+        "hash_id": "0x550d912276db44be",
+        "name": "GSI04",
+        "map_static": 1,
+        "map_name": "Sky",
+        "map_type": "Totk",
+        "friend_hash_id": "0xa85990444d478eb9",
+        "is_passenger": true
+      },
+      {
+        "id": "ML24",
+        "Translate": {
+          "X": 2646,
+          "Y": 233.06,
+          "Z": 2117.5
+        },
+        "hash_id": "0xd33ca4ecbf243972",
+        "name": "ML24",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xb24a6b32763e0046",
+        "is_passenger": true
+      },
+      {
+        "id": "UM17",
+        "Translate": {
+          "X": 4355.5,
+          "Y": 182.94,
+          "Z": -2536
+        },
+        "hash_id": "0xc94745453653229a",
+        "name": "UM17",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xb2943a6379ffe651",
+        "is_passenger": true
+      },
+      {
+        "id": "PF62",
+        "Translate": {
+          "X": -306.82,
+          "Y": 129.87,
+          "Z": 3290
+        },
+        "hash_id": "0x191ccd03cdcba219",
+        "name": "PF62",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xb3604b21a627ef40",
+        "is_passenger": true
+      },
+      {
+        "id": "SS60",
+        "Translate": {
+          "X": 1768.5,
+          "Y": 120.84,
+          "Z": 1867.7
+        },
+        "hash_id": "0xd69247b51e2814f1",
+        "name": "SS60",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xb5c0399756de22c8",
+        "is_passenger": true
+      },
+      {
+        "id": "TR17",
+        "Translate": {
+          "X": -1434,
+          "Y": 299.11,
+          "Z": -1476
+        },
+        "hash_id": "0x244d6a6048b22b80",
+        "name": "TR17",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xb78127c69fdc72a9",
+        "is_passenger": true
+      },
+      {
+        "id": "PF86",
+        "Translate": {
+          "X": 67,
+          "Y": 111.27,
+          "Z": 3762
+        },
+        "hash_id": "0x10642f056d64787f",
+        "name": "PF86",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xb7d876fb848a007c",
+        "is_passenger": true
+      },
+      {
+        "id": "SS26",
+        "Translate": {
+          "X": 793.5,
+          "Y": 116.07,
+          "Z": 510.5
+        },
+        "hash_id": "0xdda3c0a174357b1e",
+        "name": "SS26",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xb83f3e4cac0d321f",
+        "is_passenger": true
+      },
+      {
+        "id": "GC45",
+        "Translate": {
+          "X": -4613.5,
+          "Y": 143.57,
+          "Z": 3197
+        },
+        "hash_id": "0xe67e7dd66e455f35",
+        "name": "GC45",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xb9ed273015b98834",
+        "is_passenger": true
+      },
+      {
+        "id": "GH10",
+        "Translate": {
+          "X": -4537.5,
+          "Y": 633.76,
+          "Z": 1344
+        },
+        "hash_id": "0xd1befa7b75d0d2e2",
+        "name": "GH10",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xba0dbba90c1a9a19",
+        "is_passenger": true
+      },
+      {
+        "id": "UZ50",
+        "Translate": {
+          "X": 2807.03,
+          "Y": 252.04,
+          "Z": -183.04
+        },
+        "hash_id": "0xe1ee1f28d6b61998",
+        "name": "UZ50",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xbc6318fadc8c50c1",
+        "is_passenger": true
+      },
+      {
+        "id": "RP06",
+        "Translate": {
+          "X": -2891.97,
+          "Y": 352.58,
+          "Z": -3494.02
+        },
+        "hash_id": "0xdd1998ff1f641d21",
+        "name": "RP06",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xbe56994927c6cb37",
+        "is_passenger": true
+      },
+      {
+        "id": "TR21",
+        "Translate": {
+          "X": 534.64,
+          "Y": 122.57,
+          "Z": -1108.05
+        },
+        "hash_id": "0x0aef926f0a73a3c0",
+        "name": "TR21",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xc37b8fddc99f683b",
+        "is_passenger": true
+      },
+      {
+        "id": "HF01",
+        "Translate": {
+          "X": -1798.5,
+          "Y": 225.08,
+          "Z": 320.5
+        },
+        "hash_id": "0x05bae05d95dd6b22",
+        "name": "HF01",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xc7a6a3a3ac49a14c",
+        "is_passenger": true
+      },
+      {
+        "id": "RP13",
+        "Translate": {
+          "X": -3670.5,
+          "Y": 429.02,
+          "Z": -3386
+        },
+        "hash_id": "0x0d922a4f1c7a2f00",
+        "name": "RP13",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xc8de69e1d4d01529",
+        "is_passenger": true
+      },
+      {
+        "id": "EC42",
+        "Translate": {
+          "X": 1534.05,
+          "Y": 411.47,
+          "Z": -1605.99
+        },
+        "hash_id": "0x0b51a045caac75b9",
+        "name": "EC42",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xcae5e6a73bbeac22",
+        "is_passenger": true
+      },
+      {
+        "id": "UZ73",
+        "Translate": {
+          "X": 3654,
+          "Y": 109.37,
+          "Z": 604.5
+        },
+        "hash_id": "0x025d90e226fc9275",
+        "name": "UZ73",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xcba991805f62c47b",
+        "is_passenger": true
+      },
+      {
+        "id": "PS07",
+        "Translate": {
+          "X": -1383.5,
+          "Y": 361.62,
+          "Z": -3629.5
+        },
+        "hash_id": "0x71eb61633f131db3",
+        "name": "PS07",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x145e2045e67c2a3d",
+        "is_passenger": true
+      },
+      {
+        "id": "EC03",
+        "Translate": {
+          "X": 3349.5,
+          "Y": 326.94,
+          "Z": -3667.5
+        },
+        "hash_id": "0x0bcf29ea999dfaed",
+        "name": "EC03",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xcc9b683cea8d43ce",
+        "is_passenger": true
+      },
+      {
+        "id": "UZ13",
+        "Translate": {
+          "X": 2637.91,
+          "Y": 263.55,
+          "Z": -1110.5
+        },
+        "hash_id": "0x0979af33bcd5bbd5",
+        "name": "UZ13",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xccc554518a9572dc",
+        "is_passenger": true
+      },
+      {
+        "id": "HF58",
+        "Translate": {
+          "X": -696,
+          "Y": 172.01,
+          "Z": 1574
+        },
+        "hash_id": "0x0e948ff8a969ce29",
+        "name": "HF58",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xcde0858addf5840e",
+        "is_passenger": true
+      },
+      {
+        "id": "UM26",
+        "Translate": {
+          "X": 3092,
+          "Y": 302.21,
+          "Z": -1755.38
+        },
+        "hash_id": "0x2f4c569ed97998d1",
+        "name": "UM26",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xcef85f6898d1d02e",
+        "is_passenger": true
+      },
+      {
+        "id": "ML08",
+        "Translate": {
+          "X": 3500,
+          "Y": 268.01,
+          "Z": 1457.5
+        },
+        "hash_id": "0x35aab4a050886804",
+        "name": "ML08",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xd05e7f866162de56",
+        "is_passenger": true
+      },
+      {
+        "id": "EC33",
+        "Translate": {
+          "X": 1980.5,
+          "Y": 528.82,
+          "Z": -2040
+        },
+        "hash_id": "0x32841970c93c84d6",
+        "name": "EC33",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xd3301b3208524de7",
+        "is_passenger": true
+      },
+      {
+        "id": "SS27",
+        "Translate": {
+          "X": 1876.5,
+          "Y": 344.57,
+          "Z": 806
+        },
+        "hash_id": "0x281f58287777a4e0",
+        "name": "SS27",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xd3cbd9dbbeebfd17",
+        "is_passenger": true
+      },
+      {
+        "id": "UZ22",
+        "Translate": {
+          "X": 3781,
+          "Y": 636.32,
+          "Z": -445.5
+        },
+        "hash_id": "0x3867aafde189c855",
+        "name": "UZ22",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xd3eb6b50b2a47eaa",
+        "is_passenger": true
+      },
+      {
+        "id": "GC22",
+        "Translate": {
+          "X": -2985,
+          "Y": 131.11,
+          "Z": 2326
+        },
+        "hash_id": "0x67d1d0e38ffbd77e",
+        "name": "GC22",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x15a4b1c5a6171c78",
+        "is_passenger": true
+      },
+      {
+        "id": "GC21",
+        "Translate": {
+          "X": -1017.98,
+          "Y": 305.77,
+          "Z": 2632.5
+        },
+        "hash_id": "0x011cab773f6f13a3",
+        "name": "GC21",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xdac86ad5e603ca95",
+        "is_passenger": true
+      },
+      {
+        "id": "EC36",
+        "Translate": {
+          "X": 1541.5,
+          "Y": 388.82,
+          "Z": -1808.5
+        },
+        "hash_id": "0x00e7f477db742c14",
+        "name": "EC36",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xdb7033b58af655e4",
+        "is_passenger": true
+      },
+      {
+        "id": "GSI17",
+        "Translate": {
+          "X": 474.25,
+          "Y": 1548.47,
+          "Z": 1694.75
+        },
+        "hash_id": "0xb1eafa34d7928d2f",
+        "name": "GSI17",
+        "map_static": 1,
+        "map_name": "Sky",
+        "map_type": "Totk",
+        "friend_hash_id": "0xdc9c28f60084facd",
+        "is_passenger": true
+      },
+      {
+        "id": "UZ71",
+        "Translate": {
+          "X": 3999.5,
+          "Y": 281.8,
+          "Z": 186.5
+        },
+        "hash_id": "0x38896dc2b41a9381",
+        "name": "UZ71",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xdd5da6276f00a45f",
+        "is_passenger": true
+      },
+      {
+        "id": "EC15",
+        "Translate": {
+          "X": 1816.94,
+          "Y": 506.82,
+          "Z": -2642.47
+        },
+        "hash_id": "0x168b1886ca3a5e93",
+        "name": "EC15",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xe75f2ba499cca6a8",
+        "is_passenger": true
+      },
+      {
+        "id": "RW40",
+        "Translate": {
+          "X": 3541.73,
+          "Y": 106.07,
+          "Z": 3458.29
+        },
+        "hash_id": "0x64211956f4462f88",
+        "name": "RW40",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x179c18302eece651",
+        "is_passenger": true
+      },
+      {
+        "id": "LB53",
+        "Translate": {
+          "X": -2872.99,
+          "Y": 285.31,
+          "Z": -496.97
+        },
+        "hash_id": "0x6fad9353d1760c3a",
+        "name": "LB53",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xec2195519e8cdba3",
+        "is_passenger": true
+      },
+      {
+        "id": "UM29",
+        "Translate": {
+          "X": 4292.5,
+          "Y": 258.55,
+          "Z": -1608.5
+        },
+        "hash_id": "0x6dadbd4681058df8",
+        "name": "UM29",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xeed977e0d06944fe",
+        "is_passenger": true
+      },
+      {
+        "id": "LB43",
+        "Translate": {
+          "X": -2082.5,
+          "Y": 209.56,
+          "Z": -480
+        },
+        "hash_id": "0x515e3c682714606c",
+        "name": "LB43",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xf42ac71a180abe4e",
+        "is_passenger": true
+      },
+      {
+        "id": "EC54",
+        "Translate": {
+          "X": 2372.34,
+          "Y": 236.69,
+          "Z": -1404.55
+        },
+        "hash_id": "0x50b7f00accf9598c",
+        "name": "EC54",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xf53bb118b54590ad",
+        "is_passenger": true
+      },
+      {
+        "id": "UZ37",
+        "Translate": {
+          "X": 3527.5,
+          "Y": 316.7,
+          "Z": 60.5
+        },
+        "hash_id": "0x10d3910b23f8b9b4",
+        "name": "UZ37",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xf70f90356c6270aa",
+        "is_passenger": true
+      },
+      {
+        "id": "PF68",
+        "Translate": {
+          "X": 223.47,
+          "Y": 175.16,
+          "Z": 3531.37
+        },
+        "hash_id": "0x5a785bcb9d7225c8",
+        "name": "PF68",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xfbecdd7daa8cd3e0",
+        "is_passenger": true
+      },
+      {
+        "id": "ML19",
+        "Translate": {
+          "X": 2476.52,
+          "Y": 116.21,
+          "Z": 1742.53
+        },
+        "hash_id": "0x22a774537c466e8b",
+        "name": "ML19",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0xfd132df124d41952",
+        "is_passenger": true
+      },
+      {
+        "id": "PF03",
+        "Translate": {
+          "X": 628.53,
+          "Y": 117.82,
+          "Z": 964.58
+        },
+        "hash_id": "0x46280ff1236ca0e3",
+        "name": "PF03",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x199b09371296f7fc",
+        "is_passenger": true
+      },
+      {
+        "id": "ML39",
+        "Translate": {
+          "X": 3245.04,
+          "Y": 236.54,
+          "Z": 2283.04
+        },
+        "hash_id": "0x74c4d621a8dff54f",
+        "name": "ML39",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x1b71d003da4baf6e",
+        "is_passenger": true
+      },
+      {
+        "id": "PS13",
+        "Translate": {
+          "X": -2337.04,
+          "Y": 509.52,
+          "Z": -2956.54
+        },
+        "hash_id": "0x7b3c479ee74cee72",
+        "name": "PS13",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x1ca9c1898ede247d",
+        "is_passenger": true
+      },
+      {
+        "id": "HF50",
+        "Translate": {
+          "X": -455.13,
+          "Y": 125.06,
+          "Z": 1647.94
+        },
+        "hash_id": "0x64bc788070f63839",
+        "name": "HF50",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x21aab7e641604032",
+        "is_passenger": true
+      },
+      {
+        "id": "EC10",
+        "Translate": {
+          "X": 2178.03,
+          "Y": 628.63,
+          "Z": -2780.46
+        },
+        "hash_id": "0xa73b2de643ab410d",
+        "name": "EC10",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x26376688f39f1aee",
+        "is_passenger": true
+      },
+      {
+        "id": "UM09",
+        "Translate": {
+          "X": 3959,
+          "Y": 285.5,
+          "Z": -3118.5
+        },
+        "hash_id": "0xadda2fdb3470703e",
+        "name": "UM09",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x2a177609fd8aa7bf",
+        "is_passenger": true
+      },
+      {
+        "id": "RW41",
+        "Translate": {
+          "X": 2242.5,
+          "Y": 135.07,
+          "Z": 3469
+        },
+        "hash_id": "0x53a63f89c3a10b65",
+        "name": "RW41",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x2a2ce4df12954054",
+        "is_passenger": true
+      },
+      {
+        "id": "TR02",
+        "Translate": {
+          "X": 1025,
+          "Y": 216.37,
+          "Z": -3674
+        },
+        "hash_id": "0xa4454506c6584e6a",
+        "name": "TR02",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x2b954ce40e323553",
+        "is_passenger": true
+      },
+      {
+        "id": "HF38",
+        "Translate": {
+          "X": -1356.41,
+          "Y": 151.97,
+          "Z": 1310.46
+        },
+        "hash_id": "0x9d42d1a1f0072590",
+        "name": "HF38",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x3291538fa06bdcc6",
+        "is_passenger": true
+      },
+      {
+        "id": "GH03",
+        "Translate": {
+          "X": -3583.55,
+          "Y": 175.75,
+          "Z": -14.15
+        },
+        "hash_id": "0x9db217c87678593b",
+        "name": "GH03",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x3a2f117abde21022",
+        "is_passenger": true
+      },
+      {
+        "id": "TR03",
+        "Translate": {
+          "X": 523,
+          "Y": 289.82,
+          "Z": -3398.5
+        },
+        "hash_id": "0x522a94e956e97d33",
+        "name": "TR03",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x3b5f9b5b9e7da7b9",
+        "is_passenger": true
+      },
+      {
+        "id": "HF43",
+        "Translate": {
+          "X": -42,
+          "Y": 128.06,
+          "Z": 1112
+        },
+        "hash_id": "0x5ba09f257eb9ec25",
+        "name": "HF43",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x3cde914031313704",
+        "is_passenger": true
+      },
+      {
+        "id": "SS63",
+        "Translate": {
+          "X": 1172,
+          "Y": 115.28,
+          "Z": 1884.5
+        },
+        "hash_id": "0x59ea8674743ae409",
+        "name": "SS63",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x3e5f8f162d00ae26",
+        "is_passenger": true
+      },
+      {
+        "id": "LB02",
+        "Translate": {
+          "X": -546,
+          "Y": 373.26,
+          "Z": -2226
+        },
+        "hash_id": "0x80777291d0e95b60",
+        "name": "LB02",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x45e3b3b7e746ec48",
+        "is_passenger": true
+      },
+      {
+        "id": "UM25",
+        "Translate": {
+          "X": 3748,
+          "Y": 199.45,
+          "Z": -2304.5
+        },
+        "hash_id": "0xb4f2021c67d8b7f4",
+        "name": "UM25",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x4767004a184e7df7",
+        "is_passenger": true
+      },
+      {
+        "id": "HF68",
+        "Translate": {
+          "X": -1129.54,
+          "Y": 249.79,
+          "Z": 1970.78
+        },
+        "hash_id": "0x8d697c2cfe1e88c5",
+        "name": "HF68",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x4896271e37247312",
+        "is_passenger": true
+      },
+      {
+        "id": "SS72",
+        "Translate": {
+          "X": 769.5,
+          "Y": 241.61,
+          "Z": 2141
+        },
+        "hash_id": "0xb275574e9b630238",
+        "name": "SS72",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x49884ebc4c874727",
+        "is_passenger": true
+      },
+      {
+        "id": "PF34",
+        "Translate": {
+          "X": -189.86,
+          "Y": 125.84,
+          "Z": 2249.39
+        },
+        "hash_id": "0x7f96a09d207c8c19",
+        "name": "PF34",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x00c3e1ef17e6ba50",
+        "is_passenger": true
+      },
+      {
+        "id": "PF82",
+        "Translate": {
+          "X": 1397.15,
+          "Y": 107.23,
+          "Z": 3641.25
+        },
+        "hash_id": "0x81ac7cd4136278c2",
+        "name": "PF82",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x4e314676408880ec",
+        "is_passenger": true
+      },
+      {
+        "id": "RW24",
+        "Translate": {
+          "X": 2453,
+          "Y": 326.36,
+          "Z": 2912
+        },
+        "hash_id": "0xb4e0c6aa28e3f92b",
+        "name": "RW24",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x51753d5977774f42",
+        "is_passenger": true
+      },
+      {
+        "id": "PF73",
+        "Translate": {
+          "X": 519.75,
+          "Y": 155.13,
+          "Z": 3483.66
+        },
+        "hash_id": "0xb3e9d3447878c98c",
+        "name": "PF73",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x5264f1268b0286cb",
+        "is_passenger": true
+      },
+      {
+        "id": "UZ12",
+        "Translate": {
+          "X": 4053.42,
+          "Y": 381.76,
+          "Z": -945.36
+        },
+        "hash_id": "0x522065f7a820ef96",
+        "name": "UZ12",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x092ea2b579cab4aa",
+        "is_passenger": true
+      },
+      {
+        "id": "RW42",
+        "Translate": {
+          "X": 2828,
+          "Y": 106.48,
+          "Z": 3883.5
+        },
+        "hash_id": "0xb175928c097f7d8c",
+        "name": "RW42",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x5e009362d5eac4a3",
+        "is_passenger": true
+      },
+      {
+        "id": "GC42",
+        "Translate": {
+          "X": -3820.41,
+          "Y": 157.41,
+          "Z": 3125.9
+        },
+        "hash_id": "0x4e16b8e9e8391c04",
+        "name": "GC42",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x09c17f3baf0dc536",
+        "is_passenger": true
+      },
+      {
+        "id": "HF22",
+        "Translate": {
+          "X": -779,
+          "Y": 123.29,
+          "Z": 500
+        },
+        "hash_id": "0x4e08085255170991",
+        "name": "HF22",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x09df1a50290b4748",
+        "is_passenger": true
+      },
+      {
+        "id": "SS16",
+        "Translate": {
+          "X": 1505,
+          "Y": 119.3,
+          "Z": 335.5
+        },
+        "hash_id": "0xe253f94e0755ebff",
+        "name": "SS16",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x63ee8bfc2f3522fd",
+        "is_passenger": true
+      },
+      {
+        "id": "PS21",
+        "Translate": {
+          "X": -2794,
+          "Y": 459.72,
+          "Z": -2307.5
+        },
+        "hash_id": "0xe7ff8fdfc926d4d1",
+        "name": "PS21",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x6400888dba389d0a",
+        "is_passenger": true
+      },
+      {
+        "id": "GC09",
+        "Translate": {
+          "X": -2433.5,
+          "Y": 340.14,
+          "Z": 2118.5
+        },
+        "hash_id": "0x97366017b2dcb12b",
+        "name": "GC09",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x64a5a3398166e7d1",
+        "is_passenger": true
+      },
+      {
+        "id": "ML42",
+        "Translate": {
+          "X": 3726.5,
+          "Y": 307.21,
+          "Z": 2160.5
+        },
+        "hash_id": "0xeb63e3efe091789c",
+        "name": "ML42",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x6af0255d13bdb3db",
+        "is_passenger": true
+      },
+      {
+        "id": "SS13",
+        "Translate": {
+          "X": 1534.5,
+          "Y": 115.74,
+          "Z": -510
+        },
+        "hash_id": "0xe85d3592b32acbc5",
+        "name": "SS13",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x6c107fb060500012",
+        "is_passenger": true
+      },
+      {
+        "id": "PF14",
+        "Translate": {
+          "X": 290,
+          "Y": 133.26,
+          "Z": 1204.5
+        },
+        "hash_id": "0xeec08ed585c22982",
+        "name": "PF14",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x6f15b03752685eb5",
+        "is_passenger": true
+      },
+      {
+        "id": "GH12",
+        "Translate": {
+          "X": -3196.5,
+          "Y": 585,
+          "Z": 1169.79
+        },
+        "hash_id": "0x9661a75839973c27",
+        "name": "GH12",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x75ed6d366e8b0336",
+        "is_passenger": true
+      },
+      {
+        "id": "GC50",
+        "Translate": {
+          "X": -2494.4,
+          "Y": 131.76,
+          "Z": 3348.47
+        },
+        "hash_id": "0x4075b12010df7a70",
+        "name": "GC50",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x0be67e07414b8c79",
+        "is_passenger": true
+      },
+      {
+        "id": "GC05",
+        "Translate": {
+          "X": -1984.43,
+          "Y": 138.96,
+          "Z": 2079.17
+        },
+        "hash_id": "0x498b637f0631a3b9",
+        "name": "GC05",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x0c365d093d05fc40",
+        "is_passenger": true
+      },
+      {
+        "id": "SS28",
+        "Translate": {
+          "X": 2689,
+          "Y": 217.01,
+          "Z": 544
+        },
+        "hash_id": "0x4fb2ff7f0d0b0cad",
+        "name": "SS28",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x0c3fc1a964ffdccb",
+        "is_passenger": true
+      },
+      {
+        "id": "PF67",
+        "Translate": {
+          "X": 1611.94,
+          "Y": 166.91,
+          "Z": 3493.28
+        },
+        "hash_id": "0x914f9cd862cf9aae",
+        "name": "PF67",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x7c829b0eada2a14f",
+        "is_passenger": true
+      },
+      {
+        "id": "TR13",
+        "Translate": {
+          "X": 1249.48,
+          "Y": 527.35,
+          "Z": -3005.47
+        },
+        "hash_id": "0xdb1afacf0acc5343",
+        "name": "TR13",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x7ccf289a445a9a99",
+        "is_passenger": true
+      },
+      {
+        "id": "HF10",
+        "Translate": {
+          "X": -1548,
+          "Y": 133.46,
+          "Z": 1001.5
+        },
+        "hash_id": "0x90543aa17522c4a0",
+        "name": "HF10",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x7deb7883ac348bcf",
+        "is_passenger": true
+      },
+      {
+        "id": "UM07",
+        "Translate": {
+          "X": 4282,
+          "Y": 277.53,
+          "Z": -3267.5
+        },
+        "hash_id": "0xfc0c55443334d8a0",
+        "name": "UM07",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x8179acfb6c1a014b",
+        "is_passenger": true
+      },
+      {
+        "id": "UM21",
+        "Translate": {
+          "X": 4201.71,
+          "Y": 233.2,
+          "Z": -2742.3
+        },
+        "hash_id": "0xc220611f3fdaf78b",
+        "name": "UM21",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x822da7cd47b4be51",
+        "is_passenger": true
+      },
+      {
+        "id": "LB30",
+        "Translate": {
+          "X": -3613.35,
+          "Y": 394.54,
+          "Z": -985.37
+        },
+        "hash_id": "0xc0f953c29ff7f374",
+        "name": "LB30",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x8464b2a0e6538974",
+        "is_passenger": true
+      },
+      {
+        "id": "SS30",
+        "Translate": {
+          "X": 958.26,
+          "Y": 137.08,
+          "Z": 203.05
+        },
+        "hash_id": "0xcbc5b5826d42ccbf",
+        "name": "SS30",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x8476fce426d4833c",
+        "is_passenger": true
+      },
+      {
+        "id": "PS14",
+        "Translate": {
+          "X": -1539.5,
+          "Y": 344.3,
+          "Z": -2554
+        },
+        "hash_id": "0xf7c5c8b2b584883d",
+        "name": "PS14",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x86b0ca748d9a5f3f",
+        "is_passenger": true
+      },
+      {
+        "id": "LL05",
+        "Translate": {
+          "X": -776.46,
+          "Y": 122.95,
+          "Z": -938.51
+        },
+        "hash_id": "0xc73bbbb212e83b6d",
+        "name": "LL05",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x86b688f4417e6e8c",
+        "is_passenger": true
+      },
+      {
+        "id": "TR10",
+        "Translate": {
+          "X": 489,
+          "Y": 280.85,
+          "Z": -3054.5
+        },
+        "hash_id": "0xc4aee547a6b56906",
+        "name": "TR10",
+        "map_static": 1,
+        "map_name": "Surface",
+        "map_type": "Totk",
+        "friend_hash_id": "0x87193eeaf89da734",
+        "is_passenger": true
       }
     ],
     "Place": [

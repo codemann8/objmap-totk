@@ -2,7 +2,7 @@ import 'leaflet-path-transform';
 
 import * as L from 'leaflet';
 import Component from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 
 import AppMapDetailsBase from '@/components/AppMapDetailsBase';
 import ObjectInfo from '@/components/ObjectInfo';
@@ -25,6 +25,8 @@ import { ColorScale } from '@/util/colorscale';
 import * as curves from '@/util/curves';
 import { vecAdd } from '@/util/math';
 import * as svg from '@/util/svg';
+
+import { Settings } from '@/util/settings';
 
 require('leaflet-hotline')
 
@@ -53,16 +55,16 @@ function isAreaObject(obj: ObjectMinData) {
   return areaObjectNames.includes(obj.name) || obj.name.startsWith('AirWall') || obj.name.startsWith("AreaInvalidateRestartPos") || obj.name.startsWith("ForbidAutoPlacementArea");
 }
 
-class StaticData {
+export class StaticData {
   persistentAreaMarkers: L.Path[] = [];
   history: ObjectData[] = [];
-  persistentKorokMarkers: any[] = [];
+  persistentKorokPaths: Map<string, { markers: any[], relatedHashIds: string[] }> = new Map();
   colorScale: ColorScale | null = null;
   persistentRailMarkers: { [key: string]: any }[] = [];
   persistentRailLimits: { [key: string]: any } = {};
 }
 
-const staticData = new StaticData();
+export const staticData = new StaticData();
 
 @Component({
   components: {
@@ -102,6 +104,11 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   private isChecked!: boolean;
 
   async init() {
+    // Auto-persist previous korok's path when switching markers (opacity-alt only)
+    if (this.isOpacityAltEnabled() && this.korokMarkers.length && this.obj && this.isKorokWithPath()) {
+      this.keepKorokMarkersAlive();
+    }
+
     this.minObj = this.marker.data.obj;
     this.obj = null;
     this.genGroup = [];
@@ -291,9 +298,21 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     }
   }
 
+  private isKorokWithPath(): boolean {
+    if (!this.obj) return false;
+    if (this.minObj && this.minObj.korok_type) return true;
+    const korokCarryNames = ['KorokCarryProgressKeeper', 'KorokCarry_Destination', 'KorokCarryPassenger_Pair'];
+    return korokCarryNames.includes(this.obj.name);
+  }
+
   beforeDestroy() {
     this.areaMarkers.forEach(m => m.remove());
-    this.korokMarkers.forEach(m => m.remove());
+    // Auto-persist korok paths when opacity-alt is enabled
+    if (this.isOpacityAltEnabled() && this.korokMarkers.length && this.obj && this.isKorokWithPath()) {
+      this.keepKorokMarkersAlive();
+    } else {
+      this.korokMarkers.forEach(m => m.remove());
+    }
     this.shrineCrystalMarkers.forEach(m => m.remove());
     this.railMarkers.forEach(m => m.remove());
     // Rails
@@ -874,14 +893,100 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
   }
 
   keepKorokMarkersAlive() {
-    this.staticData.persistentKorokMarkers.push(... this.korokMarkers);
+    if (!this.obj) return;
+    const hashId = this.obj.hash_id;
+    const relatedHashIds = this.getKorokFriendHashIds();
+    // Make markers non-interactive so they don't steal clicks
+    for (const m of this.korokMarkers) {
+      m.off();
+      if (m.getElement) {
+        const el = m.getElement();
+        if (el) el.style.pointerEvents = 'none';
+      }
+      // @ts-ignore
+      if (m._path) m._path.style.pointerEvents = 'none';
+    }
+    this.staticData.persistentKorokPaths.set(hashId, {
+      markers: [...this.korokMarkers],
+      relatedHashIds,
+    });
     this.korokMarkers = [];
   }
 
   forgetPersistentKorokMarkers() {
-    let map = this.marker.data.mb;
-    this.staticData.persistentKorokMarkers.forEach(m => m.remove());
-    this.staticData.persistentKorokMarkers = [];
+    for (const [, entry] of this.staticData.persistentKorokPaths) {
+      entry.markers.forEach(m => m.remove());
+    }
+    this.staticData.persistentKorokPaths.clear();
+    // Also remove current live korok markers
+    this.korokMarkers.forEach(m => m.remove());
+    this.korokMarkers = [];
+  }
+
+  hideCurrentKorokPath() {
+    if (!this.obj) return;
+    // Remove persisted entry if it exists
+    this.forgetPersistentKorokPath(this.obj.hash_id);
+    // Also remove current live markers
+    this.korokMarkers.forEach(m => m.remove());
+    this.korokMarkers = [];
+  }
+
+  forgetPersistentKorokPath(hashId: string) {
+    const entry = this.staticData.persistentKorokPaths.get(hashId);
+    if (entry) {
+      entry.markers.forEach(m => m.remove());
+      this.staticData.persistentKorokPaths.delete(hashId);
+    }
+  }
+
+  private getKorokFriendHashIds(): string[] {
+    if (!this.obj) return [];
+    if (this.obj.name == 'KorokCarryProgressKeeper' ||
+        this.obj.name == 'KorokCarry_Destination' ||
+        this.obj.name == 'KorokCarryPassenger_Pair') {
+      // Return hash_ids of ALL KorokCarryProgressKeepers in the genGroup,
+      // since those are the actual map markers the user marks as found.
+      return this.genGroup
+        .filter(obj => obj.name === 'KorokCarryProgressKeeper')
+        .map(obj => obj.hash_id);
+    }
+    return [];
+  }
+
+  hasPersistentKorokPaths(): boolean {
+    return this.staticData.persistentKorokPaths.size > 0;
+  }
+
+  getPersistentKorokPathKeys(): string[] {
+    return Array.from(this.staticData.persistentKorokPaths.keys());
+  }
+
+  private isOpacityAltEnabled(): boolean {
+    return Settings.getInstance().checklistMarkerVisibility === 'opacity-alt';
+  }
+
+  @Watch('isChecked')
+  private onIsCheckedChanged(newVal: boolean) {
+    if (newVal && this.isOpacityAltEnabled() && this.isKorokWithPath()) {
+      const friendHashIds = this.getKorokFriendHashIds();
+      if (friendHashIds.length > 0) {
+        // KorokCarry friends: only remove when ALL friends are marked
+        // Emit event to parent to check friend marked status
+        this.$parent.$emit('AppMap:check-korok-friends-marked', {
+          friendHashIds: friendHashIds,
+          callback: (allMarked: boolean) => {
+            if (allMarked) {
+              this.korokMarkers.forEach(m => m.remove());
+              this.korokMarkers = [];
+            }
+          }
+        });
+      } else {
+        this.korokMarkers.forEach(m => m.remove());
+        this.korokMarkers = [];
+      }
+    }
   }
 
   keepRailMarkersAlive() {

@@ -23,9 +23,9 @@
         <b-btn v-show="areaMarkers.length" size="sm" block variant="dark" @click.stop.prevent="keepAreaMarkersAlive()">Keep area representation loaded</b-btn>
         <b-btn v-show="staticData.persistentAreaMarkers.length" size="sm" block variant="dark" @click.stop.prevent="forgetPersistentAreaMarkers()">Hide area representation</b-btn>
       </section>
-      <section class="mt-2" v-show="minObj.korok_type && (this.korokMarkers.length || staticData.persistentKorokMarkers.length)">
-        <b-btn v-show="this.korokMarkers.length" size="sm" block variant="dark" @click.stop.prevent="keepKorokMarkersAlive()">Keep Korok markers loaded</b-btn>
-        <b-btn v-show="staticData.persistentKorokMarkers.length" size="sm" block variant="dark" @click.stop.prevent="forgetPersistentKorokMarkers()">Hide Korok markers</b-btn>
+      <section class="mt-2" v-show="isKorokWithPath() && (korokMarkers.length || hasPersistentKorokPaths())">
+        <b-btn v-show="korokMarkers.length || (obj && staticData.persistentKorokPaths.has(obj.hash_id))" size="sm" block variant="dark" @click.stop.prevent="hideCurrentKorokPath()">Hide this Korok's path</b-btn>
+        <b-btn v-show="hasPersistentKorokPaths() || korokMarkers.length" size="sm" block variant="dark" @click.stop.prevent="forgetPersistentKorokMarkers()">Hide all Korok paths</b-btn>
       </section>
       <section class="mt-2" v-show="this.railMarkers.length || staticData.persistentRailMarkers.length">
         <b-btn v-show="this.railMarkers.length" size="sm" block variant="dark" @click.stop.prevent="keepRailMarkersAlive()">Keep Rails loaded</b-btn>

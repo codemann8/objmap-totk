@@ -61,5 +61,18 @@ data['markers']['Labo'] = make_markers(mainfield_markers['Labo'])
 data['markers']['Shop'] = make_markers(chain(*(mainfield_markers[x] for x in ('ShopBougu', 'ShopColor', 'ShopJewel', 'ShopYadoya', 'ShopYorozu'))))
 data['markers']['Korok'] = korok_data
 
+# Merge korok extra data (origin positions, friend pairs) if available
+korok_extra_path = root / 'korok_extra.json'
+if korok_extra_path.exists():
+    korok_extra = json.load(open(korok_extra_path, 'r'))
+    for korok in data['markers']['Korok']:
+        hid = korok['hash_id']
+        if hid in korok_extra:
+            extra = korok_extra[hid]
+            if 'origin_pos' in extra:
+                korok['origin_pos'] = extra['origin_pos']
+            if 'friend_hash_id' in extra:
+                korok['friend_hash_id'] = extra['friend_hash_id']
+
 with open(game_files_dir / 'map_summary' / 'MainField' / 'static.json', 'w') as f:
     json.dump(data, f, ensure_ascii=False)

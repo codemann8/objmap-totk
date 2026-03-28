@@ -16,7 +16,7 @@ import draggable from 'vuedraggable';
 import AppMapDetailsDungeon from '@/components/AppMapDetailsDungeon';
 import AppMapDetailsCave from './AppMapDetailsCave.vue';
 import AppMapDetailsLandmark from '@/components/AppMapDetailsLandmark';
-import AppMapDetailsObj from '@/components/AppMapDetailsObj';
+import AppMapDetailsObj, { staticData as objDetailsStaticData } from '@/components/AppMapDetailsObj';
 import AppMapDetailsPlace from '@/components/AppMapDetailsPlace';
 import AppMapFilterMainButton from '@/components/AppMapFilterMainButton';
 import AppMapPopup from '@/components/AppMapPopup';
@@ -728,6 +728,10 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   closeSidebar() {
+    if (this.detailsPaneOpened) {
+      this.closeMarkerDetails();
+      return;
+    }
     this.sidebar.close();
   }
 
@@ -1799,6 +1803,23 @@ export default class AppMap extends mixins(MixinUtil) {
       value = !value;
       value = await this.checklists.setMarked(item.hash_id, value);
     }
+
+    // Auto-mark korok friend pair (opacity-alt only)
+    let friendHashId: string | null = null;
+    if (toggle && this.clMarkerVisibility === 'opacity-alt') {
+      const korokGroup = this.markerGroups.get('Korok');
+      if (korokGroup) {
+        // @ts-ignore
+        const korokMarker = korokGroup.find((m) => m.getHashID() === item.hash_id);
+        // @ts-ignore
+        if (korokMarker && korokMarker.info && korokMarker.info.friend_hash_id) {
+          // @ts-ignore
+          friendHashId = korokMarker.info.friend_hash_id;
+          this.checklists.setMarked(friendHashId!, value);
+        }
+      }
+    }
+
     const groupOpacity = (value) ? MARKER_OPACITIES[this.clMarkerVisibility] : 1.0;
     const activeSearchOpacity = value ? ACTIVE_SEARCH_MARKED_OPACITY : 1.0;
     const showCheckmark = this.shouldShowChecklistCheckmark();
@@ -1851,7 +1872,59 @@ export default class AppMap extends mixins(MixinUtil) {
         }
       }
       this.refreshMapTowerCompletion();
+
+      // Update friend korok marker visual state
+      if (friendHashId) {
+        const korokGroup = this.markerGroups.get('Korok');
+        if (korokGroup) {
+          // @ts-ignore
+          const friendMarker = korokGroup.find((m) => m.getHashID() === friendHashId);
+          if (friendMarker) {
+            // @ts-ignore
+            friendMarker.setMarked(value, groupOpacity, showCheckmark);
+            // @ts-ignore
+            this.applyAlternateUnmarkedIcon(friendMarker, !value && useAlternateUnmarkedIcon);
+          }
+        }
+        if (friendHashId in this.localDetails)
+          this.localDetails[friendHashId] = value;
+        if (friendHashId in this.localSearch)
+          this.localSearch[friendHashId] = value;
+      }
+
+      // Auto-remove persisted korok paths when marked as found (opacity-alt only)
+      if (value && this.clMarkerVisibility === 'opacity-alt') {
+        this.autoRemovePersistedKorokPath(item.hash_id);
+        if (friendHashId) {
+          this.autoRemovePersistedKorokPath(friendHashId);
+        }
+      }
     })
+  }
+
+  private autoRemovePersistedKorokPath(hashId: string) {
+    // Check all persisted paths to see if this hash_id is involved
+    for (const [key, entry] of objDetailsStaticData.persistentKorokPaths) {
+      // Direct match: this is the korok that was persisted
+      if (key === hashId) {
+        if (entry.relatedHashIds.length > 0) {
+          // Korok friends: only remove when ALL related are marked
+          const allMarked = entry.relatedHashIds.every(id => this.checklists.isMarked(id));
+          if (!allMarked) continue;
+        }
+        entry.markers.forEach(m => m.remove());
+        objDetailsStaticData.persistentKorokPaths.delete(key);
+        continue;
+      }
+      // Indirect match: this hash_id is a related friend of a persisted path
+      if (entry.relatedHashIds.includes(hashId)) {
+        const allMarked = entry.relatedHashIds.every(id => this.checklists.isMarked(id));
+        if (allMarked) {
+          entry.markers.forEach(m => m.remove());
+          objDetailsStaticData.persistentKorokPaths.delete(key);
+        }
+      }
+    }
   }
 
   initContextMenu() {
@@ -1904,6 +1977,10 @@ export default class AppMap extends mixins(MixinUtil) {
     });
     this.$on('AppMap:update-search-markers', (value: any) => {
       this.updateSearchResultMarkers(value);
+    });
+    this.$on('AppMap:check-korok-friends-marked', (value: any) => {
+      const allMarked = value.friendHashIds.every((id: string) => this.checklists.isMarked(id));
+      value.callback(allMarked);
     });
     this.map.m.on('AppMap:update-search-markers', (args) => {
       this.updateSearchResultMarkers(args);
