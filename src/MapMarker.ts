@@ -259,6 +259,7 @@ export class MapMarkerLocation extends MapMarkerCanvasImpl {
       msg = lp.getMessageId();
     }
     super(mb, msg, lp.getXYZ(), {
+      radius: 0,
       stroke: false,
       fill: false,
       // @ts-ignore
