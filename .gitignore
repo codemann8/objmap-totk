@@ -4,6 +4,9 @@ public/game_files
 node_modules
 /dist
 
+# local scripts
+*.ps1
+
 # local env files
 .env.local
 .env.*.local
