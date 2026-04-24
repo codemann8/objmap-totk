@@ -431,6 +431,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   private areaMapLayer = new ui.Unobservable(L.layerGroup());
   private areaMapLayersByData: ui.Unobservable<Map<any, L.Layer[]>> = new ui.Unobservable(new Map());
+  private cachedMapTowerEntries: Array<[string, any]> | null = null;
   private areaAutoItem = new ui.Unobservable(L.layerGroup());
 
   private skipCompletedObjects: boolean = false;
@@ -2212,8 +2213,34 @@ export default class AppMap extends mixins(MixinUtil) {
   }
 
   private refreshMapTowerCompletion() {
-    if (this.shownAreaMap === 'MapTowerCompletion') {
+    if (this.shownAreaMap !== 'MapTowerCompletion')
+      return;
+    if (this.cachedMapTowerEntries && this.areaMapLayersByData.data.size > 0) {
+      this.updateMapTowerCompletionInPlace(this.cachedMapTowerEntries);
+    } else {
       this.loadAreaMap(this.shownAreaMap);
+    }
+  }
+
+  private updateMapTowerCompletionInPlace(entries: Array<[string, any]>) {
+    const fillOpacity = (this.showAreaColor) ? 0.2 : 0.0;
+    const completion = this.computeMapTowerCompletion(entries);
+    for (const [data, features] of entries) {
+      const completionInfo = completion.get(data);
+      const completionColor = completionInfo ? this.completionToColor(completionInfo.ratio) : undefined;
+      const layers = this.areaMapLayersByData.data.get(data);
+      if (!layers)
+        continue;
+      const title = (features[0] && features[0].properties && features[0].properties.title) || data;
+      const total = completionInfo ? completionInfo.total : 0;
+      const completed = completionInfo ? completionInfo.completed : 0;
+      const percent = completionInfo ? Math.round(completionInfo.ratio * 100) : 0;
+      for (const layer of layers as L.GeoJSON[]) {
+        if (completionColor) {
+          layer.setStyle({ color: completionColor, fillOpacity });
+        }
+        layer.setTooltipContent(`${title}<br/>${percent}% (${completed}/${total})`);
+      }
     }
   }
 
@@ -2459,6 +2486,36 @@ export default class AppMap extends mixins(MixinUtil) {
       }
     }
 
+    // Also count items from all checklists that are not already covered by searchGroups.
+    for (const list of this.checklists.lists) {
+      for (const item of Object.values(list.items) as any[]) {
+        if (seen.has(item.hash_id))
+          continue;
+        const minData = {
+          objid: 0,
+          hash_id: item.hash_id,
+          map_type: item.map_type,
+          map_name: item.map_name || '',
+          map_static: true,
+          name: '',
+          pos: item.pos as [number, number, number],
+        };
+        if (!isObjectInLayer(minData, this.map.activeLayer))
+          continue;
+        seen.add(item.hash_id);
+
+        const areaKey = this.findAreaForPoint(item.pos[0], item.pos[2], areaIndex);
+        if (!areaKey)
+          continue;
+        const entry = completion.get(areaKey);
+        if (!entry)
+          continue;
+        entry.total += 1;
+        if (this.checklists.isMarked(item.hash_id))
+          entry.completed += 1;
+      }
+    }
+
     completion.forEach((entry) => {
       entry.ratio = entry.total > 0 ? entry.completed / entry.total : 0;
     });
@@ -2469,6 +2526,7 @@ export default class AppMap extends mixins(MixinUtil) {
   async loadAreaMap(name: string) {
     this.areaMapLayer.data.clearLayers();
     this.areaMapLayersByData.data.clear();
+    this.cachedMapTowerEntries = null;
     this.caveDetailEntries = [];
     this.caveDetailHoveredTitle = null;
     if (this.caveDetailTooltip) {
@@ -2513,6 +2571,9 @@ export default class AppMap extends mixins(MixinUtil) {
       areas = this.featureCollectionToPolygons(areas as any)
     }
     const entries = Object.entries(areas);
+    if (isMapTowerCompletion) {
+      this.cachedMapTowerEntries = entries;
+    }
     const completion = isMapTowerCompletion ? this.computeMapTowerCompletion(entries) : null;
 
     let fillOpacity = (this.showAreaColor) ? 0.2 : 0.0
