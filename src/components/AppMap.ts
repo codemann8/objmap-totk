@@ -446,7 +446,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   private caveDetailEntries: Array<{ title: string, layers: L.GeoJSON[], features: any[] }> = [];
   private caveDetailHoveredTitle: string | null = null;
-  private korokPairLines: Map<string, { line: L.Polyline, map_layer: string }> = new Map();
+  private korokPairLines: Map<string, { lines: L.Polyline[], map_layer: string }> = new Map();
   private caveDetailTooltip: L.Tooltip | null = null;
   private caveDetailHoverInitialized = false;
   private markerTooltipOpen = false;
@@ -705,10 +705,29 @@ export default class AppMap extends mixins(MixinUtil) {
     this.syncKorokPairLines();
   }
 
+  private korokArrowMarkerInjected = false;
+
+  private ensureKorokPairLineStyle() {
+    if (this.korokArrowMarkerInjected) return;
+    this.korokArrowMarkerInjected = true;
+    // Inject CSS for animated dashes that visually flow from passenger → destination
+    const style = document.createElement('style');
+    style.textContent = `
+      .korok-pair-line {
+        stroke-dasharray: 8, 8;
+        animation: korok-pair-flow 1s linear infinite;
+      }
+      @keyframes korok-pair-flow {
+        to { stroke-dashoffset: -16; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
   private syncKorokPairLines() {
     // Remove all existing auto pair lines
     for (const [, entry] of this.korokPairLines) {
-      entry.line.remove();
+      entry.lines.forEach(l => l.remove());
     }
     this.korokPairLines.clear();
 
@@ -743,8 +762,32 @@ export default class AppMap extends mixins(MixinUtil) {
 
       const activeLayer = this.map.activeLayer;
       const lineOpacity = (info.map_name === activeLayer) ? 1.0 : 0;
-      const line = L.polyline([passengerPos, friendPos], { color: '#cccccc', weight: 1.5, opacity: lineOpacity }).addTo(this.map.m);
-      this.korokPairLines.set(info.hash_id, { line, map_layer: info.map_name });
+      const line = L.polyline([passengerPos, friendPos], {
+        color: '#cccccc', weight: 1.5, opacity: lineOpacity,
+      }).addTo(this.map.m);
+      const layers: L.Polyline[] = [line];
+      // Add a short tick at the destination end, rotated 30° from the backward direction
+      const dLat = friendPos[0] - passengerPos[0];
+      const dLng = friendPos[1] - passengerPos[1];
+      const lineLen = Math.sqrt(dLat * dLat + dLng * dLng);
+      if (lineLen > 0) {
+        const tickLen = Math.min(50, lineLen * 0.5); // fixed ~50 units, capped at 50% of main line
+        // Unit vector pointing backward (from destination toward passenger)
+        const bLat = -dLat / lineLen;
+        const bLng = -dLng / lineLen;
+        // Rotate backward vector by +30 degrees
+        const a = 30 * Math.PI / 180;
+        const tickDLat = bLat * Math.cos(a) - bLng * Math.sin(a);
+        const tickDLng = bLng * Math.cos(a) + bLat * Math.sin(a);
+        const tickEnd: [number, number] = [
+          friendPos[0] + tickDLat * tickLen,
+          friendPos[1] + tickDLng * tickLen,
+        ];
+        layers.push(L.polyline([friendPos, tickEnd], {
+          color: '#cccccc', weight: 1.5, opacity: lineOpacity,
+        }).addTo(this.map.m));
+      }
+      this.korokPairLines.set(info.hash_id, { lines: layers, map_layer: info.map_name });
     }
   }
 
@@ -929,7 +972,7 @@ export default class AppMap extends mixins(MixinUtil) {
     // Update auto korok pair line opacity based on stored layer
     for (const [, entry] of this.korokPairLines) {
       const opacity = (entry.map_layer === activeLayer) ? 1.0 : 0;
-      entry.line.setStyle({ opacity });
+      entry.lines.forEach(l => l.setStyle({ opacity }));
     }
   }
 
