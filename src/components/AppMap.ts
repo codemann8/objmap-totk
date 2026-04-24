@@ -446,6 +446,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
   private caveDetailEntries: Array<{ title: string, layers: L.GeoJSON[], features: any[] }> = [];
   private caveDetailHoveredTitle: string | null = null;
+  private korokPairLines: Map<string, { line: L.Polyline, map_layer: string }> = new Map();
   private caveDetailTooltip: L.Tooltip | null = null;
   private caveDetailHoverInitialized = false;
   private markerTooltipOpen = false;
@@ -701,6 +702,50 @@ export default class AppMap extends mixins(MixinUtil) {
         this.updateMarkerCheckmark(marker);
       }
     }
+    this.syncKorokPairLines();
+  }
+
+  private syncKorokPairLines() {
+    // Remove all existing auto pair lines
+    for (const [, entry] of this.korokPairLines) {
+      entry.line.remove();
+    }
+    this.korokPairLines.clear();
+
+    if (this.clMarkerVisibility !== 'opacity-alt') return;
+
+    const korokGroup = this.markerGroups.get('Korok');
+    if (!korokGroup) return;
+
+    // Build hash_id -> info map for quick lookup
+    const korokByHash = new Map<string, any>();
+    // @ts-ignore
+    for (const marker of korokGroup.markers) {
+      // @ts-ignore
+      if (marker.info) korokByHash.set(marker.info.hash_id, marker.info);
+    }
+
+    // @ts-ignore
+    for (const marker of korokGroup.markers) {
+      // @ts-ignore
+      const info = marker.info;
+      if (!info || !info.is_passenger || !info.friend_hash_id) continue;
+      // Only draw if neither passenger nor friend is marked
+      if (this.checklists.isMarked(info.hash_id) || this.checklists.isMarked(info.friend_hash_id)) continue;
+
+      const friendInfo = korokByHash.get(info.friend_hash_id);
+      if (!friendInfo) continue;
+
+      // Passenger position is their Translate (where they are stranded)
+      // Friend/destination position is the friend's Translate
+      const passengerPos: [number, number] = [info.Translate.Z, info.Translate.X];
+      const friendPos: [number, number] = [friendInfo.Translate.Z, friendInfo.Translate.X];
+
+      const activeLayer = this.map.activeLayer;
+      const lineOpacity = (info.map_name === activeLayer) ? 1.0 : 0;
+      const line = L.polyline([passengerPos, friendPos], { color: '#cccccc', weight: 1.5, opacity: lineOpacity }).addTo(this.map.m);
+      this.korokPairLines.set(info.hash_id, { line, map_layer: info.map_name });
+    }
   }
 
   initSidebar() {
@@ -873,6 +918,19 @@ export default class AppMap extends mixins(MixinUtil) {
         layer.setStyle({ opacity });
       }
     })
+    // Update persisted korok path opacity based on their stored layer
+    for (const [, entry] of objDetailsStaticData.persistentKorokPaths) {
+      const opacity = (entry.map_layer === activeLayer) ? 1.0 : 0;
+      for (const m of entry.markers) {
+        if (m.setOpacity) m.setOpacity(opacity);
+        else if (m.setStyle) m.setStyle({ opacity });
+      }
+    }
+    // Update auto korok pair line opacity based on stored layer
+    for (const [, entry] of this.korokPairLines) {
+      const opacity = (entry.map_layer === activeLayer) ? 1.0 : 0;
+      entry.line.setStyle({ opacity });
+    }
   }
 
   changeLayerColor(event: any) {
@@ -1900,6 +1958,8 @@ export default class AppMap extends mixins(MixinUtil) {
           this.autoRemovePersistedKorokPath(friendHashId);
         }
       }
+      // Sync auto pair lines whenever a korok is toggled
+      this.syncKorokPairLines();
     })
   }
 
@@ -2153,6 +2213,7 @@ export default class AppMap extends mixins(MixinUtil) {
 
     this.searchResultMarkers.forEach(m => m.data.updateTitle());
     this.updateSearchResultMarkerVisibility();
+    this.updateMarkers();
   }
 
   private async refreshSearchesForMapChange() {

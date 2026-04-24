@@ -35,23 +35,32 @@ export class MapMarkerGroup {
     if (!this.enableUpdates && !this.isInitialUpdate)
       return;
 
-    const addMarkers: Array<L.Layer> = [];
-    const remMarkers: Array<L.Layer> = [];
+    const toShow: boolean[] = this.markers.map(m => m.shouldBeShown());
 
-    for (const [i, marker] of this.markers.entries()) {
-      const shouldShow = marker.shouldBeShown();
-      if (shouldShow == this.shownMarkers[i])
-        continue;
-      if (shouldShow)
-        addMarkers.push(marker.getMarker());
-      else
-        remMarkers.push(marker.getMarker());
-      this.shownMarkers[i] = shouldShow;
+    // Check if the desired visible set has actually changed.
+    const changed = this.isInitialUpdate ||
+      toShow.some((show, i) => show !== this.shownMarkers[i]);
+
+    if (!changed) {
+      this.isInitialUpdate = false;
+      return;
     }
 
-    this.markerGroup.removeLayers(remMarkers);
-    this.markerGroup.addLayers(addMarkers);
+    this.shownMarkers = toShow;
     this.isInitialUpdate = false;
+
+    // Full rebuild: clear, then add only the markers that should be shown.
+    // A delta-based removeLayers/addLayers approach leaves leaflet.markercluster
+    // in inconsistent internal state (stale featureGroup entries, wrong
+    // _recursivelyAddChildrenToMap calls) which causes wrong-layer markers to
+    // reappear. Full rebuild is safe and fast because chunkedLoading:false and
+    // disableClusteringAtZoom bypass the expensive distance-grid computation.
+    this.markerGroup.clearLayers();
+    const addMarkers = this.markers
+      .filter((_, i) => toShow[i])
+      .map(m => m.getMarker());
+    if (addMarkers.length > 0)
+      this.markerGroup.addLayers(addMarkers);
   }
 
   find(predicate: (marker: MapMarker) => boolean) {

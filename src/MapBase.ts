@@ -257,8 +257,11 @@ export class MapBase {
     }).addTo(this.m);
     this.m.on('baselayerchange', (ev: any) => {
       const url = ev.layer._url;
-      this.activeLayer = AREAS.find(area => url.includes(area)) || "Surface";
-      this.m.fireEvent('objmap:base-layer-change');
+      const newLayer = AREAS.find(area => url.includes(area)) || "Surface";
+      if (this.activeLayer !== newLayer) {
+        this.activeLayer = newLayer;
+        this.m.fireEvent('objmap:base-layer-change');
+      }
     });
 
     // Keyboard control over Layer switching
@@ -331,6 +334,7 @@ preserveAspectRatio="none"  xmlns="http://www.w3.org/2000/svg" >
     this.m.removeLayer(this.baseMapLayers[this.activeLayer]);
     this.baseMapLayers[name].addTo(this.m);
     this.activeLayer = name;
+    this.m.fireEvent('objmap:base-layer-change');
   }
 
   switchBaseTileLayerDir(dir: -1 | 1) {

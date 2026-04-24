@@ -58,7 +58,7 @@ function isAreaObject(obj: ObjectMinData) {
 export class StaticData {
   persistentAreaMarkers: L.Path[] = [];
   history: ObjectData[] = [];
-  persistentKorokPaths: Map<string, { markers: any[], relatedHashIds: string[] }> = new Map();
+  persistentKorokPaths: Map<string, { markers: any[], relatedHashIds: string[], map_layer: string }> = new Map();
   colorScale: ColorScale | null = null;
   persistentRailMarkers: { [key: string]: any }[] = [];
   persistentRailLimits: { [key: string]: any } = {};
@@ -896,6 +896,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     if (!this.obj) return;
     const hashId = this.obj.hash_id;
     const relatedHashIds = this.getKorokFriendHashIds();
+    const map_layer = this.marker.data.mb.activeLayer;
     // Make markers non-interactive so they don't steal clicks
     for (const m of this.korokMarkers) {
       m.off();
@@ -909,6 +910,7 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
     this.staticData.persistentKorokPaths.set(hashId, {
       markers: [...this.korokMarkers],
       relatedHashIds,
+      map_layer,
     });
     this.korokMarkers = [];
   }
@@ -925,8 +927,21 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
   hideCurrentKorokPath() {
     if (!this.obj) return;
-    // Remove persisted entry if it exists
-    this.forgetPersistentKorokPath(this.obj.hash_id);
+    const currentHashId = this.obj.hash_id;
+    // Get the related IDs for the current korok (for pair koroks)
+    const currentRelatedIds = new Set(this.getKorokFriendHashIds());
+
+    // Clear this korok's own path
+    this.forgetPersistentKorokPath(currentHashId);
+    // Also clear any persisted paths that share related IDs (i.e. the pair partner's path)
+    if (currentRelatedIds.size > 0) {
+      for (const [key, entry] of Array.from(this.staticData.persistentKorokPaths.entries())) {
+        if (entry.relatedHashIds.some(id => currentRelatedIds.has(id))) {
+          entry.markers.forEach(m => m.remove());
+          this.staticData.persistentKorokPaths.delete(key);
+        }
+      }
+    }
     // Also remove current live markers
     this.korokMarkers.forEach(m => m.remove());
     this.korokMarkers = [];
@@ -968,23 +983,28 @@ export default class AppMapDetailsObj extends AppMapDetailsBase<MapMarkerObj | M
 
   @Watch('isChecked')
   private onIsCheckedChanged(newVal: boolean) {
-    if (newVal && this.isOpacityAltEnabled() && this.isKorokWithPath()) {
-      const friendHashIds = this.getKorokFriendHashIds();
-      if (friendHashIds.length > 0) {
-        // KorokCarry friends: only remove when ALL friends are marked
-        // Emit event to parent to check friend marked status
-        this.$parent.$emit('AppMap:check-korok-friends-marked', {
-          friendHashIds: friendHashIds,
-          callback: (allMarked: boolean) => {
-            if (allMarked) {
-              this.korokMarkers.forEach(m => m.remove());
-              this.korokMarkers = [];
+    const isCarryPair = this.obj && ['KorokCarryProgressKeeper', 'KorokCarry_Destination', 'KorokCarryPassenger_Pair'].includes(this.obj.name);
+    if (newVal) {
+      if (isCarryPair) {
+        // For carry pairs, remove the persisted path immediately when marked
+        if (this.obj) this.hideCurrentKorokPath();
+      } else if (this.isOpacityAltEnabled() && this.isKorokWithPath()) {
+        const friendHashIds = this.getKorokFriendHashIds();
+        if (friendHashIds.length > 0) {
+          // KorokCarry friends: only remove when ALL friends are marked
+          this.$parent.$emit('AppMap:check-korok-friends-marked', {
+            friendHashIds: friendHashIds,
+            callback: (allMarked: boolean) => {
+              if (allMarked) {
+                this.korokMarkers.forEach(m => m.remove());
+                this.korokMarkers = [];
+              }
             }
-          }
-        });
-      } else {
-        this.korokMarkers.forEach(m => m.remove());
-        this.korokMarkers = [];
+          });
+        } else {
+          this.korokMarkers.forEach(m => m.remove());
+          this.korokMarkers = [];
+        }
       }
     }
   }
